@@ -46,3 +46,7 @@ Positive tau means Livox content leads camera at the same recorded time. Negativ
 - Original algorithm hashes remain in the reference summaries. Source-bag hashes, independently verified in the workspace audit, were added to publication copies so saved comparisons remain verifiable when eight raw bags are absent. Publication changes to launch/setup and displayed names do not change numerical estimators.
 
 The associated Measurement paper and SSRN preprint are linked in the root README. Their reported offsets and geometric estimator evaluations belong to their own experiments; this app's candidate should not be substituted for them.
+
+## Reading the timing figure
+
+The top shows the lead magnitude, conditional interval and signed model parameter. A matching-scene timestamp example uses `t_C = 1 s` and `t_L = 1 s - tau`. These are illustrative timestamps, not two selected exposure measurements. The lower plot converts angular speed to RPM (`omega / 6`) and subtracts each fitted setup intercept from its measured unwrapped phase. All original phase observations remain unchanged; the line is `6 * RPM * tau_seconds`. Original plots are retained as `*_raw.png` beside the simplified versions.

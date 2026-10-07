@@ -67,11 +67,13 @@ The saved analysis covers **10 bags · 14,281 camera frames · 4,205 clouds · 1
 | Conditional 95% interval | **[−28.13, −23.81] ms** |
 | Phase-fit residual STD | **0.182°** |
 
-![Cross-speed phase fit for the ten Device 1 captures](device_1_timing.png)
+![Timing explained with matching-scene timestamps and angle gaps versus RPM](device_1_timing.png)
 
-Convention: `θ_L(t) = phase + θ_C(t + τ)`. Here, camera content leads on bag-record time; the matching LiDAR scene is recorded about **25.97 ms later**. This is **not calibrated physical synchronization**: exposure midpoint, per-ray timing, and encoder ground truth are unavailable. The interval is conditional on the model and does not include unknown systematic bias.
+Read the top first: the same modeled scene at camera time **1.000000 s** appears at Livox time **1.025971 s**. The bottom uses **RPM**; each dot is one recording after removing fixed setup phase.
 
-[Device 1 report](results/batch_device_1_20261007T005914Z_2e5dcccf/REPORT.md) · [Per-capture metrics](results/batch_device_1_20261007T005914Z_2e5dcccf/capture_metrics.csv) · [Cross-speed report](results/comparison_20261007T054924Z_01265fa4/REPORT.md) · [Methods and limitations](docs/METHODS.md)
+The matching LiDAR scene is recorded about **25.97 ms later**. Physical exposure/per-ray timing and encoder ground truth remain uncalibrated; the interval is conditional on the model and excludes unknown systematic bias. The signed model parameter is `τ = −25.97 ms`.
+
+[Device 1 report](results/batch_device_1_20261007T005914Z_2e5dcccf/REPORT.md) · [Per-capture metrics](results/batch_device_1_20261007T005914Z_2e5dcccf/capture_metrics.csv) · [Cross-speed report](results/comparison_20261007T054924Z_01265fa4/REPORT.md) · [Methods and limitations](docs/METHODS.md) · [Detailed phase plot](results/comparison_20261007T054924Z_01265fa4/figures/cross_speed_timing_raw.png)
 
 ## Research background
 

@@ -359,15 +359,8 @@ def compare():
                    'fitted_phase_deg':data['prediction_deg'][i],'residual_deg':data['residual_deg'][i]} for i,record in enumerate(observations)])
     save_json(out/'model.json',model);save_json(out/'request.json',{'runs':ids})
     result={'id':identifier,'kind':'comparison','multi_timing':model,'observations':observations};save_json(out/'summary.json',result)
-    import matplotlib
-    matplotlib.use('Agg')
-    import matplotlib.pyplot as plt
-    fig,ax=plt.subplots(figsize=(10,6))
-    for i,group in enumerate(model['groups']):
-        keep=data['group_index']==i;ax.scatter(data['omega_deg_s'][keep],data['phase_unwrapped_deg'][keep],label=group,s=50)
-        omega=np.linspace(data['omega_deg_s'][keep].min(),data['omega_deg_s'][keep].max(),100)
-        ax.plot(omega,model['group_phase_intercepts_deg'][group]+omega*model['candidate_tau_ms']/1000)
-    ax.set(xlabel='Signed rotation rate (deg/s)',ylabel='Empirical Livox minus FLIR phase (deg)',title=f'Cross-speed candidate {model["candidate_tau_ms"]:+.1f} ms; physical synchronization uncalibrated');ax.legend();fig.tight_layout();fig.savefig(out/'figures'/'cross_speed_timing.png',dpi=160);plt.close(fig)
+    from timing_visualization import timing_figure
+    timing_figure(model, data, out/'figures'/'cross_speed_timing.png')
     report=f'''# Cross-speed timing comparison
 
 Status: **{model['status']}**. Candidate tau: **{model['candidate_tau_ms']:+.2f} ms**.
