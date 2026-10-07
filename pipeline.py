@@ -20,7 +20,7 @@ from visuals import preview_image,diagnostics
 from scan_variability import analyze_scans,plot_scans
 from job_registry import remember_current
 
-STAGES={'localization':(0,7),'extract':(7,18),'flir_calibration':(18,22),'flir_detection':(22,40),'flir_validation':(40,55),
+STAGES={'camera_localization':(0,4),'localization':(4,8),'extract':(8,18),'flir_calibration':(18,22),'flir_detection':(22,40),'flir_validation':(40,55),
         'livox_features':(55,60),'livox_detection':(60,74),'livox_validation':(74,87),
         'scan_variability':(87,89),'timing':(89,94),'export':(94,99)}
 
@@ -131,6 +131,9 @@ Five-fold held-out validation and a chronological first-60%/last-40% test are sa
 
 Every run has its own folder; reprocessing creates a fresh run and preserves earlier results. Original captures and pre-existing algorithms are untouched.
 '''
+    camera_location=result.get('camera_localization')
+    if camera_location:
+        text+='\n## Automatic camera target search\n\nFull-camera motion and coherent rotation selected crop `'+str(camera_location['roi'])+'` pixels from '+str(camera_location['discovery_frames'])+' sampled frames. The detected camera location guides LiDAR using device calibration; final angle and RPM estimates are independent. `camera_localization/` contains the sampled frames, motion map, selected/candidate regions, summary and figure.\n'
     localization=result.get('localization')
     if localization:
         attempts='\n'.join('- '+a['method']+': '+a['status']+' — '+a['reason'] for a in localization['attempts'])
@@ -144,14 +147,20 @@ Every run has its own folder; reprocessing creates a fresh run and preserves ear
         figure_class='compact-matrix' if name=='error_matrix' else ''
         body+=f'<figure class="{figure_class}"><img src="figures/{name}.png" alt="{name.replace("_"," ")}"><figcaption><a href="figures/{name}.png">Full-size image</a></figcaption></figure>'
     if localization:body+='<figure><img src="localization/target_localization.png" alt="Automatic target localization"></figure>'
+    if camera_location:body+='<figure><img src="camera_localization/target_localization.png" alt="Automatic camera crop and full-frame motion evidence"></figure>'
     (out/'report.html').write_text('<!doctype html><meta charset="utf-8"><title>Livox / FLIR report</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:32px 0}.compact-matrix img{display:block;width:100%;max-width:44rem;margin:auto}figcaption{font-size:.875rem;line-height:1.6;margin-top:8px}</style>'+body)
 
 def run(request):
     job=Job(request);out=job.out
     try:
         config=request['config'];path=bag_path(request['bag']);source_stat=path.stat()
-        job.progress('localization',0,1,'Checking source recording identity before target localization')
+        job.progress('camera_localization',0,1,'Checking source recording identity before target localization')
         source_hash=sha256_file(path)
+        from camera_localization import resolve
+        camera_location=resolve(path,config,out,job.progress)
+        if camera_location:
+            job.state['previews']['localization']={'path':'camera_localization/target_localization.png','frame':0,'bag_stamp_s':None,'relative_angle_deg':None,'method':'camera_auto','attempts':[]}
+            job.publish()
         from localization import discover
         localization=discover(path,config,out,job.progress)
         if localization:
@@ -174,7 +183,7 @@ def run(request):
         result={'id':request['id'],'bag':path.name,'bag_path':str(path.relative_to(ROOT/'bagfiles')),
                 'device':path.parent.name if path.parent!=ROOT/'bagfiles' else None,'parent_batch':request.get('parent_batch'),
                 'config':config,'metadata':meta,'flir':c['summary'],'livox':l['summary'],'scans':scans,
-                'timing':t,'localization':localization,'provenance':{'bag_size':source_stat.st_size,'bag_mtime_ns':source_stat.st_mtime_ns,'bag_sha256':source_hash,
+                'timing':t,'localization':localization,'camera_localization':camera_location,'provenance':{'bag_size':source_stat.st_size,'bag_mtime_ns':source_stat.st_mtime_ns,'bag_sha256':source_hash,
                                       'algorithm_sha256':job.code_hashes,'python':sys.version,'only_selected_topics_processed':True},
                 'elapsed_s':time.monotonic()-job.started}
         save_json(out/'summary.json',result);report(result,out)

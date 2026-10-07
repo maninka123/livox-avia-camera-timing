@@ -38,8 +38,9 @@
         <div class="localization-status"><span class="auto-symbol" aria-hidden="true">✦</span><div><strong>Automatic target search</strong><p id="calibration-status">Checking this device’s calibration…</p></div></div>
         <details id="acquisition-settings"><summary>Acquisition settings</summary><div class="settings-body">
           <label for="phase-group">Shared setup / illumination group</label><input id="phase-group" value="normal" maxlength="60"><p class="field-hint">Use the same group only when sensor pose and illumination remain consistent. Used for cross-speed timing.</p>
-          <label>Camera crop · x, y, width, height (pixels)</label><div class="crop-fields"><input id="roi-x" aria-label="Crop x" type="number" min="0" value="235"><input id="roi-y" aria-label="Crop y" type="number" min="0" value="150"><input id="roi-w" aria-label="Crop width" type="number" min="60" value="110"><input id="roi-h" aria-label="Crop height" type="number" min="60" value="110"></div>
-          <p class="field-hint">Defaults match the copied captures. Keep the rotating target near the crop center.</p>
+          <label class="checkbox-line"><input id="manual-camera-crop" type="checkbox"> Use a manual camera crop</label>
+          <div id="manual-crop-fields" hidden><label>Camera crop · x, y, width, height (pixels)</label><div class="crop-fields"><input id="roi-x" aria-label="Crop x" type="number" min="0" placeholder="x" disabled><input id="roi-y" aria-label="Crop y" type="number" min="0" placeholder="y" disabled><input id="roi-w" aria-label="Crop width" type="number" min="60" placeholder="width" disabled><input id="roi-h" aria-label="Crop height" type="number" min="60" placeholder="height" disabled></div></div>
+          <p class="field-hint">Automatic searches full-camera images for coherent flywheel rotation. Use a manual crop to identify the intended target when several wheels are visible.</p>
           <label for="timing-range">Time-shift search · ± milliseconds</label><input id="timing-range" type="number" min="10" max="2000" value="500">
           <button class="text-button" id="show-full-frame">View first full camera frame ↗</button>
         </div></details>
@@ -50,7 +51,7 @@
         <div class="table-scroll topic-scroll"><table><thead><tr><th>Topic</th><th>Messages</th><th>Avg /s</th></tr></thead><tbody id="topic-table"><tr><td colspan="3" class="empty-cell">Choose a recording to inspect its topics.</td></tr></tbody></table></div>
         <p class="field-hint">Rates are averaged over the bag duration; arrival bursts do not indicate the sensor's sampling rate.</p>
         <p class="recorded-at" id="recorded-at"></p>
-        <div class="recorded-view"><div class="recorded-view-heading"><span>Camera view <small>First recorded frame</small></span><button class="text-button" id="inspect-frame">Expand ↗</button></div><div class="recorded-image-wrap"><img id="recorded-camera-preview" alt="First recorded camera image with the configured crop outlined" hidden><svg id="crop-overlay" aria-hidden="true" hidden><rect id="preview-crop" fill="none" stroke="#64e8bd" stroke-width="2"/></svg><p id="recorded-preview-status">Choose a recording to preview its camera image.</p></div><p class="field-hint">The outline shows the camera crop. Target localization is verified during processing.</p></div>
+        <div class="recorded-view"><div class="recorded-view-heading"><span>Camera view <small>First recorded frame</small></span><button class="text-button" id="inspect-frame">Expand ↗</button></div><div class="recorded-image-wrap"><img id="recorded-camera-preview" alt="Full first camera image; the flywheel crop is located during processing" hidden><svg id="crop-overlay" aria-hidden="true" hidden><rect id="preview-crop" fill="none" stroke="#64e8bd" stroke-width="2"/></svg><p id="recorded-preview-status">Choose a recording to preview its camera image.</p></div><p class="field-hint">Processing automatically finds the camera wheel and uses device calibration to guide the LiDAR search. A manual crop, when enabled, is outlined here.</p></div>
       </section>
     </div>
     <section id="progress-panel" class="card progress-card" hidden>
@@ -59,7 +60,7 @@
       <div class="progress-numbers"><span><strong id="processed">0</strong> processed this stage</span><span><strong id="remaining">0</strong> remaining this stage</span><span>Elapsed <strong id="elapsed">0s</strong></span></div>
       <div class="stage-steps"><span id="step-extract">Read bag</span><span id="step-flir">Camera detection</span><span id="step-livox">Livox detection</span><span id="step-timing">Timing evidence</span><span id="step-export">Save results</span></div>
     </section>
-    <section id="localization-live" class="card localization-live" hidden><div class="preview-title"><span>Flywheel location verified</span><span id="localization-live-label" class="subtle"></span></div><img id="localization-preview" alt="Automatic flywheel localization in the full LiDAR view and camera image"></section>
+    <section id="localization-live" class="card localization-live" hidden><div class="preview-title"><span>Target localization</span><span id="localization-live-label" class="subtle"></span></div><img id="localization-preview" alt="Automatic flywheel localization in the full LiDAR view and camera image"></section>
     <section id="batch-progress" class="card batch-progress" hidden><div class="card-heading"><div><h2>Folder queue</h2><p id="batch-progress-summary"></p></div></div><div class="table-scroll"><table><thead><tr><th>Capture</th><th>Status</th><th>Camera RPM</th><th>Livox RPM</th><th>Livox STD</th></tr></thead><tbody id="batch-queue"></tbody></table></div></section>
     <div class="live-heading"><h2>Detection previews</h2><span class="subtle" id="preview-note">Measured data appears here as the run progresses.</span></div>
     <div class="preview-grid">

@@ -1,0 +1,217 @@
+{
+  "captures": [
+    {
+      "bag": "rig_20260828_191635_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        236,
+        149,
+        108,
+        108
+      ],
+      "center_px": [
+        289.9710884094238,
+        207.3858871459961
+      ],
+      "discovery_rpm": -5.000198955321782,
+      "rotation_score": 4.141200993061381,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_191845_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        234,
+        146,
+        113,
+        113
+      ],
+      "center_px": [
+        289.99858474731445,
+        207.40758895874023
+      ],
+      "discovery_rpm": 10.003542470397406,
+      "rotation_score": 4.09722451250794,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192028_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        247,
+        165,
+        86,
+        86
+      ],
+      "center_px": [
+        289.94520568847656,
+        208.53592681884766
+      ],
+      "discovery_rpm": 10.000959512069082,
+      "rotation_score": 3.934854522561955,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192202_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        247,
+        165,
+        86,
+        86
+      ],
+      "center_px": [
+        289.94462966918945,
+        208.5470428466797
+      ],
+      "discovery_rpm": -14.99570085315772,
+      "rotation_score": 3.907981122299815,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192433_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        247,
+        164,
+        87,
+        87
+      ],
+      "center_px": [
+        290.0603790283203,
+        207.74919509887695
+      ],
+      "discovery_rpm": 5.002261895190165,
+      "rotation_score": 3.9995120468602225,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192618_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        247,
+        165,
+        86,
+        86
+      ],
+      "center_px": [
+        290.15464782714844,
+        207.63817977905273
+      ],
+      "discovery_rpm": -10.001474145416468,
+      "rotation_score": 4.066728280780158,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192752_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        247,
+        164,
+        87,
+        87
+      ],
+      "center_px": [
+        290.03893280029297,
+        207.64122772216797
+      ],
+      "discovery_rpm": 14.999369021899922,
+      "rotation_score": 4.0677126070753,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_192952_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        244,
+        160,
+        95,
+        95
+      ],
+      "center_px": [
+        292.4216117858887,
+        208.4431495666504
+      ],
+      "discovery_rpm": -5.003185904096669,
+      "rotation_score": 3.885207949603269,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_193136_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        243,
+        159,
+        97,
+        97
+      ],
+      "center_px": [
+        292.4419174194336,
+        208.47641372680664
+      ],
+      "discovery_rpm": 9.997470178007415,
+      "rotation_score": 3.9013224812947294,
+      "candidate_count": 1
+    },
+    {
+      "bag": "rig_20260828_193309_0.bag",
+      "sampled_frames": 125,
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "roi": [
+        244,
+        160,
+        96,
+        96
+      ],
+      "center_px": [
+        292.473201751709,
+        208.50077056884766
+      ],
+      "discovery_rpm": -14.998450016166247,
+      "rotation_score": 3.9070836102656568,
+      "candidate_count": 1
+    }
+  ],
+  "elapsed_s": 5.471350125999379,
+  "peak_rss_mb": 379.57421875,
+  "all_original_device_1_bags_detected": true
+}

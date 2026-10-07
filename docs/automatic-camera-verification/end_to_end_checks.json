@@ -1,0 +1,20 @@
+{
+  "source_run_id": "rig_20260828_193309_0_20261007T123232Z_6c942cb9",
+  "requested_camera_roi": null,
+  "detected_camera_roi": [
+    244,
+    160,
+    96,
+    96
+  ],
+  "camera_frames": 1443,
+  "livox_scans": 423,
+  "input_points": 10152000,
+  "camera_rpm": -14.99928645570143,
+  "livox_rpm": -14.99994814882784,
+  "livox_localization": "camera_guided",
+  "candidate_tau_ms": -16.000000000000014,
+  "timing_status": "NOT_IDENTIFIABLE_FROM_THIS_BAG",
+  "saved_artifacts_present": true,
+  "passed": true
+}

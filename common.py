@@ -131,9 +131,10 @@ def validate_options(metadata, options):
         if not isinstance(config[key],str) or config[key] not in topics or topics[config[key]]['type']!=kind:
             raise ValueError(f'Select a valid {kind} topic for {key}.')
     roi=config['camera_roi']
-    if not isinstance(roi,list) or len(roi)!=4 or any(isinstance(x,bool) or not isinstance(x,int) for x in roi):
-        raise ValueError('Camera crop needs four integers: x, y, width, height.')
-    if min(roi[:2])<0 or min(roi[2:])<60:raise ValueError('Crop coordinates must be nonnegative and crop dimensions at least 60 pixels.')
+    if roi is not None:
+        if not isinstance(roi,list) or len(roi)!=4 or any(isinstance(x,bool) or not isinstance(x,int) for x in roi):
+            raise ValueError('Use null for automatic camera cropping, or four integers: x, y, width, height.')
+        if min(roi[:2])<0 or min(roi[2:])<60:raise ValueError('Crop coordinates must be nonnegative and crop dimensions at least 60 pixels.')
     if not isinstance(config['phase_group'],str) or not config['phase_group'].strip() or len(config['phase_group'])>60:
         raise ValueError('Provide a setup/illumination group name of 1–60 characters.')
     config['phase_group']=config['phase_group'].strip()

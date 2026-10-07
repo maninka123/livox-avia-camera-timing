@@ -41,6 +41,8 @@ function resetRecordedPreview(){
 }
 function updateCropOverlay(){
   if(!state.recordedDimensions)return;
+  if(!$('manual-camera-crop').checked || ['roi-x','roi-y','roi-w','roi-h'].some(id=>!$(id).value.trim() || !$(id).checkValidity())){$('crop-overlay').setAttribute('hidden','');return;}
+  $('crop-overlay').removeAttribute('hidden');
   const [width,height]=state.recordedDimensions;$('crop-overlay').setAttribute('viewBox',`0 0 ${width} ${height}`);
   for(const [attribute,id] of [['x','roi-x'],['y','roi-y'],['width','roi-w'],['height','roi-h']])$('preview-crop').setAttribute(attribute,$(id).value || '0');
 }
@@ -132,12 +134,12 @@ async function inspectBag() {
   }catch(error){if($('bag-select').value===name && version===state.inspectVersion){notify(error.message);$('topic-hint').textContent='Recording metadata could not be read. Automatic folder processing can report this bag as failed and continue.';markTopics();}}
 }
 function config() {
-  for(const id of ['roi-x','roi-y','roi-w','roi-h','timing-range']){
+  for(const id of [...($('manual-camera-crop').checked?['roi-x','roi-y','roi-w','roi-h']:[]),'timing-range']){
     if(!$(id).value.trim() || !$(id).checkValidity())throw new Error('Check the camera crop and timing search settings. All fields need values within their displayed limits.');
   }
   if(!($('process-scope').value==='folder' && $('batch-auto-groups').checked) && !$('phase-group').value.trim())throw new Error('Enter a shared setup / illumination group.');
   return {camera_topic:$('camera-topic').value,livox_topic:$('livox-topic').value,phase_group:$('phase-group').value,
-    livox_localization:'auto',camera_roi:['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)),timing_search_ms:Number($('timing-range').value)};
+    livox_localization:'auto',camera_roi:$('manual-camera-crop').checked?['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)):null,timing_search_ms:Number($('timing-range').value)};
 }
 async function start() {
   if(state.starting || state.busy)return;
@@ -184,7 +186,7 @@ function progressView(job) {
     for(const entry of batch.entries){const row=element('tr');const m=entry.metrics || {};row.append(element('td',entry.bag_path.split('/').pop()),element('td',entry.status),element('td',number(m.camera_rpm,4)),element('td',number(m.livox_rpm,4)),element('td',`${number(m.livox_std_deg)}°`));if(entry.error)row.title=entry.error;$('batch-queue').append(row);}
   }
   const location=job.previews?.localization;if($('localization-live'))$('localization-live').hidden=!location;
-  if(location && $('localization-preview')){$('localization-preview').src=artifact(job.id,location.path);$('localization-live-label').textContent=location.method==='camera_guided'?'Camera-guided + LiDAR evidence':location.method==='lidar_only'?'LiDAR-only fallback':'Verified reference-rig fallback';}
+  if(location && $('localization-preview')){$('localization-preview').src=artifact(job.id,location.path);$('localization-live-label').textContent=location.method==='camera_auto'?'Camera crop detected · LiDAR search follows':location.method==='camera_guided'?'Camera-guided + LiDAR evidence':location.method==='lidar_only'?'LiDAR-only fallback':'Verified reference-rig fallback';}
   for(const sensor of ['flir','livox']){
     const preview=job.previews?.[sensor];if(!preview){$(`${sensor}-preview`).hidden=true;$(`${sensor}-preview`).removeAttribute('src');$(`${sensor}-placeholder`).hidden=false;$(`${sensor}-live-label`).textContent='Awaiting capture';delete state.previewKeys[sensor];continue;}
     const key=`${preview.path}/${preview.frame}/${preview.relative_angle_deg}`;
@@ -275,6 +277,11 @@ function renderDetection(result, initialTab='overview') {
   const note=element('div',undefined,'card result-note');note.append(element('strong',`FLIR ${number(result.flir.rpm,5)} RPM · Livox ${number(result.livox.rpm,5)} RPM. `));note.append(document.createTextNode('Each sensor independently estimates rotation speed from its own measurements. The statistics summarize detection repeatability and agreement between the two streams.'));
   if(result.flir.status==='REVIEW' || result.livox.status==='REVIEW')note.append(element('p','Detection quality requires review. Inspect branch flags and validation plots before using these results.'));
   root.append(note);
+  if(result.camera_localization){
+    const camera=result.camera_localization;const card=element('section',undefined,'card localization-result');
+    card.append(element('div','AUTOMATIC CAMERA SEARCH','localization-method'),element('h2','Camera flywheel found in the full image'),element('p',`Detected crop [${camera.roi.join(', ')}] px · ${camera.discovery_frames} sampled frames. The camera location guides LiDAR through device calibration; each sensor estimates its own motion.`));
+    const img=element('img');img.src=artifact(result.id,'camera_localization/target_localization.png');img.alt='Detected camera crop and full-frame motion evidence';img.loading='lazy';img.style.maxWidth='100%';card.append(img);root.append(card);
+  }
   if(result.localization)root.append(localizationCard(result));
   root.append(TimingExplanation.mount(result));
   if(result.parent_batch){const back=element('button','← Back to device folder results','secondary');back.addEventListener('click',()=>showResult(result.parent_batch).catch(e=>notify(e.message)));root.append(back);}
@@ -427,5 +434,6 @@ $('full-frame').addEventListener('error',()=>{$('full-frame').hidden=true;$('fra
 $('close-dialog').addEventListener('click',()=>$('full-frame-dialog').close());
 $('inspect-frame').addEventListener('click',()=>$('show-full-frame').click());
 for(const id of ['roi-x','roi-y','roi-w','roi-h'])$(id).addEventListener('input',updateCropOverlay);
+$('manual-camera-crop').addEventListener('change',()=>{const manual=$('manual-camera-crop').checked;$('manual-crop-fields').hidden=!manual;for(const id of ['roi-x','roi-y','roi-w','roi-h'])$(id).disabled=!manual;updateCropOverlay();});
 async function initialize(){try{await loadDatasets();await Promise.all([loadBags(),loadRuns()]);const active=state.runs.find(r=>['queued','running','cancelling'].includes(r.status));if(active){state.currentJob=active.id;state.busy=true;$('cancel').disabled=false;await poll();}}catch(error){notify(error.message);}}
 initialize();

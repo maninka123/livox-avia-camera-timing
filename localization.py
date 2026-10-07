@@ -182,7 +182,8 @@ def plot(evidence, selected, options, image, camera_cal, config, calibration, pa
             ax.plot(*selected['center_uv'], '+', color='#ff8a3d', ms=10)
     axes[2].imshow(image, cmap='gray'); axes[2].set_title('Camera region / projected LiDAR centre')
     if camera_cal is not None:
-        cx, cy, a, b, angle = camera_cal; cx += config['camera_roi'][0]; cy += config['camera_roi'][1]
+        roi = config.get('resolved_camera_roi') or config['camera_roi']
+        cx, cy, a, b, angle = camera_cal; cx += roi[0]; cy += roi[1]
         axes[2].add_patch(Ellipse((cx, cy), 2*a, 2*b, angle=np.degrees(angle), fill=False, color='#27b599', lw=2))
     if selected and calibration and 'projected_center_px' in selected:
         axes[2].plot(*selected['projected_center_px'], '+', color='#ff8a3d', ms=12)
@@ -222,7 +223,7 @@ def discover(path, config, output, progress):
     points = []; offsets = [0]; stamps = []; crops = []; image = None; counter = {config['camera_topic']: 0, config['livox_topic']: 0}
     total = counts[config['camera_topic']] + counts[config['livox_topic']]; read = 0
     progress('localization', 0, total, 'Searching the full LiDAR view · ' + method.replace('_', ' '))
-    x, y, w, h = config['camera_roi']
+    x, y, w, h = config.get('resolved_camera_roi') or config['camera_roi']
     with rosbag.Bag(str(path)) as bag:
         for topic, msg, ts in bag.read_messages(topics=list(counter)):
             i = counter[topic]; counter[topic] += 1; read += 1
@@ -269,6 +270,7 @@ def discover(path, config, output, progress):
     result = {'requested_method': mode, 'method': method, 'attempts': attempts, 'camera_angles_used': False,
               'sampled_clouds': len(points), 'total_clouds': counts[config['livox_topic']],
               'calibration': calibration, 'supplied_calibration': supplied_calibration, 'camera_geometry_crop': camera_cal,
+              'camera_roi': [x, y, w, h],
               'all_scans_used_for_angle_estimation': True}
     result['preserve_reference_timing_phase']=mode in ('auto','camera_guided') and reference_capture(path,device)
     selected = None; options = []

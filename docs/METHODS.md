@@ -2,7 +2,7 @@
 
 ## Camera angle estimation
 
-1. Identify the moving rotor in a grayscale crop using temporal appearance variation; fit an ellipse to calibrate its projected geometry.
+1. Search sampled full-camera images using temporal appearance variation, complete-envelope geometry and multi-harmonic rotation coherence. Select the crop automatically, then fit its projected ellipse for angle tracking.
 2. Sample 12 radial bands and 360 angular positions with subpixel interpolation. Normalize per-frame intensity gain/offset and retain spatial harmonics 1–12.
 3. Estimate signed rotation rate from coherent spatial harmonics, searching approximately −20 to +20 RPM and excluding near-zero rotation.
 4. Learn a regularized periodic appearance model with a reduced feature basis. Register each observation on that model with a coarse phase search and local refinement.

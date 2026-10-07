@@ -1,0 +1,14 @@
+{
+  "run_id": "rig_20260828_193309_0_20261007T123232Z_6c942cb9",
+  "checks": [
+    "App defaults to automatic camera cropping with no fixed coordinates",
+    "Advanced manual crop sends the explicit coordinates; disabling it returns to automatic",
+    "Complete actual-bag run retains the requested automatic mode and records the detected crop separately",
+    "Calibrated LiDAR localization uses the same detected camera crop",
+    "Automatic camera evidence is displayed from saved real artifacts",
+    "Estimated offset remains read-only with multiple-RPM guidance",
+    "Desktop and 390/320 px mobile layouts have no page overflow"
+  ],
+  "browser_errors": [],
+  "passed": true
+}

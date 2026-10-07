@@ -1,0 +1,20 @@
+{
+  "camera_roi": [
+    244,
+    160,
+    96,
+    96
+  ],
+  "livox_method": "camera_guided",
+  "camera_roi_used_by_livox": [
+    244,
+    160,
+    96,
+    96
+  ],
+  "camera_angles_used_by_livox": false,
+  "calibration_device": "device_1",
+  "peak_rss_mb": 379.57421875,
+  "full_angle_or_timing_processing_rerun": false,
+  "passed": true
+}

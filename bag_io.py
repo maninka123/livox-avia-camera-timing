@@ -47,7 +47,9 @@ def extract(path,config,output,progress,preview,localization=None):
     counts={row['name']:row['messages'] for row in meta['topics']}
     total=counts[config['camera_topic']]+counts[config['livox_topic']]
     images=[];ct=[];ch=[];lt=[];lh=[];points=[];offsets=[0];full=[];point_counts=[];finite_counts=[];reference_h5=[]
-    x,y,w,h=config['camera_roi'];processed=0
+    roi=config.get('resolved_camera_roi') or config['camera_roi']
+    if roi is None:raise ValueError('Resolve the automatic camera crop before extraction.')
+    x,y,w,h=roi;processed=0
     with rosbag.Bag(str(path)) as bag:
         for topic,msg,ts in bag.read_messages(topics=[config['camera_topic'],config['livox_topic']]):
             if topic==config['camera_topic']:

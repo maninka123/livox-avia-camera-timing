@@ -16,6 +16,7 @@ def main():
     scopes.add_argument('--folder',choices=[f'device_{i}' for i in range(1,6)],help='Process every bag in one device folder')
     parser.add_argument('--localization',choices=['auto','camera_guided','lidar_only','legacy'],default='auto',help='Automatic fallback by default; advanced override for diagnostics or reproducing old results')
     parser.add_argument('--camera-topic');parser.add_argument('--livox-topic');parser.add_argument('--phase-group')
+    parser.add_argument('--camera-roi',nargs=4,type=int,metavar=('X','Y','WIDTH','HEIGHT'),help='Optional manual camera crop; default searches full images automatically')
     args=parser.parse_args()
     if args.bag and (args.all or args.folder):parser.error('Choose one bag or folder mode, not both.')
     if args.all or args.folder:
@@ -27,7 +28,7 @@ def main():
             if not paths:parser.error('This device folder is empty.')
             identifier='batch_'+device+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
             request={'id':identifier,'kind':'batch','dataset':device,'bags':[str(p.relative_to(BAGS)) for p in paths],
-                     'config':{k:v for k,v in {'camera_topic':args.camera_topic,'livox_topic':args.livox_topic,'phase_group':args.phase_group,'livox_localization':args.localization}.items() if v},
+                     'config':{k:v for k,v in {'camera_topic':args.camera_topic,'livox_topic':args.livox_topic,'phase_group':args.phase_group,'livox_localization':args.localization,'camera_roi':args.camera_roi}.items() if v is not None},
                      'auto_topics':not (args.camera_topic or args.livox_topic),'auto_groups':not bool(args.phase_group)}
             out=RESULTS/identifier;out.mkdir();save_json(out/'request.json',request)
             print('Processing folder',device,'->',out,flush=True);result=run_batch(request)
@@ -39,6 +40,7 @@ def main():
         path=bag_path(name);meta=inspect(path)
         options={'camera_topic':args.camera_topic or meta['suggested_camera_topic'],'livox_topic':args.livox_topic or meta['suggested_livox_topic'],
                  'phase_group':args.phase_group or meta['suggested_phase_group'],'livox_localization':args.localization}
+        if args.camera_roi is not None:options['camera_roi']=args.camera_roi
         config=validate_options(meta,options)
         identifier=file_prefix(path.stem)+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
         out=RESULTS/identifier;out.mkdir();request={'id':identifier,'bag':str(path.relative_to(BAGS)),'config':config,'created_at':datetime.now(timezone.utc).isoformat()}

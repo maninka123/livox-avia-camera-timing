@@ -6,7 +6,7 @@ Run `bash setup.sh` once, then `bash launch.sh`. ROS Noetic must be sourced and 
 
 Device 1 contains two example bags. Device 2–5 are empty destinations for additional recordings. Import into the selected device, or copy `.bag` files into its directory. Inspect message types/counts before processing; automatic selection prefers camera Image and Livox PointCloud2 topics. Manual selection remains available.
 
-The shipped camera crop is `[235, 150, 110, 110]`. Use the full-frame preview and acquisition controls when the target occupies another location. Review the setup group before timing comparisons: captures within a group must share sensor pose and phase convention. The normal/red filename suggestions apply only to these recordings.
+Camera cropping defaults to automatic (`camera_roi: null`). The detector searches the full image for coherent wheel motion, then uses the measured camera position with device calibration to guide LiDAR. **Use a manual camera crop** remains available under Acquisition settings, or pass `--camera-roi X Y WIDTH HEIGHT` in the CLI. Review the setup group before timing comparisons: captures within a group must share sensor pose and phase convention. The normal/red filename suggestions apply only to these recordings.
 
 ## Processing and results
 

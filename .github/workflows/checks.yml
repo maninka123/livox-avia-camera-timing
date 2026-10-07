@@ -19,3 +19,4 @@ jobs:
           python -m unittest discover -s tests -p test_scan_variability.py -v
           python -m unittest discover -s tests -p test_localization.py -v
           python -m unittest discover -s tests -p test_scan_reader.py -v
+          python -m unittest discover -s tests -p test_camera_localization.py -v

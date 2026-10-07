@@ -18,7 +18,7 @@ bash setup.sh
 bash launch.sh
 ```
 
-Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the entire folder → inspect topics → **Start processing**. Change the crop/topics for your own recordings. Use `bash launch.sh --port 8766` for another port.
+Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the entire folder → inspect topics → **Start processing**. Camera cropping is automatic; adjust topics or the optional manual crop for your own recordings. Use `bash launch.sh --port 8766` for another port.
 
 **Explore without processing:** open **Saved results** to view the included previous and automatic ten-capture Device 1 analyses. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. A fresh LFS download is about **2.1 GB**; expanded bag/array files occupy about **2.4 GB**.
 
@@ -32,7 +32,11 @@ Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the
 
 ## Automatic target finding
 
-No method selector is needed. **Camera calibration + LiDAR evidence** is tried first; unsupported or missing calibration falls back to **LiDAR-only**. The app shows the selected method and reasons. A checked fixed-region fallback is restricted to exact original recordings; ambiguous or unknown scenes remain unresolved.
+No method selector is needed. **Full-camera motion** finds the wheel and selects its crop (`camera_roi: null`). The detected camera position plus device calibration guides the LiDAR search. **Camera calibration + LiDAR evidence** is tried first; unsupported or missing calibration falls back to **LiDAR-only**. The app shows the selected method and reasons. A checked fixed-region fallback is restricted to exact original recordings; ambiguous or unknown scenes remain unresolved.
+
+![Automatic full-camera crop and motion evidence](automatic_camera.png)
+
+An optional manual crop is under **Acquisition settings**, or use `--camera-roi X Y WIDTH HEIGHT`. [Automatic camera checks](docs/AUTOMATIC_CAMERA_CHECKS.md).
 
 Your supplied intrinsics/extrinsics are saved in [`calibrations/device_1.json`](calibrations/device_1.json). Add a matching device file for your own rig: calibration helps locate the wheel in the point cloud. The supplied fisheye calibration is for **484 × 366 pixels**, with translation in metres. These bags show roughly **31 px** of camera/LiDAR centre disagreement, flagged for alignment review. [Calibration and fallback details](LOCALIZATION.md).
 
