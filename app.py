@@ -26,6 +26,7 @@ from werkzeug.exceptions import HTTPException
 app=Flask(__name__);app.config['MAX_CONTENT_LENGTH']=8*1024**3
 app.config['TEMPLATES_AUTO_RELOAD']=True
 lock=threading.RLock()
+scan_preview_lock=threading.Lock()
 
 def folder(run_id):
     return result_path(run_id)
@@ -327,11 +328,9 @@ def scan_preview(run_id):
     out=folder(run_id);index=int(request.args.get('scan',0))
     file=out/'intermediates'/'livox_extracted.npz'
     if not file.is_file():raise ValueError('This capture has no extracted cloud data yet.')
-    with np.load(file) as data:
-        if not 0<=index<len(data['stamps']):raise ValueError('Scan index is outside this capture.')
-        offsets=data['offsets'];points=data['points'][offsets[index]:offsets[index+1]]
-        low,high=data['depth_bounds_m'] if 'depth_bounds_m' in data else (1.2,2.7)
-        localized='coordinate_system' in data and str(data['coordinate_system'])=='target_centred'
+    from scan_reader import read_scan
+    with scan_preview_lock:
+        points,(low,high),localized=read_scan(file,index)
     image=np.full((600,760,3),250,np.uint8)
     radius=np.hypot(points[:,0],points[:,1]);target=(radius>.025)&(radius<.135)&(points[:,2]>low)&(points[:,2]<high)
     for mask,color in ((~target,(183,189,189)),(target,(55,121,220))):

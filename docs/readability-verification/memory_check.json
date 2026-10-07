@@ -1,0 +1,8 @@
+{
+  "point_array_size_mib": 30.0042724609375,
+  "selected_scan_points": 4819,
+  "selected_scan_size_kib": 75.296875,
+  "peak_rss_increase_mib": 4.58984375,
+  "chunk_limit_mib": 1,
+  "coordinate_system": "target_centred"
+}

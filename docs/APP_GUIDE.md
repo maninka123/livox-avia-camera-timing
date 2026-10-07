@@ -44,3 +44,7 @@ The original long-form development validation record is archived as `WORKSPACE_V
 ## Automatic target search
 
 Keep the default Automatic setting. A device calibration file guides the search when valid; missing or unsupported calibration triggers independent LiDAR localization. Live previews and the saved result explain which method was used. The LiDAR result includes a full-scene localization figure and alignment review. Folder tables show the method for each capture. See [LOCALIZATION.md](../LOCALIZATION.md) for calibration and diagnostic CLI flags.
+
+## Readable results and plot sizes
+
+The interface uses a scalable text hierarchy with 16 px main text and 14–15 px supporting text. The residual correlation matrix has a compact display, while long scan-trace figures scroll inside a bounded panel. Use **Full-size image** beneath a plot to inspect its original labels and pixels. Individual scan previews load only the requested cloud instead of allocating the entire saved point array. [Readability and memory checks](READABILITY_CHECKS.md).

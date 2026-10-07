@@ -141,9 +141,10 @@ Every run has its own folder; reprocessing creates a fresh run and preserves ear
     # Standalone shareable report with local images and a readable plain-text narrative.
     body='<h1>Livox / FLIR processing report</h1><pre>'+html.escape(text)+'</pre>'
     for name in ('overview','flir_detection_stages','livox_detection_stages','scan_variability','timing_profile','clock_diagnostics','error_matrix'):
-        body+=f'<figure><img src="figures/{name}.png" alt="{name.replace("_"," ")}"></figure>'
+        figure_class='compact-matrix' if name=='error_matrix' else ''
+        body+=f'<figure class="{figure_class}"><img src="figures/{name}.png" alt="{name.replace("_"," ")}"><figcaption><a href="figures/{name}.png">Full-size image</a></figcaption></figure>'
     if localization:body+='<figure><img src="localization/target_localization.png" alt="Automatic target localization"></figure>'
-    (out/'report.html').write_text('<!doctype html><meta charset="utf-8"><title>Livox / FLIR report</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:32px 0}</style>'+body)
+    (out/'report.html').write_text('<!doctype html><meta charset="utf-8"><title>Livox / FLIR report</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:32px 0}.compact-matrix img{display:block;width:100%;max-width:44rem;margin:auto}figcaption{font-size:.875rem;line-height:1.6;margin-top:8px}</style>'+body)
 
 def run(request):
     job=Job(request);out=job.out

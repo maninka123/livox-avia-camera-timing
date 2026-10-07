@@ -229,14 +229,20 @@ function metric(label,value,unit,foot) {
   const big=element('div',value,'metric-value');big.append(element('span',` ${unit}`,'metric-unit'));card.append(big,element('div',foot,'metric-foot'));return card;
 }
 function figure(id,name,caption) {
-  const fig=element('figure',undefined,'card figure-card');const img=element('img');img.src=artifact(id,`figures/${name}.png`);img.alt=caption;img.loading='lazy';fig.append(img,element('figcaption',caption));return fig;
+  const fig=element('figure',undefined,'card figure-card');fig.dataset.figure=name;
+  if(name==='error_matrix')fig.classList.add('figure-card-compact');
+  const view=element('div',undefined,'figure-viewport');
+  if(name==='batch_scan_traces'){view.classList.add('figure-viewport-scroll');view.tabIndex=0;view.setAttribute('role','region');view.setAttribute('aria-label','Individual scan traces; scroll to inspect every capture');}
+  const img=element('img');img.src=artifact(id,`figures/${name}.png`);img.alt=caption;img.loading='lazy';img.decoding='async';view.append(img);
+  const footer=element('figcaption');const full=element('a','Full-size image ↗','figure-original');full.href=img.src;full.target='_blank';full.rel='noopener';full.setAttribute('aria-label','Open full-size image: '+caption);
+  footer.append(element('span',caption),full);fig.append(view,footer);return fig;
 }
 function metricTable(result) {
   const card=element('div',undefined,'card result-table');card.append(element('h2','Repeatability and cross-modal agreement'));
   const table=element('table');const head=element('thead');const hr=element('tr');for(const name of ['Metric','FLIR held-out repeatability','Livox held-out agreement','Livox held-out offline agreement'])hr.append(element('th',name));head.append(hr);table.append(head);
   const body=element('tbody');const a=result.timing.agreement;
   for(const [label,key] of [['STD','std_deg'],['MAE','mae_deg'],['RMSE','rmse_deg'],['95th percentile','p95_deg']]){const row=element('tr');row.append(element('td',label),element('td',`${number(result.flir.heldout_residual[key],4)}°`),element('td',`${number(a.heldout_raw[key],4)}°`),element('td',`${number(a.heldout_offline_smoothed[key],4)}°`));body.append(row);}
-  table.append(body);card.append(table);return card;
+  table.append(body);const wrap=element('div',undefined,'table-scroll');wrap.append(table);card.append(wrap);return card;
 }
 function timingBox(result) {
   const lag=result.timing.single_bag_lag;const box=element('div',undefined,'card timing-box');box.append(element('h2',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Actual sensor offset: unresolved':'Time-shift candidate from varying motion'));

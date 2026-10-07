@@ -1,0 +1,70 @@
+{
+  "browser_errors": [],
+  "failures": [],
+  "computed_type_sizes": [
+    {
+      "page": "workspace",
+      "body_px": "16px",
+      "headings_px": [
+        "22px"
+      ]
+    },
+    {
+      "page": "library",
+      "body_px": "16px",
+      "headings_px": [
+        "22px"
+      ]
+    },
+    {
+      "page": "bag_overview",
+      "body_px": "16px",
+      "headings_px": [
+        "22px"
+      ]
+    },
+    {
+      "page": "bag_scans",
+      "body_px": "16px",
+      "headings_px": [
+        "22px"
+      ]
+    },
+    {
+      "page": "folder_timing",
+      "body_px": "16px",
+      "headings_px": [
+        "22px"
+      ]
+    }
+  ],
+  "screenshots": [
+    "workspace_1512.png",
+    "library_1512.png",
+    "bag_overview_1512.png",
+    "bag_scans_1512.png",
+    "folder_timing_1512.png",
+    "workspace_768.png",
+    "library_768.png",
+    "bag_overview_768.png",
+    "bag_scans_768.png",
+    "folder_timing_768.png",
+    "workspace_390.png",
+    "library_390.png",
+    "bag_overview_390.png",
+    "bag_scans_390.png",
+    "folder_timing_390.png",
+    "workspace_320.png",
+    "library_320.png",
+    "bag_overview_320.png",
+    "bag_scans_320.png",
+    "folder_timing_320.png"
+  ],
+  "checked_widths": [
+    1512,
+    768,
+    390,
+    320
+  ],
+  "large_text_percent": 200
+}
