@@ -22,7 +22,7 @@ Individual approximately constant-speed captures have unresolved timing. Their c
 
 The saved ten-capture comparison is a model-based −25.97 ms candidate, with conditional interval [−28.13, −23.81] ms. Camera content leads on bag-record time. Matching LiDAR scenes have later recorded timestamps. Exposure/per-ray timing and absolute encoder angles are not calibrated.
 
-The flywheel explanation lets you select a reference speed/time, expand the visual angle difference, try a clearly labeled hypothetical delay, reset to the saved value, and export SVG. Visual expansion affects drawing only; printed numbers keep their modeled values.
+The flywheel explanation automatically uses the saved timing candidate. Offset and measured RPM are shown to one decimal place; calculations keep their full precision. The offset is read-only. For a folder or comparison, select the capture to illustrate, adjust visual expansion or scene time, and export SVG. Expansion changes the drawing only. Missing estimates or rotation speeds are shown as unavailable; no example values are substituted. [Illustration checks](TIMING_ILLUSTRATION_CHECKS.md).
 
 ## Saved artifacts
 
