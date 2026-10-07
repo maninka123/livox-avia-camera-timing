@@ -22,7 +22,7 @@ The `--localization legacy` diagnostic reproduces the original central-region, e
 
 ## Validation and bag selection
 
-Five-fold held-out templates and a chronological holdout evaluate stability. Camera held-out residual STD measures repeatability relative to its fitted motion. Livox held-out agreement STD measures disagreement with the camera after fixed phase adjustment. Neither metric is encoder-verified angular accuracy.
+Five-fold held-out templates and a chronological holdout evaluate stability. Camera held-out residual STD measures repeatability relative to its fitted motion. Livox held-out agreement STD measures disagreement with the camera after fixed phase adjustment. Both metrics describe internal repeatability and cross-modal agreement.
 
 The two distributed bags minimize `sqrt(camera_heldout_STD² + livox_heldout_agreement_STD²)` among ten eligible captures, using raw-cloud agreement rather than offline smoothing. This ranking score balances two residual metrics; it is not a derived independent-noise error bound. Both selected bags have approximately +10 RPM, so they are good detection examples but do not provide the signed-speed diversity needed for timing identifiability.
 

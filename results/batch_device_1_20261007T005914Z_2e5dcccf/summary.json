@@ -619,5 +619,5 @@
       "max": 84.65877586223475
     }
   },
-  "interpretation": "Each bag is a separate timing replicate. Local RPM variability includes phase-estimation noise; depth spread describes spatial returns. Held-out angular statistics are repeatability/agreement, not encoder accuracy. Overall time shift assumes stable phase and pose within each setup group and remains physically uncalibrated."
+  "interpretation": "Each bag is a separate timing replicate. Local RPM variability includes phase-estimation noise; depth spread describes spatial returns. Held-out angular statistics summarize repeatability and cross-modal agreement. Overall time shift assumes stable phase and pose within each setup group and remains physically uncalibrated."
 }

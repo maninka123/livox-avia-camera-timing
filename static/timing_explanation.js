@@ -43,7 +43,7 @@ window.TimingExplanation = (() => {
       speeds=result.observations.map(o=>({label:o.bag,rpm:o.omega_deg_s/6}));
     }else{
       estimate=result.timing.single_bag_lag;
-      source=estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Single-bag candidate · compare speeds':'Single-bag timing candidate';
+      source=estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Calculated single-bag candidate':'Single-bag timing candidate';
       speeds=[{label:result.bag,rpm:result.flir.rpm}];
     }
     speeds=speeds.filter(s=>finite(s.rpm));
@@ -58,9 +58,9 @@ window.TimingExplanation = (() => {
     const unresolved=ctx.estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG';
     badge.textContent=tau===null?'Offset unresolved':ctx.source;
     badge.classList.toggle('conditional',tau===null || unresolved);
-    explanation.textContent=tau===null?'No offset estimate is available for this result, so a timing illustration cannot be drawn.':unresolved?'For this steady-speed capture, the angular separation can come from a time delay or a different starting angle. Compare captures at different speeds to separate the two. The illustration uses the saved single-bag fitting minimum.':'This illustration uses the saved timing candidate. It assumes a stable phase convention; the physical sensor offset remains uncalibrated.';
+    explanation.textContent=tau===null?'No offset estimate is available for this result, so a timing illustration cannot be drawn.':unresolved?'For this steady-speed capture, the angular separation can come from a time delay or a different starting angle. Compare captures at different speeds to separate the two. The illustration uses the calculated single-bag fitting minimum.':'This illustration uses the calculated timing candidate. It assumes a stable phase convention; the physical sensor offset remains uncalibrated.';
     const controls=node('div',undefined,'offset-controls');
-    const tauLabel=node('div',undefined,'offset-readout');const tauCaption=node('span','Saved offset used in illustration');tauCaption.id='offset-delay-label';
+    const tauLabel=node('div',undefined,'offset-readout');const tauCaption=node('span','Estimated time offset');tauCaption.id='offset-delay-label';
     const value=node('output',tau===null?'Unavailable':`${rounded(tau)} ms`);value.id='offset-delay';value.setAttribute('aria-labelledby',tauCaption.id);tauLabel.append(tauCaption,value);
     if(tau===null || !ctx.speeds.length){
       if(tau!==null)explanation.textContent='The saved offset is shown below. No measured rotation speed is available, so the flywheel illustration cannot be drawn.';
@@ -77,7 +77,7 @@ window.TimingExplanation = (() => {
     const gainLabel=node('label','Visual expansion');const magnify=node('select');magnify.id='offset-gain';gainLabel.htmlFor=magnify.id;
     for(const value of [1,5,10,20,50,100])magnify.append(new Option(value===1?'Real angular scale · ×1':`Exaggerate angular gap · ×${value}`,value));magnify.value=gain;gainLabel.append(magnify);
     controls.append(speedLabel,tauLabel,gainLabel);card.append(controls);
-    card.append(node('p','Offset and RPM are rounded to one decimal for display; the diagrams use the saved full-precision values.','field-hint'));
+    card.append(node('p','Offset and RPM are rounded to one decimal for display; the diagrams use the calculated full-precision values.','field-hint'));
     const actions=node('div',undefined,'offset-actions');
     const download=node('button','Download explanation as SVG ↓','text-button');download.id='offset-download';actions.append(download);card.append(actions);
     const panels=node('div',undefined,'offset-panels');const left=node('section',undefined,'offset-panel');const right=node('section',undefined,'offset-panel');

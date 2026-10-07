@@ -104,7 +104,7 @@
     "alignment_calibration_samples": 201,
     "comparison_samples": 403,
     "rate_difference_rpm": 5.511295732674171e-06,
-    "reference": "New per-image FLIR observations, not encoder truth; constant phase calibrated on first half."
+    "reference": "New per-image FLIR observations; constant phase calibrated on first half."
   },
   "cross_speed_phase_observation": {
     "group": "normal",

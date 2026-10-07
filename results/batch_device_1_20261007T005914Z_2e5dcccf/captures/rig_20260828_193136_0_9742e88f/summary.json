@@ -122,7 +122,7 @@
     "boundary_hits": 0,
     "heldout_boundary_hits": 0,
     "status": "TRACK_RECOVERED",
-    "absolute_accuracy": "Unverified: geometry anchor is approximate; no encoder reference."
+    "absolute_accuracy": "Absolute angle accuracy is not established by repeatability statistics."
   },
   "livox": {
     "frames": 420,
@@ -352,7 +352,7 @@
       "alignment_calibration_samples": 199,
       "comparison_samples": 398,
       "rate_difference_rpm": 0.0007840361067543711,
-      "reference": "New per-image FLIR observations, not encoder truth; constant phase calibrated on first half."
+      "reference": "New per-image FLIR observations; constant phase calibrated on first half."
     },
     "cross_speed_phase_observation": {
       "group": "red",

@@ -1,4 +1,4 @@
-"""Per-cloud descriptive statistics; motion scatter is distinct from encoder error."""
+"""Per-cloud descriptive statistics; motion scatter is distinct from absolute angular error."""
 import numpy as np
 from common import save_json, write_csv
 

@@ -5,7 +5,7 @@
 <rect width="1440" height="590" rx="24" fill="#f5f8fa"/>
 <g font-family="Arial, Helvetica, sans-serif">
 <text x="48" y="48" font-size="26" font-weight="700" fill="#18323b">From measured observations to timing evidence</text>
-<text x="48" y="78" font-size="17" fill="#586b73">Each sensor infers its own speed. No commanded RPM or encoder is supplied.</text>
+<text x="48" y="78" font-size="17" fill="#586b73">Each sensor infers its own speed. Rotation speed is inferred independently from each sensor’s measurements.</text>
 <g fill="#fff" stroke-width="2">
 <rect x="48" y="112" width="406" height="158" rx="16" stroke="#17867e"/>
 <rect x="518" y="112" width="406" height="158" rx="16" stroke="#17867e"/>

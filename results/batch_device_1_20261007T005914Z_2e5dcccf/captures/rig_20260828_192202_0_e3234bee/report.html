@@ -22,7 +22,7 @@ Livox agreement with new FLIR observations, after one constant phase calibration
 | RMSE, degrees | 0.7884 | 0.4286 |
 | P95 absolute disagreement, degrees | 1.6323 | 0.8691 |
 
-The Livox 21-cloud smoother spans 2.000 s and uses approximately 1.000 s of future data. Raw, offline-filtered and batch-trajectory angles are separately exported. No encoder reference exists; these statistics describe repeatability and cross-modal agreement, not absolute angle accuracy. Camera physical zero is only approximately geometry anchored; Livox physical zero remains uncalibrated.
+The Livox 21-cloud smoother spans 2.000 s and uses approximately 1.000 s of future data. Raw, offline-filtered and batch-trajectory angles are separately exported. These statistics describe repeatability and cross-modal agreement, not absolute angle accuracy. Angle outputs describe rotation relative to their reference phases.
 
 ## Every-scan variability
 

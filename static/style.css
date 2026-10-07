@@ -22,3 +22,5 @@
 .recorded-view-heading,.preview-title,.live-heading{flex-wrap:wrap;gap:.5rem}
 .recorded-view-heading small{display:block;margin-left:0;margin-top:.25rem}
 @media(max-width:720px){.sidebar{grid-template-columns:repeat(auto-fit,minmax(min(100%,9rem),1fr))}}
+
+.timing-advice{padding:1rem 1.125rem;margin:1rem 0;border:1px solid #ebd3a5;border-radius:.75rem;background:#fff8eb;color:#6f4b13;font-size:var(--type-label);line-height:1.65}.timing-advice strong{display:block;font-weight:600}.timing-advice p{margin:.35rem 0 0}

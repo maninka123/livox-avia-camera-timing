@@ -251,11 +251,17 @@ function metricTable(result) {
   table.append(body);const wrap=element('div',undefined,'table-scroll');wrap.append(table);card.append(wrap);return card;
 }
 function timingBox(result) {
-  const lag=result.timing.single_bag_lag;const box=element('div',undefined,'card timing-box');box.append(element('h2',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Single-bag timing: compare different speeds':'Time-shift candidate from varying motion'));
+  const lag=result.timing.single_bag_lag;const box=element('div',undefined,'card timing-box');box.append(element('h2',`Estimated time offset: ${number(lag.candidate_tau_ms,1)} ms`));
+  if(lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG')box.append(timingAdvice());
   box.append(element('p',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'This capture has nearly constant rotation speed. A fixed angular difference and a time delay can produce the same separation between the streams. Compare captures at different RPMs to separate these effects and estimate the shared time shift.':lag.reason));box.append(element('p',`Conditional profile minimum ${number(lag.candidate_tau_ms,1)} ms · phase-profile 95% range [${number(lag.profile_95_low_ms,1)}, ${number(lag.profile_95_high_ms,1)}] ms · block-bootstrap 95% range [${number(lag.block_bootstrap_95_low_ms,1)}, ${number(lag.block_bootstrap_95_high_ms,1)}] ms.`));
   box.append(element('p','A constant phase is fitted separately for every time shift. A conditional minimum is not an established physical offset. Positive tau means Livox content leads FLIR on bag-record time; negative tau means FLIR leads.'));
   box.append(element('p',`Camera nonlinear-motion scatter ${number(lag.camera_nonconstant_motion_std_deg,3)}°; estimated camera scatter ${number(lag.camera_noise_floor_deg,3)}°. Livox header clock: ${result.timing.clocks.livox.domain.replaceAll('_',' ')}. Different clock epochs cannot be subtracted directly.`));
   return box;
+}
+function timingAdvice() {
+  const warning=element('div',undefined,'timing-advice');warning.setAttribute('role','note');
+  warning.append(element('strong','For a stronger timing estimate'),element('p','Process captures at different RPMs with the same sensor setup. This single-bag value is a fitting candidate: at steady speed, a fixed angular difference can mimic a time delay.'));
+  return warning;
 }
 function renderDetection(result, initialTab='overview') {
   const root=$('result-body');root.replaceChildren();const agreement=result.timing.agreement;const lag=result.timing.single_bag_lag;
@@ -263,8 +269,9 @@ function renderDetection(result, initialTab='overview') {
     metric('FLIR · held-out STD',number(result.flir.heldout_residual.std_deg),'°',`${result.flir.frames.toLocaleString()} native camera frames`),
     metric('Livox · held-out STD',number(agreement.heldout_raw.std_deg),'°','Per-cloud disagreement with FLIR'),
     metric('Livox · offline STD',number(agreement.heldout_offline_smoothed.std_deg),'°',`${number(result.livox.future_lookahead_s,1)} s of future data used`),
-    metric('Timing estimate',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Compare speeds':'Candidate','',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Use captures at different RPMs to separate time delay from a fixed angular difference.':'Derived from variation in the measured motion. See timing evidence.'));
+    metric('Estimated time offset',lag.candidate_tau_ms===null?'Unavailable':number(lag.candidate_tau_ms,1),lag.candidate_tau_ms===null?'':'ms',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Single-bag fitting candidate · compare different RPMs for a stronger estimate.':'Derived from variation in the measured motion. See timing evidence.'));
   root.append(grid);
+  if(lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG')root.append(timingAdvice());
   const note=element('div',undefined,'card result-note');note.append(element('strong',`FLIR ${number(result.flir.rpm,5)} RPM · Livox ${number(result.livox.rpm,5)} RPM. `));note.append(document.createTextNode('Each sensor independently estimates rotation speed from its own measurements. The statistics summarize detection repeatability and agreement between the two streams.'));
   if(result.flir.status==='REVIEW' || result.livox.status==='REVIEW')note.append(element('p','Detection quality requires review. Inspect branch flags and validation plots before using these results.'));
   root.append(note);
@@ -286,7 +293,7 @@ function renderDetection(result, initialTab='overview') {
 function renderComparison(result) {
   const model=result.multi_timing;const root=$('result-body');root.replaceChildren();const grid=element('div',undefined,'metric-grid');
   grid.append(metric('Cross-speed candidate',number(model.candidate_tau_ms,1),'ms','Stable per-setup phase is assumed.'),metric('Standard error',number(model.standard_error_ms,1),'ms','Student-t interval reported below.'),metric('Phase-fit residual STD',number(model.phase_residual_std_deg),'°',`${model.degrees_of_freedom} residual degrees of freedom`),metric('Independent captures',String(model.bags),'bags',`${model.groups.length} setup / illumination groups`));root.append(grid);
-  const box=element('div',undefined,'card timing-box');box.append(element('h2',model.status.replaceAll('_',' ').toLowerCase()),element('p',`95% interval: [${number(model.student_t_95_low_ms,1)}, ${number(model.student_t_95_high_ms,1)}] ms. ${model.reason}`),element('p','This remains a timing candidate, not calibrated physical synchronization. Positive tau means Livox content leads FLIR on bag-record time. No encoder or native per-ray acquisition timing is available.'));root.append(box,TimingExplanation.mount(result),figure(result.id,'cross_speed_timing','Read the timing estimate first, then compare the remaining angle gaps versus RPM after setup correction.'));
+  const box=element('div',undefined,'card timing-box');box.append(element('h2',model.status.replaceAll('_',' ').toLowerCase()),element('p',`95% interval: [${number(model.student_t_95_low_ms,1)}, ${number(model.student_t_95_high_ms,1)}] ms. ${model.reason}`),element('p','This remains a timing candidate, not calibrated physical synchronization. Positive tau means Livox content leads FLIR on bag-record time. Native per-ray acquisition timing requires separate calibration.'));root.append(box,TimingExplanation.mount(result),figure(result.id,'cross_speed_timing','Read the timing estimate first, then compare the remaining angle gaps versus RPM after setup correction.'));
 }
 function scanExplorer(result, root) {
   const card=element('section',undefined,'card scan-explorer');card.id='scan-explorer';

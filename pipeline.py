@@ -83,7 +83,7 @@ Livox agreement with new FLIR observations, after one constant phase calibration
 | RMSE, degrees | {a['heldout_raw']['rmse_deg']:.4f} | {a['heldout_offline_smoothed']['rmse_deg']:.4f} |
 | P95 absolute disagreement, degrees | {a['heldout_raw']['p95_deg']:.4f} | {a['heldout_offline_smoothed']['p95_deg']:.4f} |
 
-The Livox {l['filter_frames']}-cloud smoother spans {l['filter_span_s']:.3f} s and uses approximately {l['future_lookahead_s']:.3f} s of future data. Raw, offline-filtered and batch-trajectory angles are separately exported. No encoder reference exists; these statistics describe repeatability and cross-modal agreement, not absolute angle accuracy. Camera physical zero is only approximately geometry anchored; Livox physical zero remains uncalibrated.
+The Livox {l['filter_frames']}-cloud smoother spans {l['filter_span_s']:.3f} s and uses approximately {l['future_lookahead_s']:.3f} s of future data. Raw, offline-filtered and batch-trajectory angles are separately exported. These statistics describe repeatability and cross-modal agreement, not absolute angle accuracy. Angle outputs describe rotation relative to their reference phases.
 
 ## Every-scan variability
 

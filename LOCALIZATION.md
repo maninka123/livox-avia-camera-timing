@@ -33,7 +33,7 @@ For the exact original rig recordings, identified by their source SHA256, Automa
 
 Other recordings use **target-centred H1 modulo 360°**. Incompatible conventions are rejected by comparison; do not merge their phase observations as though they shared a zero. The `--localization lidar_only` diagnostic override can produce the same target-centred convention for a complete new analysis. The original ten-bag timing result remains separately saved.
 
-Single constant-speed recordings still have unresolved physical timing. A combined phase-model candidate and its confidence interval are conditional on a stable sensor phase, target localization and setup grouping; camera exposure, per-ray timing and encoder truth remain uncalibrated.
+Single constant-speed recordings still have unresolved physical timing. A combined phase-model candidate and its confidence interval are conditional on a stable sensor phase, target localization and setup grouping; camera exposure and per-ray timing require separate calibration.
 
 ## Saved evidence and commands
 

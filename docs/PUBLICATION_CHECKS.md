@@ -29,4 +29,4 @@ OPENBLAS_NUM_THREADS=1 .venv/bin/python reproduce_reference.py
 git lfs fsck
 ```
 
-Full API tests expect the two shipped examples and empty Device 2–5 folders; use a clean checkout for these dataset assertions. GitHub Actions runs the numerical timing/scan tests without ROS or large data downloads. This verification establishes software/data delivery and internal numerical consistency, not encoder-verified angle accuracy or physical sensor clock calibration.
+Full API tests expect the two shipped examples and empty Device 2–5 folders; use a clean checkout for these dataset assertions. GitHub Actions runs the numerical timing/scan tests without ROS or large data downloads. This verification establishes software/data delivery and internal numerical consistency, not absolute angle accuracy or physical sensor clock calibration.

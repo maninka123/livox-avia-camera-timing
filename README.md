@@ -68,7 +68,7 @@ The table uses the updated automatic method. These bags were selected using the 
 
 ## Updated automatic results
 
-All **10 captures · 14,281 camera frames · 4,205 clouds** completed. LiDAR held-out disagreement STD improved in **9 of 10** bags, with a **16.4% median per-bag reduction**. One bag worsened slightly. These measure agreement/repeatability, not encoder-verified accuracy; a tenfold improvement is not demonstrated.
+All **10 captures · 14,281 camera frames · 4,205 clouds** completed. LiDAR held-out disagreement STD improved in **9 of 10** bags, with a **16.4% median per-bag reduction**. One bag worsened slightly. These measure agreement/repeatability; a tenfold improvement is not demonstrated.
 
 ![Each capture: previous versus automatic LiDAR estimation](automatic_comparison.png)
 
@@ -99,7 +99,7 @@ The saved analysis covers **10 bags · 14,281 camera frames · 4,205 clouds · 1
 
 Read the top first: the same modeled scene at camera time **1.000000 s** appears at Livox time **1.025971 s**. The bottom uses **RPM**; each dot is one recording after removing fixed setup phase.
 
-The matching LiDAR scene is recorded about **25.97 ms later**. Physical exposure/per-ray timing and encoder ground truth remain uncalibrated; the interval is conditional on the model and excludes unknown systematic bias. The signed model parameter is `τ = −25.97 ms`.
+The matching LiDAR scene is recorded about **25.97 ms later**. Physical exposure/per-ray timing remains uncalibrated; the interval is conditional on the model and excludes unknown systematic bias. The signed model parameter is `τ = −25.97 ms`.
 
 [Device 1 report](results/batch_device_1_20261007T005914Z_2e5dcccf/REPORT.md) · [Per-capture metrics](results/batch_device_1_20261007T005914Z_2e5dcccf/capture_metrics.csv) · [Cross-speed report](results/comparison_20261007T054924Z_01265fa4/REPORT.md) · [Methods and limitations](docs/METHODS.md) · [Detailed phase plot](results/comparison_20261007T054924Z_01265fa4/figures/cross_speed_timing_raw.png)
 

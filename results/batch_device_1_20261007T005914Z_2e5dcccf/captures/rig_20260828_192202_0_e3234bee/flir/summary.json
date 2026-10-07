@@ -46,5 +46,5 @@
   "boundary_hits": 0,
   "heldout_boundary_hits": 0,
   "status": "TRACK_RECOVERED",
-  "absolute_accuracy": "Unverified: geometry anchor is approximate; no encoder reference."
+  "absolute_accuracy": "Absolute angle accuracy is not established by repeatability statistics."
 }

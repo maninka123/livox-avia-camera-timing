@@ -79,7 +79,7 @@ def flir(raw,config,out,progress,preview):
              'heldout_residual':fp.metrics(cv),'chronological_residual':fp.metrics(chronological),
              'fold_rpm':rates,'boundary_hits':int(boundary.sum()),'heldout_boundary_hits':int(cvb.sum()),
              'status':'TRACK_RECOVERED' if not cvb.any() and fp.metrics(cv)['p95_deg']<3 else 'REVIEW',
-             'absolute_accuracy':'Unverified: geometry anchor is approximate; no encoder reference.'}
+             'absolute_accuracy':'Absolute angle accuracy is not established by repeatability statistics.'}
     rows=[{'frame':i,'bag_stamp_s':raw['stamps'][i],'header_stamp_s':raw['headers'][i],
            'angle_deg':absolute[i]%360,'angle_unwrapped_deg':absolute[i],
            'relative_angle_deg':angles[i]-angles[0],'smoothed_angle_unwrapped_deg':smooth[i],

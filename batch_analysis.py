@@ -131,7 +131,7 @@ def aggregate(request, results, entries, output):
                   'camera_frames':sum(c['camera_frames'] for c in captures),'livox_clouds':sum(c['livox_clouds'] for c in captures),
                   'input_points':sum(c['input_points_total'] for c in captures)},
         'folder_metrics':{key:describe([c[key] for c in captures]) for key in ('flir_std_deg','livox_std_deg','livox_offline_std_deg','livox_local_rpm_std','target_points_std')},
-        'interpretation':'Each bag is a separate timing replicate. Local RPM variability includes phase-estimation noise; depth spread describes spatial returns. Held-out angular statistics are repeatability/agreement, not encoder accuracy. Overall time shift assumes stable phase and pose within each setup group and remains physically uncalibrated.'}
+        'interpretation':'Each bag is a separate timing replicate. Local RPM variability includes phase-estimation noise; depth spread describes spatial returns. Held-out angular statistics summarize repeatability and cross-modal agreement. Overall time shift assumes stable phase and pose within each setup group and remains physically uncalibrated.'}
     save_json(output/'summary.json',result)
     report(request,result,output)
     return native(result)
@@ -165,7 +165,7 @@ This is **not a calibrated physical sensor offset**. The interval is conditional
 
 Every recorded cloud is decoded. Motion estimation uses measured target-region returns; full raw clouds remain in the selected source bag. `all_scan_metrics.csv` contains every scan's input/target counts, target depth mean/spread, centroid, harmonic magnitude, relative angles, held-out residual, boundary flag and local RPM. `all_camera_local_rpm.csv` contains local camera slopes; combined per-sensor angle CSVs are also saved.
 
-Local RPM is an offline centered 2-second phase slope and uses up to one second of future data. RPM scatter includes angle-estimation noise and periodic-model effects. It is not an independent measurement of mechanical speed variation. Fold RPM STD describes sensitivity to held-out data, not an encoder-validated uncertainty. Spatial depth spread is not angular error. FLIR and Livox independently infer their own speed without supplied motor RPM. There is no encoder truth.
+Local RPM is an offline centered 2-second phase slope and uses up to one second of future data. RPM scatter includes angle-estimation noise and periodic-model effects. It is not an independent measurement of mechanical speed variation. Fold RPM STD describes sensitivity to held-out data. Spatial depth spread is not angular error. FLIR and Livox independently infer their own speed without supplied motor RPM.
 
 Each capture's complete intermediate arrays, model files, angle CSVs, nine figures and individual reports are in `captures/<capture run>/`. `capture_metrics.csv` summarizes each bag. `variability_bins.csv` contains the plotted within-capture bins. `timing/` saves the overall fit observations, residuals and parameter covariance. `processing_manifest.csv` includes failures and exact source paths; successful results remain available when another bag fails. A downloaded batch ZIP includes all nested capture artifacts.
 

@@ -17,7 +17,7 @@ Batch: `results/batch_device_1_20261006T151840Z_0c7febaa/`.
 
 ## Per-capture measurements
 
-These statistics describe held-out repeatability and sensor disagreement. They are not absolute errors measured by an encoder.
+These statistics describe held-out repeatability and sensor disagreement. Absolute angle accuracy requires separate reference validation.
 
 | Bag | Livox scans | FLIR RPM | Livox RPM | Local Livox RPM STD | FLIR STD (deg) | Livox agreement STD (deg) | Offline agreement STD (deg) | Target returns mean ± STD |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|

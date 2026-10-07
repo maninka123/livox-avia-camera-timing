@@ -103,7 +103,7 @@ def analyze(camera,lidar,config,out):
                'second_half_heldout_offline_smoothed':metrics(cvs[keep&(lidar['stamps']>=mid)]),
                'alignment_phase_deg':offset,'alignment_calibration_samples':int(calibration.sum()),
                'comparison_samples':int(keep.sum()),'rate_difference_rpm':float(lidar['summary']['rpm']-camera['summary']['rpm']),
-               'reference':'New per-image FLIR observations, not encoder truth; constant phase calibrated on first half.'}
+               'reference':'New per-image FLIR observations; constant phase calibrated on first half.'}
     period=lidar['summary'].get('phase_period_deg',120)
     convention=lidar['summary'].get('phase_convention','legacy_h5_over_3')
     phase_delta=periodic_mean(lidar['canonical'][keep]-reference[keep],period)
