@@ -134,7 +134,8 @@ Every run has its own folder; reprocessing creates a fresh run and preserves ear
     localization=result.get('localization')
     if localization:
         attempts='\n'.join('- '+a['method']+': '+a['status']+' — '+a['reason'] for a in localization['attempts'])
-        text+='\n## Automatic target localization\n\nSelected method: **'+localization['method']+'**. Geometry: `'+json.dumps(native(localization['geometry']))+'`.\n\n'+attempts+'\n\n'+localization['note']+'\n\n'+localization.get('calibration_alignment_review','')+'\n\nThe camera supplies a spatial prior only; LiDAR angle and RPM remain independently inferred. `localization/` saves sampled full-scene rays, depth maps, decision history, calibration snapshot and figure. Original metre depth is preserved; exported angular coordinates are target-centred and radius-normalized.\n'
+        coordinates='target-centred and radius-normalized' if localization.get('geometry') else 'original sensor y/x, z/x for the verified reference-rig fallback'
+        text+='\n## Automatic target localization\n\nSelected method: **'+localization['method']+'**. Geometry: `'+json.dumps(native(localization['geometry']))+'`.\n\n'+attempts+'\n\n'+localization['note']+'\n\n'+localization.get('calibration_alignment_review','')+'\n\nThe camera supplies a spatial prior only; LiDAR angle and RPM remain independently inferred. `localization/` saves sampled full-scene rays, depth maps, decision history, calibration snapshot and figure. Original metre depth is preserved; exported angular coordinates are '+coordinates+'.\n'
     (out/'REPORT.md').write_text(text)
     import html
     # Standalone shareable report with local images and a readable plain-text narrative.
