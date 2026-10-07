@@ -282,10 +282,12 @@ def download(run_id):
     if state['status']!='complete':raise ValueError('Wait for completion before downloading all artifacts.')
     bundles=RESULTS/'.bundles';bundles.mkdir(exist_ok=True);bundle=bundles/(run_id.replace('/','__')+'.zip')
     with file_lock(bundle.with_suffix('.lock')):
-        if not bundle.exists():
+        files=saved_files(out)
+        latest=max((file.stat().st_mtime_ns for file in files),default=0)
+        if not bundle.exists() or bundle.stat().st_mtime_ns<latest:
             temp=bundle.with_suffix('.tmp')
             with zipfile.ZipFile(temp,'w',compression=zipfile.ZIP_DEFLATED,compresslevel=2) as archive:
-                for file in saved_files(out):archive.write(str(file),out.name+'/'+str(file.relative_to(out)))
+                for file in files:archive.write(str(file),out.name+'/'+str(file.relative_to(out)))
             temp.replace(bundle)
     return send_file(bundle,as_attachment=True,download_name=bundle.name)
 
