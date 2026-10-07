@@ -1,0 +1,23 @@
+{
+  "run_id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_193309_0_64ef9a6f",
+  "scan": 396,
+  "time_s": 39.60008120536804,
+  "rpm": -14.99994814882784,
+  "accumulated_rotation_deg": -3564.3166065185446,
+  "relative_orientation_deg": 35.68339348145537,
+  "signed_turns": -9.900879462551513,
+  "constant_speed_expected_rotation_deg": -3563.9949886193554,
+  "observed_scan_step_min_max_deg": [
+    -10.874374555032773,
+    -7.616550506294743
+  ],
+  "browser_errors": [],
+  "checks": [
+    "Saved scan 396 shows wrapped orientation and accumulated rotation with unchanged RPM/residual",
+    "Paginated scan table aligns both angle columns with numeric data",
+    "Positive/negative multiple turns, zero, rounding at 360\u00b0 and missing/nonfinite values are handled",
+    "Desktop and 390/320 px mobile layouts retain readable labels without page overflow",
+    "Saved scan CSV and analysis summary retain their SHA256 hashes; no bag processing was rerun"
+  ],
+  "passed": true
+}

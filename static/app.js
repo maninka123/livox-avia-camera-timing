@@ -5,6 +5,12 @@ window.__consoleErrors = [];
 window.addEventListener('error', e => window.__consoleErrors.push(e.message));
 window.addEventListener('unhandledrejection', e => window.__consoleErrors.push(String(e.reason)));
 const number = (value, digits=3) => value === null || value === undefined || !Number.isFinite(Number(value)) ? '—' : Number(value).toFixed(digits);
+// Display orientation within one revolution; retain unwrapped rotation for motion/RPM.
+function relativeOrientation(value, digits=3) {
+  if(typeof value!=='number' || !Number.isFinite(value))return '—';
+  const wrapped=(value%360+360)%360;
+  return number(Number(wrapped.toFixed(digits))%360,digits);
+}
 const bytes = value => value > 1e9 ? `${(value/1e9).toFixed(2)} GB` : `${(value/1e6).toFixed(1)} MB`;
 const artifact = (id, file) => `/artifacts/${id.split('/').map(encodeURIComponent).join('/')}/${file.split('/').map(encodeURIComponent).join('/')}`;
 function element(tag, text, className) { const e=document.createElement(tag); if(text!==undefined)e.textContent=text; if(className)e.className=className; return e; }
@@ -285,6 +291,7 @@ function renderComparison(result) {
 function scanExplorer(result, root) {
   const card=element('section',undefined,'card scan-explorer');card.id='scan-explorer';
   card.append(element('h2','Inspect any individual Livox scan'),element('p',result.scans.explanation,'field-hint'));
+  card.append(element('p','Relative orientation is measured from the first scan and wrapped into 0–360°. Accumulated rotation counts every turn and can exceed 360°; its sign gives the rotation direction. These are relative measurements, not a calibrated absolute wheel angle.','field-hint'));
   const controls=element('div',undefined,'scan-controls');const label=element('label','Scan index · starts at zero');
   const index=element('input');index.id='scan-index';index.type='number';index.min=0;index.max=result.scans.scans-1;index.value=0;label.htmlFor=index.id;
   const slider=element('input');slider.id='scan-slider';slider.type='range';slider.min=0;slider.max=result.scans.scans-1;slider.value=0;slider.setAttribute('aria-label','Choose Livox scan');
@@ -293,7 +300,7 @@ function scanExplorer(result, root) {
   const detail=element('div',undefined,'scan-detail');const image=element('img');image.id='scan-preview';image.alt='Measured Livox returns from the selected scan';
   const stats=element('div',undefined,'scan-stats');stats.id='scan-stats';detail.append(image,stats);card.append(detail);
   const tableWrap=element('div',undefined,'table-scroll');const table=element('table');const head=element('thead');const hr=element('tr');
-  for(const title of ['Scan','Time (s)','Input points','Target points','Relative angle','Local RPM','Depth STD (m)','Status'])hr.append(element('th',title));head.append(hr);table.append(head);
+  for(const title of ['Scan','Time (s)','Input points','Target points','Relative orientation (0–360°)','Accumulated rotation (°)','Local RPM','Depth STD (m)','Status'])hr.append(element('th',title));head.append(hr);table.append(head);
   const body=element('tbody');body.id='scan-table';table.append(body);tableWrap.append(table);card.append(tableWrap);
   const pager=element('div',undefined,'scan-pager');const prev=element('button','← Previous scans','secondary small');prev.id='scans-previous';const info=element('span',undefined,'subtle');const next=element('button','Next scans →','secondary small');next.id='scans-next';pager.append(prev,info,next);card.append(pager);root.append(card);
   let pageStart=0,selected=-1,selectionVersion=0,pageVersion=0;
@@ -308,7 +315,7 @@ function scanExplorer(result, root) {
       const row=data.rows[0];if(!row)throw new Error('This scan was not found.');
       image.alt=`Measured Livox returns from scan ${n}`;image.src=`/api/runs/${encodeURIComponent(result.id)}/scan-preview?scan=${n}`;
       stats.replaceChildren(element('h3',`Scan ${n} / ${result.scans.scans-1}`));
-      for(const [label,value] of [['Recording time',`${number(row.time_s,3)} s`],['Input points',Math.round(row.input_point_count).toLocaleString()],['Target returns',Math.round(row.target_point_count).toLocaleString()],['Relative angle',`${number(row.relative_angle_deg,3)}°`],['Local phase-derived RPM',number(row.local_rpm,5)],['Target depth mean ± STD',`${number(row.target_depth_mean_m,4)} ± ${number(row.target_depth_std_m,4)} m`],['Held-out motion residual',`${number(row.heldout_motion_residual_deg,4)}°`],['Detection quality',row.rejected_branch_boundary?'Rejected: branch boundary':'Registered']]){
+      for(const [label,value] of [['Recording time',`${number(row.time_s,3)} s`],['Input points',Math.round(row.input_point_count).toLocaleString()],['Target returns',Math.round(row.target_point_count).toLocaleString()],['Relative orientation (0–360°)',`${relativeOrientation(row.relative_angle_deg)}°`],['Accumulated rotation',`${number(row.relative_angle_deg,3)}°`],['Local phase-derived RPM',number(row.local_rpm,5)],['Target depth mean ± STD',`${number(row.target_depth_mean_m,4)} ± ${number(row.target_depth_std_m,4)} m`],['Held-out motion residual',`${number(row.heldout_motion_residual_deg,4)}°`],['Detection quality',row.rejected_branch_boundary?'Rejected: branch boundary':'Registered']]){
         const pair=element('div',undefined,'scan-stat');pair.append(element('span',label),element('strong',value));stats.append(pair);
       }
       for(const tr of body.children)tr.classList.toggle('selected-topic',Number(tr.dataset.index)===n);
@@ -319,7 +326,7 @@ function scanExplorer(result, root) {
     try {
       const data=await api(`/api/runs/${encodeURIComponent(result.id)}/scans?start=${start}&limit=100`);if(!card.isConnected || version!==pageVersion)return;body.replaceChildren();
       for(const row of data.rows){const tr=element('tr');tr.dataset.index=row.scan_index;tr.classList.toggle('selected-topic',row.scan_index===selected);const cell=element('td');const button=element('button',String(row.scan_index),'text-button');button.addEventListener('click',()=>selectScan(row.scan_index));cell.append(button);tr.append(cell);
-        for(const value of [number(row.time_s,2),Math.round(row.input_point_count).toLocaleString(),Math.round(row.target_point_count).toLocaleString(),`${number(row.relative_angle_deg,2)}°`,number(row.local_rpm,4),number(row.target_depth_std_m,4),row.rejected_branch_boundary?'Rejected':'Registered'])tr.append(element('td',value));body.append(tr);}
+        for(const value of [number(row.time_s,2),Math.round(row.input_point_count).toLocaleString(),Math.round(row.target_point_count).toLocaleString(),`${relativeOrientation(row.relative_angle_deg,2)}°`,number(row.relative_angle_deg,2),number(row.local_rpm,4),number(row.target_depth_std_m,4),row.rejected_branch_boundary?'Rejected':'Registered'])tr.append(element('td',value));body.append(tr);}
       info.textContent=`Scans ${start}–${Math.min(start+99,data.total-1)} of ${data.total}`;
     }catch(error){if(card.isConnected && version===pageVersion)notify(error.message);}
     finally{if(card.isConnected && version===pageVersion){prev.disabled=start===0;next.disabled=start+100>=result.scans.scans;}}
