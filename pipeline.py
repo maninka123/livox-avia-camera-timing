@@ -97,7 +97,7 @@ All {result['scans']['scans']} recorded Livox clouds were decoded, containing {r
 
 The conditional profile minimum is {lag['candidate_tau_ms']:+.1f} ms. The phase-profile 95% range is [{lag['profile_95_low_ms']:+.1f}, {lag['profile_95_high_ms']:+.1f}] ms; the 1 s block-bootstrap range is [{lag['block_bootstrap_95_low_ms']:+.1f}, {lag['block_bootstrap_95_high_ms']:+.1f}] ms. These intervals are conditional on the fitted observation model; they do not remove systematic scan/exposure/phase uncertainty.
 
-The model is `{lag['sign_convention']}`. A free constant phase is fitted for every candidate time shift. The apparent time-shift minimum must **not** be reported as the actual sensor offset when status is NOT_IDENTIFIABLE_FROM_THIS_BAG. The app displays physical offset as unresolved in that case.
+The model is `{lag['sign_convention']}`. A free constant phase is fitted for every candidate time shift. The apparent time-shift minimum must **not** be reported as the actual sensor offset when status is NOT_IDENTIFIABLE_FROM_THIS_BAG. The app directs users to compare captures at different speeds in that case.
 
 Camera nonconstant-motion scatter is {lag['camera_nonconstant_motion_std_deg']:.4f}°, versus estimated camera observation scatter {lag['camera_noise_floor_deg']:.4f}°. Effective samples: {lag['effective_samples']:.1f}. RMSE at zero time shift: {lag['rmse_at_zero_deg']:.4f}°; RMSE at the conditional minimum: {lag['rmse_at_candidate_deg']:.4f}°.
 

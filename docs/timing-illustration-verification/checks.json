@@ -5,7 +5,7 @@
     "The offset is read-only and rounded to one decimal; time stepping keeps the full saved value without modifying results",
     "Standalone SVG download parses as XML, contains both scene views, numeric units and timing qualifications",
     "Phone layout stacks both diagrams and controls without page overflow",
-    "Real single-bag conditional minimum remains marked unresolved; saved offset and RPM are read-only and shown to one decimal",
+    "Single-bag candidate directs users to compare speeds; repeatability note is concise, underlying timing status is preserved, and offset/RPM stay read-only with one-decimal display",
     "Saved cross-speed comparisons display the same explanation with their own recorded speeds",
     "Missing estimates do not fabricate an offset, RPM or flywheel diagram",
     "Missing RPM preserves the saved offset display and omits an invented speed",

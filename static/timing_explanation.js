@@ -43,7 +43,7 @@ window.TimingExplanation = (() => {
       speeds=result.observations.map(o=>({label:o.bag,rpm:o.omega_deg_s/6}));
     }else{
       estimate=result.timing.single_bag_lag;
-      source=estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Conditional minimum · actual offset unresolved':'Single-bag timing candidate';
+      source=estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Single-bag candidate · compare speeds':'Single-bag timing candidate';
       speeds=[{label:result.bag,rpm:result.flir.rpm}];
     }
     speeds=speeds.filter(s=>finite(s.rpm));
@@ -58,7 +58,7 @@ window.TimingExplanation = (() => {
     const unresolved=ctx.estimate.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG';
     badge.textContent=tau===null?'Offset unresolved':ctx.source;
     badge.classList.toggle('conditional',tau===null || unresolved);
-    explanation.textContent=tau===null?'No offset estimate is available for this result, so a timing illustration cannot be drawn.':unresolved?'This constant-speed bag cannot determine the actual time offset. The illustration uses its conditional lag-profile minimum only; a fixed angular phase could explain the same separation.':'This illustration uses the saved timing candidate. It assumes a stable phase convention; the physical sensor offset remains uncalibrated.';
+    explanation.textContent=tau===null?'No offset estimate is available for this result, so a timing illustration cannot be drawn.':unresolved?'For this steady-speed capture, the angular separation can come from a time delay or a different starting angle. Compare captures at different speeds to separate the two. The illustration uses the saved single-bag fitting minimum.':'This illustration uses the saved timing candidate. It assumes a stable phase convention; the physical sensor offset remains uncalibrated.';
     const controls=node('div',undefined,'offset-controls');
     const tauLabel=node('div',undefined,'offset-readout');const tauCaption=node('span','Saved offset used in illustration');tauCaption.id='offset-delay-label';
     const value=node('output',tau===null?'Unavailable':`${rounded(tau)} ms`);value.id='offset-delay';value.setAttribute('aria-labelledby',tauCaption.id);tauLabel.append(tauCaption,value);

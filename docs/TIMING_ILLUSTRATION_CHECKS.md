@@ -4,7 +4,7 @@ The illustration uses the saved timing candidate automatically. Offset and measu
 
 Checked in Chromium using saved single-bag, ten-capture folder and cross-speed results, without rerunning inference:
 
-- Single bag: **−16.0 ms**, **−15.0 RPM**. The conditional minimum remains labeled as unresolved physical timing.
+- Single bag: **−16.0 ms**, **−15.0 RPM**. The fitting minimum is labeled as a single-bag candidate, with a prompt to compare different speeds.
 - Folder: displays **−25.9 ms**, while calculations retain **−25.946689773256537 ms**.
 - Visual controls preserve the saved offset and numerical angular gap; SVG export contains both scenes and timing qualifications.
 - Phone layout stacks controls and diagrams without page overflow.

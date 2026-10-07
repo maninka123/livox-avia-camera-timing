@@ -18,7 +18,7 @@ Saved reference results cover all ten original Device 1 captures. Eight source b
 
 ## Timing interpretation
 
-Individual approximately constant-speed captures have unresolved timing. Their conditional lag minima are diagnostic and are not sensor offsets. A cross-speed comparison requires at least four distinct captures with enough signed-speed variation in stable setup groups. The two shipped +10 RPM examples do not meet this requirement.
+For nearly constant-speed captures, the app displays **Compare speeds**: the fixed angular difference and time delay give the same apparent separation. Their single-bag fitting minima are diagnostic candidates. Combine captures at different RPMs to estimate the shared time shift. A cross-speed comparison requires at least four distinct captures with enough signed-speed variation in stable setup groups. The two shipped +10 RPM examples do not meet this requirement.
 
 The saved ten-capture comparison is a model-based −25.97 ms candidate, with conditional interval [−28.13, −23.81] ms. Camera content leads on bag-record time. Matching LiDAR scenes have later recorded timestamps. Exposure/per-ray timing and absolute encoder angles are not calibrated.
 

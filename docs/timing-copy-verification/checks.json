@@ -1,0 +1,12 @@
+{
+  "run_id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_193309_0_64ef9a6f",
+  "checks": [
+    "Overview presents independently estimated RPM and repeatability/agreement without the approximate-zero wording",
+    "Single-bag timing directs users to compare different speeds and explains phase/time ambiguity",
+    "Scientific timing status and conditional-candidate qualification remain intact",
+    "Camera detection caption describes measured stages",
+    "Desktop and 390/320 px mobile layouts have no page overflow"
+  ],
+  "browser_errors": [],
+  "passed": true
+}
