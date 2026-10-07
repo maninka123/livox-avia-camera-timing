@@ -20,7 +20,7 @@ bash launch.sh
 
 Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the entire folder → inspect topics → **Start processing**. Change the crop/topics for your own recordings. Use `bash launch.sh --port 8766` for another port.
 
-**Explore without processing:** open **Saved results** to view the included previous and automatic ten-capture Device 1 analyses. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. The complete LFS download is about **2.3 GB**.
+**Explore without processing:** open **Saved results** to view the included previous and automatic ten-capture Device 1 analyses. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. A fresh LFS download is about **2.1 GB**; expanded bag/array files occupy about **2.4 GB**.
 
 ## What you can do
 
