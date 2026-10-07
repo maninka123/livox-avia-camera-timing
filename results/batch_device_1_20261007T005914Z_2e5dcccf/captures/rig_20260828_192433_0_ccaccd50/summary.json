@@ -1,0 +1,405 @@
+{
+  "id": "batch_device_1_20261007T005914Z_2e5dcccf/captures/rig_20260828_192433_0_ccaccd50",
+  "bag": "rig_20260828_192433_0.bag",
+  "bag_path": "device_1/rig_20260828_192433_0.bag",
+  "device": "device_1",
+  "parent_batch": "batch_device_1_20261007T005914Z_2e5dcccf",
+  "config": {
+    "camera_topic": "/camera/image_raw",
+    "livox_topic": "/livox/lidar",
+    "camera_roi": [
+      235,
+      150,
+      110,
+      110
+    ],
+    "phase_group": "normal",
+    "timing_search_ms": 500.0,
+    "camera_order": 32,
+    "livox_order": 12,
+    "livox_smoothing_frames": 21,
+    "validation_folds": 5
+  },
+  "metadata": {
+    "name": "rig_20260828_192433_0.bag",
+    "size_bytes": 607151987,
+    "start_s": 1787909073.813571,
+    "end_s": 1787909115.8504353,
+    "duration_s": 42.036864280700684,
+    "topics": [
+      {
+        "name": "/camera/camera_info",
+        "type": "sensor_msgs/CameraInfo",
+        "messages": 1425,
+        "frequency_hz": 33.89881772542735,
+        "median_arrival_hz": 34.985915727923725
+      },
+      {
+        "name": "/camera/image_raw",
+        "type": "sensor_msgs/Image",
+        "messages": 1426,
+        "frequency_hz": 33.92260636944519,
+        "median_arrival_hz": 34.99073154860723
+      },
+      {
+        "name": "/livox/imu",
+        "type": "sensor_msgs/Imu",
+        "messages": 8553,
+        "frequency_hz": 203.4642722846176,
+        "median_arrival_hz": 15709.003745318352
+      },
+      {
+        "name": "/livox/lidar",
+        "type": "sensor_msgs/PointCloud2",
+        "messages": 421,
+        "frequency_hz": 10.01501913151222,
+        "median_arrival_hz": 9.995684103033401
+      },
+      {
+        "name": "/velodyne_packets",
+        "type": "velodyne_msgs/VelodyneScan",
+        "messages": 416,
+        "frequency_hz": 9.896075911423,
+        "median_arrival_hz": 9.912636158883739
+      },
+      {
+        "name": "/velodyne_points",
+        "type": "sensor_msgs/PointCloud2",
+        "messages": 416,
+        "frequency_hz": 9.896075911423,
+        "median_arrival_hz": 9.911933395879071
+      }
+    ],
+    "suggested_camera_topic": "/camera/image_raw",
+    "suggested_livox_topic": "/livox/lidar",
+    "suggested_phase_group": "normal"
+  },
+  "flir": {
+    "frames": 1426,
+    "rpm": 4.9997732292177846,
+    "line_rpm": 4.999769576983935,
+    "clock_source": "camera_header",
+    "calibration": [
+      55.032501220703125,
+      57.587554931640625,
+      25.17823028564453,
+      25.2976131439209,
+      0.24606523234187955
+    ],
+    "geometry_anchor_deg": 27.898499298095704,
+    "coherence_sum_0_to_5": 3.995093998854037,
+    "raw_residual": {
+      "n": 1426,
+      "mae_deg": 0.20653801688991325,
+      "std_deg": 0.24552228547225805,
+      "rmse_deg": 0.2454367360750492,
+      "p95_deg": 0.4415330910040609,
+      "bias_deg": 0.0005212271902751562
+    },
+    "heldout_residual": {
+      "n": 1426,
+      "mae_deg": 0.2115614356318174,
+      "std_deg": 0.25146566173524604,
+      "rmse_deg": 0.2515856778896855,
+      "p95_deg": 0.45125629178821214,
+      "bias_deg": -0.01023321026554641
+    },
+    "chronological_residual": {
+      "n": 570,
+      "mae_deg": 0.2189375925317992,
+      "std_deg": 0.2560028551632189,
+      "rmse_deg": 0.259983398738702,
+      "p95_deg": 0.4608101678436469,
+      "bias_deg": -0.04657127624679756
+    },
+    "fold_rpm": [
+      4.999823760255536,
+      4.999780680073639,
+      4.999793127827242,
+      4.999707335425301,
+      4.999708533280029
+    ],
+    "boundary_hits": 0,
+    "heldout_boundary_hits": 0,
+    "status": "TRACK_RECOVERED",
+    "absolute_accuracy": "Unverified: geometry anchor is approximate; no encoder reference."
+  },
+  "livox": {
+    "frames": 421,
+    "rpm": 5.000243231026642,
+    "line_rpm": 5.000416579431489,
+    "initial_harmonic_rpm": 4.996907466926531,
+    "coherence": 0.9631135326430396,
+    "median_near_returns": 699.0,
+    "raw_residual": {
+      "n": 421,
+      "mae_deg": 0.3370439465752325,
+      "std_deg": 0.42032794295898523,
+      "rmse_deg": 0.4198301114940542,
+      "p95_deg": 0.8268618367222871,
+      "bias_deg": 0.001183149916197216
+    },
+    "smoothed_residual": {
+      "n": 421,
+      "mae_deg": 0.08975256234464939,
+      "std_deg": 0.11386236597041736,
+      "rmse_deg": 0.11372839400557021,
+      "p95_deg": 0.22137583652749981,
+      "bias_deg": -0.000551438324797514
+    },
+    "heldout_raw_training_motion_residual": {
+      "n": 421,
+      "mae_deg": 0.44669140835074916,
+      "std_deg": 0.576468751783807,
+      "rmse_deg": 0.5774625537090692,
+      "p95_deg": 1.1069641472811327,
+      "bias_deg": 0.04400146416275424
+    },
+    "heldout_smoothed_training_motion_residual": {
+      "n": 421,
+      "mae_deg": 0.1774378230666471,
+      "std_deg": 0.22768318670312046,
+      "rmse_deg": 0.23150400965876886,
+      "p95_deg": 0.4689402668013827,
+      "bias_deg": 0.04333136857052082
+    },
+    "chronological_residual": {
+      "n": 169,
+      "mae_deg": 0.4410345191818655,
+      "std_deg": 0.558268295129972,
+      "rmse_deg": 0.558230490747162,
+      "p95_deg": 1.071712540727458,
+      "bias_deg": -0.04244943004743266
+    },
+    "fold_rpm": [
+      5.000360513278854,
+      5.00165263153018,
+      5.000508055557935,
+      4.999376563269856,
+      4.998928478493476
+    ],
+    "boundary_hits": 0,
+    "heldout_boundary_hits": 0,
+    "status": "RELATIVE_TRACK_RECOVERED",
+    "harmonic_phase_anchor_mod120_deg": -43.01511641303202,
+    "absolute_phase": "Uncalibrated physical zero; canonical harmonic phase is an empirical convention only.",
+    "filter_frames": 21,
+    "filter_span_s": 2.0000545978546143,
+    "future_lookahead_s": 1.000042200088501,
+    "camera_used_for_estimation": false
+  },
+  "scans": {
+    "scans": 421,
+    "all_recorded_clouds_processed": true,
+    "input_points_total": 10104000,
+    "local_rpm_window_s": 2.0,
+    "local_rpm_uses_future_s": 1.0,
+    "livox_local_rpm": {
+      "n": 421,
+      "mean": 5.001623144446386,
+      "std": 0.023779000212142493,
+      "median": 5.00199474007765,
+      "p05": 4.9649383687758855,
+      "p95": 5.035759697173822,
+      "min": 4.936088672161599,
+      "max": 5.08319957426449
+    },
+    "flir_local_rpm": {
+      "n": 1426,
+      "mean": 5.0004229805981675,
+      "std": 0.013250428893633157,
+      "median": 4.999150348392563,
+      "p05": 4.980789312870578,
+      "p95": 5.02575172226185,
+      "min": 4.971173333481725,
+      "max": 5.053259907629564
+    },
+    "input_point_count": {
+      "n": 421,
+      "mean": 24000.0,
+      "std": 0.0,
+      "median": 24000.0,
+      "p05": 24000.0,
+      "p95": 24000.0,
+      "min": 24000.0,
+      "max": 24000.0
+    },
+    "target_point_count": {
+      "n": 421,
+      "mean": 678.7363420427554,
+      "std": 69.40573830343305,
+      "median": 699.0,
+      "p05": 549.0,
+      "p95": 773.0,
+      "min": 496.0,
+      "max": 828.0
+    },
+    "target_depth_std_m": {
+      "n": 421,
+      "mean": 0.13388138983838496,
+      "std": 0.011135985310067278,
+      "median": 0.13290409765455008,
+      "p05": 0.11673641259692367,
+      "p95": 0.1522878193924441,
+      "min": 0.1095671259007554,
+      "max": 0.16716612459573701
+    },
+    "explanation": "Local RPM is a centered 2-second phase slope, using up to 1 second of future data. Its scatter includes detection noise and model effects. Point-depth spread describes spatial returns, not rotor-angle error. Every recorded cloud is decoded; motion inference uses the target region, and the full cloud remains in the source bag."
+  },
+  "timing": {
+    "single_bag_lag": {
+      "status": "NOT_IDENTIFIABLE_FROM_THIS_BAG",
+      "candidate_tau_ms": 406.0,
+      "candidate_phase_deg": -2.7614708247639275,
+      "profile_95_low_ms": 354.0,
+      "profile_95_high_ms": 432.00000000000006,
+      "block_bootstrap_95_low_ms": -500.0,
+      "block_bootstrap_95_high_ms": 450.00000000000006,
+      "search_limit_ms": 500.0,
+      "effective_samples": 319.5618095917428,
+      "matched_samples": 398,
+      "camera_nonconstant_motion_std_deg": 0.17766018568024253,
+      "camera_noise_floor_deg": 0.25146566173524604,
+      "rmse_at_candidate_deg": 0.44325624318033974,
+      "rmse_at_zero_deg": 0.4638758916168361,
+      "profile_rmse_range_deg": 0.029982341122572975,
+      "sign_convention": "theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.",
+      "physical_offset_calibrated": false,
+      "reason": "Constant-rate motion and an unknown sensor phase are confounded. The fitted minimum is a conditional candidate, not a measured physical offset.",
+      "bootstrap_samples": 300,
+      "bootstrap_seed": 42
+    },
+    "clocks": {
+      "flir": {
+        "sensor": "FLIR",
+        "domain": "unix_epoch",
+        "samples": 1426,
+        "record_minus_header_mean_ms": 0.6892052472557293,
+        "record_minus_header_std_ms": 0.1497336181686846,
+        "record_minus_header_p95_ms": 0.9305477142333984,
+        "affine_rate_ppm": 1.4018678504701398,
+        "affine_residual_std_ms": 0.14881784986618868,
+        "mapping_header_origin_s": 1787909075.0645554,
+        "mapping_bag_origin_s": 1787909075.065216,
+        "mapping_slope": 1.0000014018678505,
+        "interpretation": "Observed recording/header difference; not exposure-to-ray synchronization."
+      },
+      "livox": {
+        "sensor": "Livox",
+        "domain": "device_or_other_epoch",
+        "samples": 421,
+        "record_minus_header_mean_ms": null,
+        "record_minus_header_std_ms": null,
+        "record_minus_header_p95_ms": null,
+        "affine_rate_ppm": 27.606997937024147,
+        "affine_residual_std_ms": 1.3987313879965824,
+        "mapping_header_origin_s": 6733.69934521,
+        "mapping_bag_origin_s": 1787909073.8231452,
+        "mapping_slope": 1.000027606997937,
+        "interpretation": "Different clock epoch. Absolute sensor offset cannot be obtained by header subtraction."
+      }
+    },
+    "agreement": {
+      "raw": {
+        "n": 398,
+        "mae_deg": 0.37413979865968827,
+        "std_deg": 0.4677374110667613,
+        "rmse_deg": 0.4696032981550495,
+        "p95_deg": 0.9198624054272073,
+        "bias_deg": 0.04794440647112509
+      },
+      "offline_smoothed": {
+        "n": 398,
+        "mae_deg": 0.1732935737345274,
+        "std_deg": 0.21286802722364342,
+        "rmse_deg": 0.21810696456596812,
+        "p95_deg": 0.4462123446914973,
+        "bias_deg": 0.048700125532423325
+      },
+      "heldout_raw": {
+        "n": 398,
+        "mae_deg": 0.4811060007960581,
+        "std_deg": 0.6271978458532423,
+        "rmse_deg": 0.6279660920948996,
+        "p95_deg": 1.2412603029344418,
+        "bias_deg": 0.04418890976752028
+      },
+      "heldout_offline_smoothed": {
+        "n": 398,
+        "mae_deg": 0.2525159975981452,
+        "std_deg": 0.3137158819759949,
+        "rmse_deg": 0.31752451554837324,
+        "p95_deg": 0.6013382066498137,
+        "bias_deg": 0.05149217328350659
+      },
+      "second_half_heldout_raw": {
+        "n": 199,
+        "mae_deg": 0.49364116592101265,
+        "std_deg": 0.6419405736789344,
+        "rmse_deg": 0.6507420885729999,
+        "p95_deg": 1.2690787362671707,
+        "bias_deg": 0.11596705639146715
+      },
+      "second_half_heldout_offline_smoothed": {
+        "n": 199,
+        "mae_deg": 0.23607925837367766,
+        "std_deg": 0.28291464980391673,
+        "rmse_deg": 0.30641214268299927,
+        "p95_deg": 0.6386403862465073,
+        "bias_deg": 0.11937301486568593
+      },
+      "alignment_phase_deg": 9.334936663702265,
+      "alignment_calibration_samples": 199,
+      "comparison_samples": 398,
+      "rate_difference_rpm": 0.0004700018088570346,
+      "reference": "New per-image FLIR observations, not encoder truth; constant phase calibrated on first half."
+    },
+    "cross_speed_phase_observation": {
+      "group": "normal",
+      "omega_deg_s": 29.99863937530671,
+      "phase_delta_mod120_deg": -33.632238264306494,
+      "phase_residual_std_deg": 0.4677374110667602,
+      "physical_zero_calibrated": false,
+      "convention": "Common ellipse-normalized H5 phase / 3, modulo 120 degrees; empirical sensor phase."
+    },
+    "absolute_header_offset_status": "NOT_COMPARABLE_CLOCK_EPOCHS",
+    "absolute_sensor_offset_ms": null
+  },
+  "provenance": {
+    "bag_size": 607151987,
+    "bag_mtime_ns": 1787909116000000000,
+    "algorithm_sha256": {
+      "timing.py": "f76f4853434bbbb75cefb9c7af88d06c0aa361482a40b425d6d23a309acdec72",
+      "job_registry.py": "11b4f7a3004bbfbdad06673e27a4cb14b2b2dc8b76cee562b9818602f8f5e95d",
+      "app.py": "d36ed0d5e1999b67d897bb5b57cc22ddc6f3acbc490da3fd0fab5919fcef49c5",
+      "scan_variability.py": "c56b49c35d4052a033483f421b9cf25755ed1e109a2ab967ef2be16e15d1fc5e",
+      "pipeline.py": "3be4a120a774d54dea74dc77140475e4242d68a7707b57d849d4632613839cf7",
+      "batch_worker.py": "6fa181094d204e4308a4dae781756e6ae8e048210d676e8355a60b6b53cbb963",
+      "common.py": "cf4c6ed1967b8205f97225e63bc8513420cd852f86804fd21163e0ac93ad6cfc",
+      "visuals.py": "19f335e2ae596bd25041f9a0c598657a738a0538d91dca4fdf2380f3fc8db28b",
+      "batch_analysis.py": "be371b5a1b4471814474ae684cac6e9f89aacd2b9b6e73a0325b995dbd67c40d",
+      "process_bag.py": "0e9c0e2480dccd99e975ea7c5da25ccc01537d23fd8977c9f06ffb4034b08a87",
+      "bag_io.py": "dc06f61b96215e54c5e8e0777a3f4ef67aa2a0ffa8574894c51e2b8d2978bf46",
+      "sensors.py": "fec9a65381de0cd01b091297f92c1ff8b0f9f66881b246c9ac98cb3a86cd7dfa",
+      "algorithms/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/flir/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/flir/photometry.py": "526cb051c252c07ea5b1d216b0707a27f924d3fa52db1a527f62e42637d2d5aa",
+      "algorithms/flir/periodic.py": "1606530186ec75ecc3fe4c87d6e8f1b202e589a7feda2ef50183a67060b2257b",
+      "algorithms/livox/extract_cloud.py": "5aee5a0aa593737fc8d34d9aa9ff7479f385a80b7fd015dd1231c0eeb642af5e",
+      "algorithms/livox/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/livox/periodic.py": "efde7affac18b5e9e51a2e622c9ce0e7dc0f5d0f8550d4c34a93426df08ac037",
+      "algorithms/livox/return_features.py": "f1e4d9e5e903180e99b6754e37d1970b12d5bd52d79d34de1037beabf55b3787",
+      "verification/browser_check.py": "858c12d5d82b033aff18efb8949a84e55e4e1a622031f4f268f26bdb9a131bb7",
+      "verification/audit.py": "31cd4d72eb8e15d6c38ea1b3de64634dc96f29f408d0d5a7a15898c49a52fcbc",
+      "verification/folder_browser_check.py": "a146324e0dd5e0ce9011886c4ef531306852e9c379f8a7d70d423d3a0d4eb47b",
+      "verification/comparison_check.py": "54549fd65f54d8b620e6c0a6ed5e0fb001f901d41727f478e76daf07087fa683",
+      "verification/timing_explanation_check.py": "54fcf37e7294b928f115087a06a3eb7a20a290282fd1a37a55ab2f5eb172343b",
+      "verification/folder_failure_check.py": "37ce5fe1f15cfcfc69e1f05bf8de52d242037bad4b1519891dde53e75d775089"
+    },
+    "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+    "only_selected_topics_processed": true,
+    "bag_sha256": "4342dec1fc61f39598729fd1076d9b121709048bf6ffe9cf000abd97a4055488",
+    "publication_note": "Source SHA256 verified against original and Studio copies; bag hash added at publication. Numerical artifacts and original algorithm hashes are preserved."
+  },
+  "elapsed_s": 14.015135142020881
+}

@@ -1,0 +1,33 @@
+{
+  "browser_errors": [],
+  "failed_requests": [],
+  "reference_batch_totals": {
+    "camera_frames": 14281,
+    "completed_bags": 10,
+    "failed_bags": 0,
+    "input_points": 100920000,
+    "livox_clouds": 4205,
+    "requested_bags": 10
+  },
+  "reference_scan_preview_loaded": true,
+  "processed_job": "rig_20260828_192028_0_20261007T055327Z_351cc3ef",
+  "fresh_environment_counts": {
+    "camera_frames": 1425,
+    "livox_clouds": 419
+  },
+  "fresh_environment_camera_std_deg": 0.2607651412488571,
+  "fresh_environment_livox_agreement_std_deg": 0.5738409309878187,
+  "live_preview_seen": true,
+  "stages_seen": [
+    "complete",
+    "export",
+    "extract",
+    "flir_calibration",
+    "flir_validation",
+    "livox_features",
+    "livox_validation",
+    "queued"
+  ],
+  "fresh_run_zip_entries": 71,
+  "mobile_no_horizontal_overflow": true
+}

@@ -1,0 +1,72 @@
+<!doctype html><meta charset="utf-8"><title>Livox / FLIR report</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:32px 0}</style><h1>Livox / FLIR processing report</h1><pre># Livox / FLIR processing report
+
+Bag: `rig_20260828_193136_0.bag`. Selected camera topic: `/camera/image_raw`. Selected Livox topic: `/livox/lidar`.
+Run ID: `batch_device_1_20261007T005914Z_2e5dcccf/captures/rig_20260828_193136_0_9742e88f`. Setup group: `red`.
+
+## Detection results
+
+| Quantity | FLIR | Livox |
+|---|---:|---:|
+| Recorded observations | 1426 | 420 |
+| Independently estimated signed RPM | +9.999884 | +10.000668 |
+| Held-out residual STD to training motion, degrees | 0.2363 | 0.5951 |
+| Branch boundary detections rejected | 0 | 0 |
+| Held-out branch boundary detections | 0 | 0 |
+
+Livox agreement with new FLIR observations, after one constant phase calibration on the first half of common recording time:
+
+| Metric | Held-out raw clouds | Held-out offline filtered clouds |
+|---|---:|---:|
+| STD, degrees | 0.6321 | 0.2713 |
+| MAE, degrees | 0.4871 | 0.2193 |
+| RMSE, degrees | 0.6315 | 0.2732 |
+| P95 absolute disagreement, degrees | 1.2521 | 0.5403 |
+
+The Livox 21-cloud smoother spans 2.000 s and uses approximately 1.000 s of future data. Raw, offline-filtered and batch-trajectory angles are separately exported. No encoder reference exists; these statistics describe repeatability and cross-modal agreement, not absolute angle accuracy. Camera physical zero is only approximately geometry anchored; Livox physical zero remains uncalibrated.
+
+## Every-scan variability
+
+All 420 recorded Livox clouds were decoded, containing 10,080,000 input points. Target-return count: mean 584.9, STD 84.4 per scan. Livox local phase-derived RPM STD: 0.02777. FLIR local phase-derived RPM STD: 0.01396.
+
+`scans/scan_metrics.csv` contains every scan&#x27;s original/central/target point counts, depth mean and spatial spread, centroid, relative angles, held-out motion residuals, quality flags and local RPM. Local RPM is a centered 2-second phase slope using up to one second of future data; its variability includes estimation noise and periodic-model effects. It is not an independent measurement of mechanical speed fluctuation. Spatial point-depth spread is not angular error. Full raw clouds remain in the source bag; motion inference uses measured returns in the rotating target region.
+
+## Timestamp analysis
+
+**Status: NOT_IDENTIFIABLE_FROM_THIS_BAG**. Constant-rate motion and an unknown sensor phase are confounded. The fitted minimum is a conditional candidate, not a measured physical offset.
+
+The conditional profile minimum is +204.0 ms. The phase-profile 95% range is [-457.0, +447.0] ms; the 1 s block-bootstrap range is [-460.5, +449.0] ms. These intervals are conditional on the fitted observation model; they do not remove systematic scan/exposure/phase uncertainty.
+
+The model is `theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.`. A free constant phase is fitted for every candidate time shift. The apparent time-shift minimum must **not** be reported as the actual sensor offset when status is NOT_IDENTIFIABLE_FROM_THIS_BAG. The app displays physical offset as unresolved in that case.
+
+Camera nonconstant-motion scatter is 0.1648°, versus estimated camera observation scatter 0.2363°. Effective samples: 331.2. RMSE at zero time shift: 0.5002°; RMSE at the conditional minimum: 0.4948°.
+
+FLIR header-clock domain: `unix_epoch`. Livox header-clock domain: `device_or_other_epoch`. Clock/header differences and affine mappings are in `timing/clock_metrics.csv`. Device uptime cannot be subtracted from Unix time to obtain a physical offset. The affine mapping residual is recording-clock behavior, not exposure-to-ray delay.
+
+Cross-speed timing is available after processing multiple distinct bags. Its phase observations use the common empirical H5/3 convention modulo 120°, rather than each independently learned template&#x27;s arbitrary time-zero phase. A stable phase within each setup group remains an assumption. Different signed speeds within shared groups are required; the comparison reports confidence bounds and setup-dependent systematic risk. The previous −66.7 ms candidate is not reused or assumed.
+
+## Algorithms and validation
+
+FLIR: grayscale subpixel polar sampling, 12 radial rings, 12 spatial orders, 24-component appearance representation, 32-order periodic template, and continuous per-image phase registration. Camera-header time is used when valid; bag time is the fallback. The camera uses its own data only.
+
+Livox: real measured returns, four depth bands, four radial weight windows, angular harmonics 0–10 (336 features), 48-component representation, 12-order periodic template, regularized correlated-noise precision and generalized-least-squares rate refinement. Directions for missing returns are never invented. The Livox estimator accepts no camera observations.
+
+The estimators infer RPM from data; commanded 5/10/15 RPM values are not supplied. Estimated RPM calibrates the periodic appearance model and initializes a ±40° camera / ±20° Livox phase search. Observations determine the registration within that branch. These offline models assume repeated, approximately constant-speed motion in a fixed scene and are not validated for abrupt reversals.
+
+Five-fold held-out validation and a chronological first-60%/last-40% test are saved. Camera ellipse calibration and template fitting use training images only. Livox holds out 2 s blocks and purges the smoothing half-window around test observations. Parameters were developed on these hardware recordings; this is internal validation, not a benchmark on unseen rigs.
+
+## Saved artifacts
+
+- `metadata.json`, `request.json`, `summary.json`, `metrics.csv`: acquisition, settings, provenance and final metrics.
+- `flir/angles.csv`, `livox/angles.csv`: all observations with bag and header timestamps, quality flags and separate output types.
+- `flir/model.npz`, `livox/model.npz`, `validation_model_*.npz`: final and held-out appearance models.
+- `flir/features.npz`, `livox/features.npz`: all measured feature/signature intermediates.
+- `intermediates/camera_extracted.npz`, `livox_extracted.npz`: every extracted crop and measured central ray used by the algorithms. Full source observations remain in `bagfiles/device_1/rig_20260828_193136_0.bag`.
+- `scans/scan_metrics.csv`, `camera_local_rpm.csv`, `summary.json`: every Livox scan&#x27;s statistics, independent local RPM traces and variability summaries.
+- `intermediates/*detection*`: selected annotated crops, measured cloud arrays and masks. Full camera example images are also saved.
+- `timing/paired_detections.csv`, `lag_profile.csv`, `bootstrap_lags.csv`, `summary.json`: all timing calculations and diagnostics.
+- `timing/error_covariance_deg2.csv`, `error_correlation.csv`: residual matrices, not misleading correlations of angular ramps.
+- `figures/*.png`: detection stages, angle traces, residual distributions, clock plots, lag profile, bootstrap distribution and error matrix.
+- `live/*.png`, `progress.jsonl`, `status.json`, `worker.log`: processing previews and execution trace.
+
+Every run has its own folder; reprocessing creates a fresh run and preserves earlier results. Original captures and pre-existing algorithms are untouched.
+</pre><figure><img src="figures/overview.png" alt="overview"></figure><figure><img src="figures/flir_detection_stages.png" alt="flir detection stages"></figure><figure><img src="figures/livox_detection_stages.png" alt="livox detection stages"></figure><figure><img src="figures/scan_variability.png" alt="scan variability"></figure><figure><img src="figures/timing_profile.png" alt="timing profile"></figure><figure><img src="figures/clock_diagnostics.png" alt="clock diagnostics"></figure><figure><img src="figures/error_matrix.png" alt="error matrix"></figure>

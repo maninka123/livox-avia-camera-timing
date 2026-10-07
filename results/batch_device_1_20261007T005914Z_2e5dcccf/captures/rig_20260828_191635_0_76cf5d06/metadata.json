@@ -1,0 +1,54 @@
+{
+  "name": "rig_20260828_191635_0.bag",
+  "size_bytes": 596944455,
+  "start_s": 1787908596.6145496,
+  "end_s": 1787908638.4865143,
+  "duration_s": 41.87196469306946,
+  "topics": [
+    {
+      "name": "/camera/camera_info",
+      "type": "sensor_msgs/CameraInfo",
+      "messages": 1423,
+      "frequency_hz": 33.9845529205734,
+      "median_arrival_hz": 34.994964728066115
+    },
+    {
+      "name": "/camera/image_raw",
+      "type": "sensor_msgs/Image",
+      "messages": 1424,
+      "frequency_hz": 34.00843524869749,
+      "median_arrival_hz": 34.98985584623598
+    },
+    {
+      "name": "/livox/imu",
+      "type": "sensor_msgs/Imu",
+      "messages": 8500,
+      "frequency_hz": 202.99978905472517,
+      "median_arrival_hz": 17331.834710743802
+    },
+    {
+      "name": "/livox/lidar",
+      "type": "sensor_msgs/PointCloud2",
+      "messages": 419,
+      "frequency_hz": 10.006695483991747,
+      "median_arrival_hz": 10.00553198544365
+    },
+    {
+      "name": "/velodyne_packets",
+      "type": "velodyne_msgs/VelodyneScan",
+      "messages": 414,
+      "frequency_hz": 9.88728384337132,
+      "median_arrival_hz": 9.91294072046777
+    },
+    {
+      "name": "/velodyne_points",
+      "type": "sensor_msgs/PointCloud2",
+      "messages": 414,
+      "frequency_hz": 9.88728384337132,
+      "median_arrival_hz": 9.911628896188294
+    }
+  ],
+  "suggested_camera_topic": "/camera/image_raw",
+  "suggested_livox_topic": "/livox/lidar",
+  "suggested_phase_group": "normal"
+}

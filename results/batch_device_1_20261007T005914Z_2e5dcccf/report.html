@@ -1,0 +1,42 @@
+<!doctype html><meta charset="utf-8"><title>Device folder report</title><style>body{max-width:1200px;margin:35px auto;padding:0 20px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:30px 0}</style><h1>Device 1 folder results</h1><pre># Device folder processing report
+
+Folder: `bagfiles/device_1/`. Batch run: `batch_device_1_20261007T005914Z_2e5dcccf`.
+Requested bags: 10. Completed: 10. Failed: 0.
+Camera frames: 14,281. Livox scans: 4,205. Input LiDAR points decoded: 100,920,000.
+
+## Per-capture results
+
+| Bag | Scans | FLIR RPM | Livox RPM | Livox local RPM STD | FLIR STD (deg) | Livox agreement STD (deg) | Offline agreement STD (deg) | Target returns mean ± STD |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| `rig_20260828_191635_0.bag` | 419 | -4.99977 | -5.00031 | 0.02394 | 0.1876 | 0.6103 | 0.3169 | 672.4 ± 68.1 |
+| `rig_20260828_191845_0.bag` | 419 | +9.99967 | +10.00011 | 0.02864 | 0.2013 | 0.6045 | 0.2551 | 674.7 ± 70.0 |
+| `rig_20260828_192028_0.bag` | 419 | +9.99985 | +10.00057 | 0.02377 | 0.2608 | 0.5738 | 0.2750 | 675.0 ± 69.9 |
+| `rig_20260828_192202_0.bag` | 425 | -14.99923 | -14.99940 | 0.04521 | 0.2596 | 0.7887 | 0.4278 | 675.7 ± 69.1 |
+| `rig_20260828_192433_0.bag` | 421 | +4.99977 | +5.00024 | 0.02378 | 0.2515 | 0.6272 | 0.3137 | 678.7 ± 69.4 |
+| `rig_20260828_192618_0.bag` | 419 | -9.99947 | -9.99954 | 0.03791 | 0.2539 | 0.6116 | 0.3142 | 682.9 ± 66.8 |
+| `rig_20260828_192752_0.bag` | 420 | +14.99944 | +14.99984 | 0.03451 | 0.2628 | 0.8222 | 0.2974 | 684.4 ± 66.6 |
+| `rig_20260828_192952_0.bag` | 420 | -4.99983 | -5.00014 | 0.02242 | 0.2267 | 0.6711 | 0.4213 | 580.8 ± 84.7 |
+| `rig_20260828_193136_0.bag` | 420 | +9.99988 | +10.00067 | 0.02777 | 0.2363 | 0.6321 | 0.2713 | 584.9 ± 84.4 |
+| `rig_20260828_193309_0.bag` | 423 | -14.99928 | -15.00000 | 0.04062 | 0.2303 | 0.7065 | 0.3882 | 584.5 ± 84.0 |
+
+## Overall timestamp analysis
+
+Status: **PHASE_MODEL_CANDIDATE**. Cross-speed separation assumes a stable H5 phase convention and fixed sensor phase within each setup. Pose, calibration and scan-phase changes can bias this candidate.
+
+Candidate: **-25.97 ms**. Student-t 95% interval: [-28.13, -23.81] ms. Standard error: 0.91 ms. Phase-fit residual STD: 0.1821 deg. Residual degrees of freedom: 7.
+
+theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.
+
+This is **not a calibrated physical sensor offset**. The interval is conditional on a stable empirical phase convention and fixed sensor pose within each acquisition group; it excludes systematic scan, geometry and exposure effects. Per-bag conditional lag minima are not averaged. Every scan contributes to its own bag detection, while each distinct bag is one timing replicate. Quality-review captures are excluded from the overall fit. Insufficient bags or signed-speed variation produce an unresolved result.
+
+## Scan variability and reproducibility
+
+Every recorded cloud is decoded. Motion estimation uses measured target-region returns; full raw clouds remain in the selected source bag. `all_scan_metrics.csv` contains every scan&#x27;s input/target counts, target depth mean/spread, centroid, harmonic magnitude, relative angles, held-out residual, boundary flag and local RPM. `all_camera_local_rpm.csv` contains local camera slopes; combined per-sensor angle CSVs are also saved.
+
+Local RPM is an offline centered 2-second phase slope and uses up to one second of future data. RPM scatter includes angle-estimation noise and periodic-model effects. It is not an independent measurement of mechanical speed variation. Fold RPM STD describes sensitivity to held-out data, not an encoder-validated uncertainty. Spatial depth spread is not angular error. FLIR and Livox independently infer their own speed without supplied motor RPM. There is no encoder truth.
+
+Each capture&#x27;s complete intermediate arrays, model files, angle CSVs, nine figures and individual reports are in `captures/&lt;capture run&gt;/`. `capture_metrics.csv` summarizes each bag. `variability_bins.csv` contains the plotted within-capture bins. `timing/` saves the overall fit observations, residuals and parameter covariance. `processing_manifest.csv` includes failures and exact source paths; successful results remain available when another bag fails. A downloaded batch ZIP includes all nested capture artifacts.
+
+## Processing issues
+
+None.</pre><figure><img src="figures/batch_overview.png" alt="batch overview"></figure><figure><img src="figures/batch_return_distributions.png" alt="batch return distributions"></figure><figure><img src="figures/batch_scan_traces.png" alt="batch scan traces"></figure><figure><img src="figures/batch_variability_matrix.png" alt="batch variability matrix"></figure><figure><img src="figures/overall_timing.png" alt="overall timing"></figure><h2>Individual capture reports</h2><ul><li><a href="captures/rig_20260828_191635_0_76cf5d06/report.html">rig_20260828_191635_0.bag</a></li><li><a href="captures/rig_20260828_191845_0_7bf922da/report.html">rig_20260828_191845_0.bag</a></li><li><a href="captures/rig_20260828_192028_0_299adaaa/report.html">rig_20260828_192028_0.bag</a></li><li><a href="captures/rig_20260828_192202_0_e3234bee/report.html">rig_20260828_192202_0.bag</a></li><li><a href="captures/rig_20260828_192433_0_ccaccd50/report.html">rig_20260828_192433_0.bag</a></li><li><a href="captures/rig_20260828_192618_0_5f6216ce/report.html">rig_20260828_192618_0.bag</a></li><li><a href="captures/rig_20260828_192752_0_8e324475/report.html">rig_20260828_192752_0.bag</a></li><li><a href="captures/rig_20260828_192952_0_c0852c50/report.html">rig_20260828_192952_0.bag</a></li><li><a href="captures/rig_20260828_193136_0_9742e88f/report.html">rig_20260828_193136_0.bag</a></li><li><a href="captures/rig_20260828_193309_0_4dc5046b/report.html">rig_20260828_193309_0.bag</a></li></ul>

@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.env
+.env.*
+*.upload
+*.tmp
+# New runs are local; the published reference results are force-added once.
+results/*
+!results/.gitkeep

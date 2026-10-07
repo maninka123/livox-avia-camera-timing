@@ -1,0 +1,22 @@
+[
+  {
+    "name": "rig_20260828_191845_0.bag",
+    "size_bytes": 599397873,
+    "sha256": "c852bf9c0df565a01e6ed451a42fcd105acb37a97a4f1d6545f0ffe89c6e798d",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_191845_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": true,
+    "selection_joint_residual_std_deg": 0.6371425037483573
+  },
+  {
+    "name": "rig_20260828_192028_0.bag",
+    "size_bytes": 605783016,
+    "sha256": "f2be2a1e71b034b5ee3cfc1ee431e3c5862ea0feca889312f5c84e9418cd9ee4",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192028_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": true,
+    "selection_joint_residual_std_deg": 0.6303109335617644
+  }
+]

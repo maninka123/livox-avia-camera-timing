@@ -1,0 +1,64 @@
+{
+  "frames": 419,
+  "rpm": -9.99954329649919,
+  "line_rpm": -9.999522599744756,
+  "initial_harmonic_rpm": -9.997941153640415,
+  "coherence": 0.9611637032555431,
+  "median_near_returns": 698.0,
+  "raw_residual": {
+    "n": 419,
+    "mae_deg": 0.3737798754132622,
+    "std_deg": 0.47128749149944715,
+    "rmse_deg": 0.47075212731988375,
+    "p95_deg": 0.9448618529980417,
+    "bias_deg": -0.005075995617069243
+  },
+  "smoothed_residual": {
+    "n": 419,
+    "mae_deg": 0.1320282741270689,
+    "std_deg": 0.16967030390029536,
+    "rmse_deg": 0.16958824361707744,
+    "p95_deg": 0.3429155273545745,
+    "bias_deg": -0.006392716177140677
+  },
+  "heldout_raw_training_motion_residual": {
+    "n": 419,
+    "mae_deg": 0.4417130011165122,
+    "std_deg": 0.5604312760435592,
+    "rmse_deg": 0.5598388618802878,
+    "p95_deg": 1.1127493344468795,
+    "bias_deg": -0.009270277725702642
+  },
+  "heldout_smoothed_training_motion_residual": {
+    "n": 419,
+    "mae_deg": 0.17384172292842154,
+    "std_deg": 0.21964432034549525,
+    "rmse_deg": 0.21969584280622964,
+    "p95_deg": 0.4221704467427103,
+    "bias_deg": -0.011737794028011358
+  },
+  "chronological_residual": {
+    "n": 168,
+    "mae_deg": 0.487736796897309,
+    "std_deg": 0.6077116111919325,
+    "rmse_deg": 0.6114592958628198,
+    "p95_deg": 1.2693905361544924,
+    "bias_deg": 0.08226397863786804
+  },
+  "fold_rpm": [
+    -9.998613470709909,
+    -9.998809214281223,
+    -10.000348006390407,
+    -9.999868435789715,
+    -9.998633048900283
+  ],
+  "boundary_hits": 0,
+  "heldout_boundary_hits": 0,
+  "status": "RELATIVE_TRACK_RECOVERED",
+  "harmonic_phase_anchor_mod120_deg": -51.479973135832104,
+  "absolute_phase": "Uncalibrated physical zero; canonical harmonic phase is an empirical convention only.",
+  "filter_frames": 21,
+  "filter_span_s": 2.0000412464141846,
+  "future_lookahead_s": 1.000028133392334,
+  "camera_used_for_estimation": false
+}

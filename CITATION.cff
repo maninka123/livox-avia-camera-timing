@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use this app, cite this software and the relevant research papers linked in README.md."
+title: "Livox Avia–Camera Timing Studio"
+type: software
+authors:
+  - family-names: Ranasinghe
+    given-names: Pasindu
+    affiliation: "UNSW Sydney, Australia"
+repository-code: "https://github.com/maninka123/livox-avia-camera-timing"
+url: "https://github.com/maninka123/livox-avia-camera-timing"
+version: "0.1.0"
+date-released: "2026-10-07"
+abstract: "A local app for rotating-target angle estimation and model-based relative timing analysis from Livox Avia LiDAR and camera ROS1 recordings."

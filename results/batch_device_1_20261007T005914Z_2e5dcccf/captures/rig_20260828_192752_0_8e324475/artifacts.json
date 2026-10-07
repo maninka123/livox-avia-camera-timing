@@ -1,0 +1,282 @@
+[
+  {
+    "path": "REPORT.md",
+    "size_bytes": 7186
+  },
+  {
+    "path": "figures/clock_diagnostics.png",
+    "size_bytes": 95166
+  },
+  {
+    "path": "figures/error_matrix.png",
+    "size_bytes": 66442
+  },
+  {
+    "path": "figures/flir_detection_stages.png",
+    "size_bytes": 177131
+  },
+  {
+    "path": "figures/flir_quality.png",
+    "size_bytes": 201210
+  },
+  {
+    "path": "figures/livox_detection_stages.png",
+    "size_bytes": 1207460
+  },
+  {
+    "path": "figures/livox_quality.png",
+    "size_bytes": 265077
+  },
+  {
+    "path": "figures/overview.png",
+    "size_bytes": 256265
+  },
+  {
+    "path": "figures/scan_variability.png",
+    "size_bytes": 548920
+  },
+  {
+    "path": "figures/timing_profile.png",
+    "size_bytes": 117706
+  },
+  {
+    "path": "flir/angles.csv",
+    "size_bytes": 323822
+  },
+  {
+    "path": "flir/chronological_model.npz",
+    "size_bytes": 68431
+  },
+  {
+    "path": "flir/features.npz",
+    "size_bytes": 11487538
+  },
+  {
+    "path": "flir/model.npz",
+    "size_bytes": 68655
+  },
+  {
+    "path": "flir/summary.json",
+    "size_bytes": 1342
+  },
+  {
+    "path": "flir/validation_model_0.npz",
+    "size_bytes": 68446
+  },
+  {
+    "path": "flir/validation_model_1.npz",
+    "size_bytes": 68455
+  },
+  {
+    "path": "flir/validation_model_2.npz",
+    "size_bytes": 68432
+  },
+  {
+    "path": "flir/validation_model_3.npz",
+    "size_bytes": 68443
+  },
+  {
+    "path": "flir/validation_model_4.npz",
+    "size_bytes": 68418
+  },
+  {
+    "path": "intermediates/camera_extracted.npz",
+    "size_bytes": 12628845
+  },
+  {
+    "path": "intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82633
+  },
+  {
+    "path": "intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82709
+  },
+  {
+    "path": "intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82652
+  },
+  {
+    "path": "intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82741
+  },
+  {
+    "path": "intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82688
+  },
+  {
+    "path": "intermediates/flir_detection_00000.png",
+    "size_bytes": 111994
+  },
+  {
+    "path": "intermediates/flir_detection_00070.png",
+    "size_bytes": 113240
+  },
+  {
+    "path": "intermediates/flir_detection_00384.png",
+    "size_bytes": 113535
+  },
+  {
+    "path": "intermediates/flir_detection_01012.png",
+    "size_bytes": 114099
+  },
+  {
+    "path": "intermediates/livox_detection_00000.npz",
+    "size_bytes": 54263
+  },
+  {
+    "path": "intermediates/livox_detection_00000.png",
+    "size_bytes": 35051
+  },
+  {
+    "path": "intermediates/livox_detection_00050.npz",
+    "size_bytes": 53218
+  },
+  {
+    "path": "intermediates/livox_detection_00050.png",
+    "size_bytes": 34760
+  },
+  {
+    "path": "intermediates/livox_detection_00060.npz",
+    "size_bytes": 49679
+  },
+  {
+    "path": "intermediates/livox_detection_00060.png",
+    "size_bytes": 33877
+  },
+  {
+    "path": "intermediates/livox_detection_00270.npz",
+    "size_bytes": 53064
+  },
+  {
+    "path": "intermediates/livox_detection_00270.png",
+    "size_bytes": 34882
+  },
+  {
+    "path": "intermediates/livox_extracted.npz",
+    "size_bytes": 20800325
+  },
+  {
+    "path": "live/flir.png",
+    "size_bytes": 113564
+  },
+  {
+    "path": "live/livox.png",
+    "size_bytes": 34081
+  },
+  {
+    "path": "livox/angles.csv",
+    "size_bytes": 88517
+  },
+  {
+    "path": "livox/chronological_model.npz",
+    "size_bytes": 137585
+  },
+  {
+    "path": "livox/features.npz",
+    "size_bytes": 1013861
+  },
+  {
+    "path": "livox/model.npz",
+    "size_bytes": 137772
+  },
+  {
+    "path": "livox/summary.json",
+    "size_bytes": 1893
+  },
+  {
+    "path": "livox/validation_model_0.npz",
+    "size_bytes": 137529
+  },
+  {
+    "path": "livox/validation_model_1.npz",
+    "size_bytes": 137567
+  },
+  {
+    "path": "livox/validation_model_2.npz",
+    "size_bytes": 137476
+  },
+  {
+    "path": "livox/validation_model_3.npz",
+    "size_bytes": 137525
+  },
+  {
+    "path": "livox/validation_model_4.npz",
+    "size_bytes": 137556
+  },
+  {
+    "path": "metadata.json",
+    "size_bytes": 1488
+  },
+  {
+    "path": "metrics.csv",
+    "size_bytes": 988
+  },
+  {
+    "path": "progress.jsonl",
+    "size_bytes": 57398
+  },
+  {
+    "path": "report.html",
+    "size_bytes": 8082
+  },
+  {
+    "path": "request.json",
+    "size_bytes": 536
+  },
+  {
+    "path": "scans/camera_local_rpm.csv",
+    "size_bytes": 69116
+  },
+  {
+    "path": "scans/scan_metrics.csv",
+    "size_bytes": 141933
+  },
+  {
+    "path": "scans/summary.json",
+    "size_bytes": 1697
+  },
+  {
+    "path": "status.json",
+    "size_bytes": 34142
+  },
+  {
+    "path": "summary.json",
+    "size_bytes": 15142
+  },
+  {
+    "path": "timing/bootstrap_lags.csv",
+    "size_bytes": 6780
+  },
+  {
+    "path": "timing/clock_metrics.csv",
+    "size_bytes": 679
+  },
+  {
+    "path": "timing/error_correlation.csv",
+    "size_bytes": 303
+  },
+  {
+    "path": "timing/error_covariance_deg2.csv",
+    "size_bytes": 351
+  },
+  {
+    "path": "timing/lag_profile.csv",
+    "size_bytes": 52418
+  },
+  {
+    "path": "timing/paired_detections.csv",
+    "size_bytes": 52693
+  },
+  {
+    "path": "timing/summary.json",
+    "size_bytes": 4509
+  },
+  {
+    "path": "worker.log",
+    "size_bytes": 0
+  },
+  {
+    "path": "worker_identity.json",
+    "size_bytes": 47
+  }
+]

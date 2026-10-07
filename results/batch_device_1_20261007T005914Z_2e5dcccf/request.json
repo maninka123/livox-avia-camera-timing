@@ -1,0 +1,32 @@
+{
+  "id": "batch_device_1_20261007T005914Z_2e5dcccf",
+  "kind": "batch",
+  "dataset": "device_1",
+  "bags": [
+    "device_1/rig_20260828_191635_0.bag",
+    "device_1/rig_20260828_191845_0.bag",
+    "device_1/rig_20260828_192028_0.bag",
+    "device_1/rig_20260828_192202_0.bag",
+    "device_1/rig_20260828_192433_0.bag",
+    "device_1/rig_20260828_192618_0.bag",
+    "device_1/rig_20260828_192752_0.bag",
+    "device_1/rig_20260828_192952_0.bag",
+    "device_1/rig_20260828_193136_0.bag",
+    "device_1/rig_20260828_193309_0.bag"
+  ],
+  "config": {
+    "camera_topic": "/camera/image_raw",
+    "livox_topic": "/livox/lidar",
+    "phase_group": "normal",
+    "camera_roi": [
+      235,
+      150,
+      110,
+      110
+    ],
+    "timing_search_ms": 500
+  },
+  "auto_topics": true,
+  "auto_groups": true,
+  "created_at": "2026-10-07T00:59:14.053906+00:00"
+}

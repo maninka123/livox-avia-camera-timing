@@ -1,0 +1,11 @@
+{
+  "camera_topic": "/camera/image_raw",
+  "livox_topic": "/livox/lidar",
+  "camera_roi": [235, 150, 110, 110],
+  "phase_group": "normal",
+  "timing_search_ms": 500,
+  "camera_order": 32,
+  "livox_order": 12,
+  "livox_smoothing_frames": 21,
+  "validation_folds": 5
+}
