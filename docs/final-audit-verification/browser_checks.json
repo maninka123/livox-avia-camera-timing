@@ -1,0 +1,21 @@
+{
+  "passed": true,
+  "run_id": "rig_20260828_193309_0_20261007T125540Z_deb5794c",
+  "batch_id": "batch_device_1_20261007T064645Z_f2b206cc",
+  "checks": [
+    "A manual crop outside the recorded image is rejected before a job request; automatic cropping restores normally",
+    "Actual saved camera-discovery progress has a readable stage name and correct processed/remaining counts",
+    "Complete new actual-bag results show the calculated read-only offset and multiple-RPM guidance",
+    "Correlation matrix stays compact and its original-resolution image is available",
+    "Actual scan 396 displays orientation within one turn separately from accumulated rotation",
+    "Folder comparison copy uses its metrics; long figures are bounded and keyboard-scrollable",
+    "320/390 px screens and 200% text retain usable layouts without page overflow",
+    "Actual bag and folder summaries remain byte-for-byte unchanged"
+  ],
+  "matrix_display_width_px": 704,
+  "trace_viewport": {
+    "height": 720,
+    "scrollHeight": 1944
+  },
+  "browser_errors": []
+}

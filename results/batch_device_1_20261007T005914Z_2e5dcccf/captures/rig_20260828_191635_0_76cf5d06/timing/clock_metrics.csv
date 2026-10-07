@@ -1,3 +1,0 @@
-sensor,domain,samples,record_minus_header_mean_ms,record_minus_header_std_ms,record_minus_header_p95_ms,affine_rate_ppm,affine_residual_std_ms,mapping_header_origin_s,mapping_bag_origin_s,mapping_slope,interpretation
-FLIR,unix_epoch,1424,0.6839966171243218,0.20785490327354222,0.9265542030334472,2.4160786604721096,0.20589939501391966,1787908597.7576983,1787908597.7583332,1.0000024160786605,Observed recording/header difference; not exposure-to-ray synchronization.
-Livox,device_or_other_epoch,419,,,,27.55245333552203,1.629695237078481,6256.49958083,1787908596.614581,1.0000275524533355,Different clock epoch. Absolute sensor offset cannot be obtained by header subtraction.

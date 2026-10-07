@@ -19,6 +19,15 @@ class LocalizationTests(unittest.TestCase):
         self.assertFalse(front[2]);self.assertTrue(np.isnan(uv[2]).all())
         with self.assertRaisesRegex(ValueError,'Image size'):project([[0,0,2]],c,[320,240])
 
+    def test_skew_is_applied_in_both_supported_camera_models(self):
+        for model in ('fisheye','pinhole'):
+            c=self.calibration();c['camera_model']=model
+            baseline,_=project([[.3,.6,2]],c)
+            c['K'][0][1]=21;validate(c)
+            pixels,_=project([[.3,.6,2]],c)
+            self.assertAlmostEqual(pixels[0,0],baseline[0,0]+21*(baseline[0,1]-240)/300)
+            self.assertEqual(pixels[0,1],baseline[0,1])
+
     def test_matrix_direction_units_and_camera_model_are_validated(self):
         for field,value in [('K',[[0,0,0],[0,0,0],[0,0,1]]),('D',[0,0]),('translation_units','mm'),('camera_model','unknown')]:
             c=self.calibration();c[field]=value

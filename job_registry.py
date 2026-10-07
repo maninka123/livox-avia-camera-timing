@@ -61,7 +61,36 @@ def status(identifier,out):
         state=read_json(out/'status.json')
         if state.get('status') not in (*ACTIVE,'complete','failed','cancelled'):
             raise ValueError('The saved job status is missing or invalid.')
+        for key in ('bag','stage','message'):
+            if key in state and not isinstance(state[key],str):raise ValueError('The saved job status has an invalid '+key+'.')
+        for key in ('percent','processed','remaining','total','elapsed_s','capture_percent'):
+            value=state.get(key)
+            if key in state and value is None and key!='elapsed_s':raise ValueError('The saved job status has invalid progress data: '+key+'.')
+            if value is not None and (isinstance(value,bool) or not isinstance(value,(int,float)) or not -float('inf')<value<float('inf') or value<0):
+                raise ValueError('The saved job status has invalid progress data: '+key+'.')
+        if not 0<=state.get('percent',0)<=100:raise ValueError('The saved job status has invalid progress data: percent.')
+        for key in ('previews','trace','metrics','batch'):
+            if key in state and not isinstance(state[key],dict):raise ValueError('The saved job status has invalid '+key+' data.')
+        for preview in state.get('previews',{}).values():
+            if not isinstance(preview,dict) or not isinstance(preview.get('path'),str):raise ValueError('The saved job status has invalid preview data.')
+        for trace in state.get('trace',{}).values():
+            if not isinstance(trace,list) or any(not isinstance(row,dict) or any(isinstance(row.get(k),bool) or not isinstance(row.get(k),(int,float)) or not -float('inf')<row[k]<float('inf') for k in ('t','angle')) for row in trace):
+                raise ValueError('The saved job status has invalid trace data.')
+        if 'batch' in state:
+            batch=state['batch']
+            if any(isinstance(batch.get(key),bool) or not isinstance(batch.get(key),(int,float)) or not 0<=batch[key]<float('inf') for key in ('total','finished','completed','failed','remaining')):
+                raise ValueError('The saved job status has invalid folder progress data.')
+            entries=batch.get('entries')
+            if not isinstance(entries,list) or any(not isinstance(row,dict) or not isinstance(row.get('bag_path'),str) or not isinstance(row.get('status'),str) or ('metrics' in row and not isinstance(row['metrics'],dict)) for row in entries):
+                raise ValueError('The saved job status has invalid folder queue data.')
     except ValueError as exc:
+        process=restore(identifier,out)
+        if process is not None and process.poll() is None:
+            cancelling=(out/'cancel_requested.json').exists()
+            return {'id':identifier,'bag':identifier,'status':'cancelling' if cancelling else 'running',
+                    'stage':'cancelling' if cancelling else 'recovering','percent':0,'processed':0,'remaining':0,'total':0,
+                    'message':'The saved progress needs review; the matching worker is still active. '+str(exc),
+                    'elapsed_s':None,'previews':{},'trace':{'FLIR':[],'Livox':[]}}
         return {'id':identifier,'bag':identifier,'status':'failed','stage':'failed','percent':0,
                 'message':str(exc),'elapsed_s':None}
     state['id']=identifier
@@ -87,6 +116,7 @@ def active_jobs():
     # The filesystem also contains workers launched before this server session.
     active=[]
     for out in RESULTS.iterdir():
+        if RESULTS.resolve() not in out.resolve().parents:continue
         if out.is_dir() and not out.name.startswith('.') and (out/'status.json').is_file():
             if status(out.name,out)['status'] in ACTIVE:active.append(out.name)
     return active

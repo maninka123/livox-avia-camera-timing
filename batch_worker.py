@@ -48,6 +48,9 @@ def run_batch(request):
                 path=bag_path(name);meta=inspect(path);options=dict(request.get('config',{}))
                 if request.get('auto_topics',True):
                     options.update(camera_topic=meta['suggested_camera_topic'],livox_topic=meta['suggested_livox_topic'])
+                else:
+                    for key in ('camera_topic','livox_topic'):
+                        options.setdefault(key,meta['suggested_'+key])
                 if request.get('auto_groups',True):options['phase_group']=meta['suggested_phase_group']
                 config=validate_options(meta,options)
                 child_request={'id':run_id,'bag':name,'config':config,'parent_batch':request['id']}

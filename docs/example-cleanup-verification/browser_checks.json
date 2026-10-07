@@ -1,0 +1,14 @@
+{
+  "passed": true,
+  "workspace": "/home/pasindu/rotating_target_ws/.publication/livox-avia-camera-timing",
+  "example_id": "batch_device_1_20261007T064645Z_f2b206cc",
+  "checks": [
+    "Exactly one labelled example appears; ten captures are indicated and raw run ID is available as a tooltip",
+    "Example opens ten capture rows, concise headers, its timing estimate and original HTML report",
+    "Short metric headers retain their repeatability/agreement explanation and units",
+    "Individual measured scan preview and numeric data remain available inside the example",
+    "Compact tables remain usable on 390/320 px screens"
+  ],
+  "browser_errors": [],
+  "example_summary_unchanged": true
+}

@@ -26,6 +26,19 @@ def scene(wheels, brightness=False):
 
 
 class CameraLocalizationTests(unittest.TestCase):
+    def test_malformed_discovery_inputs_fail_with_actionable_errors(self):
+        frames,time=scene([(210,130,30,30,10)])
+        for bad_frames,bad_time in ((frames,time[:,None]),(frames,np.array(1)),
+                (frames.astype(float),time),(frames,time[::-1]),(frames[:,:,:0],time)):
+            with self.assertRaisesRegex(ValueError,'grayscale images'):
+                detect(bad_frames,bad_time)
+
+    def test_crowded_scene_does_not_silently_ignore_other_candidates(self):
+        wheels=[(x,y,15,15,10) for y in (50,115,180) for x in (50,110,170,230,290,350)][:13]
+        frames,time=scene(wheels)
+        with self.assertRaisesRegex(ValueError,'Too many moving camera regions'):
+            detect(frames,time)
+
     def test_short_camera_topic_in_long_bag_is_sampled_over_its_own_sequence(self):
         try:
             import rosbag

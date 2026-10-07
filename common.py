@@ -124,7 +124,8 @@ def result_path(run_id):
     return path
 
 def validate_options(metadata, options):
-    config=json.loads((ROOT/'config.json').read_text())
+    if not isinstance(options,dict):raise ValueError('Acquisition settings must be an object.')
+    defaults=read_json(ROOT/'config.json');config=dict(defaults)
     config.update({k:v for k,v in options.items() if k in config})
     topics={row['name']:row for row in metadata['topics']}
     for key,kind in (('camera_topic','sensor_msgs/Image'),('livox_topic','sensor_msgs/PointCloud2')):
@@ -145,5 +146,5 @@ def validate_options(metadata, options):
     if not 10<=config['timing_search_ms']<=2000:raise ValueError('Timing search must be between 10 and 2000 ms.')
     # The shipped validated algorithm settings are fixed; advanced controls concern acquisition only.
     for key in ('camera_order','livox_order','livox_smoothing_frames','validation_folds'):
-        config[key]=json.loads((ROOT/'config.json').read_text())[key]
+        config[key]=defaults[key]
     return config

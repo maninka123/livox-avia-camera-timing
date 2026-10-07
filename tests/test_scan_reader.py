@@ -7,6 +7,24 @@ import scan_reader
 
 
 class ScanReaderTests(unittest.TestCase):
+    def test_corrupt_arrays_and_archive_return_actionable_errors(self):
+        with tempfile.TemporaryDirectory() as directory:
+            path=Path(directory)/'clouds.npz'
+            points=np.ones((8,4),dtype='f4')
+            for offsets in ([0.,4.5,8.],[0,5,4],[1,4,8]):
+                np.savez_compressed(path,points=points,stamps=[0,1],offsets=offsets)
+                with self.assertRaisesRegex(ValueError,'offsets'):scan_reader.read_scan(path,0)
+            for bounds in ([1,1],[float('nan'),3],[1,2,3]):
+                np.savez_compressed(path,points=points,stamps=[0,1],offsets=[0,4,8],depth_bounds_m=bounds)
+                with self.assertRaisesRegex(ValueError,'depth bounds'):scan_reader.read_scan(path,0)
+            points[0,0]=np.nan
+            np.savez_compressed(path,points=points,stamps=[0,1],offsets=[0,4,8])
+            with self.assertRaisesRegex(ValueError,'non-finite'):scan_reader.read_scan(path,0)
+            np.savez_compressed(path,stamps=[0],offsets=[0,4])
+            with self.assertRaisesRegex(ValueError,'Unable to read'):scan_reader.read_scan(path,0)
+            path.write_bytes(b'PK\x03\x04broken compressed archive')
+            with self.assertRaises(ValueError):scan_reader.read_scan(path,0)
+
     def test_each_scan_is_exact_for_both_storage_orders_and_float_sizes(self):
         with tempfile.TemporaryDirectory() as directory:
             path = Path(directory) / 'clouds.npz'

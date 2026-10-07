@@ -1,0 +1,20 @@
+{
+  "checks": [
+    "Known positive/negative/zero offsets and reverse/stopped rotation have correct angle and timestamp signs",
+    "Folder illustration uses all ten captured RPMs and the full saved candidate; exaggeration preserves angle/time values",
+    "The offset is read-only and rounded to one decimal; time stepping keeps the full saved value without modifying results",
+    "Standalone SVG download parses as XML, contains both scene views, numeric units and timing qualifications",
+    "Phone layout stacks both diagrams and controls without page overflow",
+    "Calculated single-bag value is displayed with a multiple-RPM recommendation; underlying timing status and full-precision calculations are preserved",
+    "Saved cross-speed comparisons display the same explanation with their own recorded speeds",
+    "Missing estimates do not fabricate an offset, RPM or flywheel diagram",
+    "Missing RPM preserves the saved offset display and omits an invented speed",
+    "Tiny offsets display one decimal without negative zero; calculations retain precision and handle stopped motion",
+    "The three saved analysis summaries retain their original SHA256 hashes; no browser errors"
+  ],
+  "browser_errors": [],
+  "batch_id": "batch_device_1_20261007T064645Z_f2b206cc",
+  "bag_id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_193309_0_64ef9a6f",
+  "saved_candidate_ms": -25.946689773256537,
+  "passed": true
+}

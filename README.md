@@ -1,12 +1,14 @@
 # Livox Avia–Camera Timing Studio
 
-Estimate rotating-target angles and relative observation-time offsets from **Livox Avia LiDAR + camera ROS1 bags**. A local browser app shows live detections, every scan, quality metrics, and downloadable reports.
+A local app for flywheel angles and relative timing from **Livox Avia + camera ROS1 bags**.
 
-![Studio showing Device 1 recordings and automatically selected sensor topics](app_preview.png)
+[![Full Studio workspace](app_preview.png)](app_preview.png)
 
-## Start
+Choose a recording, inspect its topics and camera view, then watch detection previews. Click any figure for full size.
 
-**Environment:** Linux, Python 3.8, and a sourced ROS Noetic installation with `rosbag` and `sensor_msgs`. Install `python3-venv` and `git-lfs` through your package manager if needed.
+## Run
+
+Requires Linux, Python 3.8, ROS Noetic, `python3-venv` and Git LFS.
 
 ```bash
 git lfs install
@@ -18,111 +20,59 @@ bash setup.sh
 bash launch.sh
 ```
 
-Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the entire folder → inspect topics → **Start processing**. Camera cropping is automatic; adjust topics or the optional manual crop for your own recordings. Use `bash launch.sh --port 8766` for another port.
+Open **http://127.0.0.1:8765**. Select a device, choose one bag or the whole folder, then start. Watch detections and progress; inspect scans, plots and reports after completion.
 
-**Explore without processing:** open **Saved results** to view the included previous and automatic ten-capture Device 1 analyses. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. A fresh LFS download is about **2.1 GB**; expanded bag/array files occupy about **2.4 GB**.
+## How it works
 
-## What you can do
+| Camera | Livox Avia | Timing |
+|---|---|---|
+| Find the wheel; fit its shape; track image phase. | Find rotating returns; track each cloud’s phase. | Compare sensor phases across different RPMs. |
 
-- Process one bag or a device folder; the app selects sensor topics and locates the flywheel automatically.
-- Watch progress, remaining counts, measured detections, and relative-angle traces.
-- Inspect every point cloud: angle, local RPM, target returns, depth spread, and quality flags.
-- Compare captures and explore exaggerated flywheel/timestamp diagrams explaining the offset.
-- Save angles, models, intermediate arrays, plots, metrics, HTML/Markdown reports, and ZIP bundles under a fresh `results/<run>/`.
+![Independent estimation and timing](method_overview.svg)
 
-## Automatic target finding
+Each sensor estimates its own angles and RPM. Camera position plus device calibration guides the LiDAR search; missing calibration falls back to LiDAR-only. Camera cropping is automatic; a manual crop is optional.
 
-No method selector is needed. **Full-camera motion** finds the wheel and selects its crop (`camera_roi: null`). The detected camera position plus device calibration guides the LiDAR search. **Camera calibration + LiDAR evidence** is tried first; unsupported or missing calibration falls back to **LiDAR-only**. The app shows the selected method and reasons. A checked fixed-region fallback is restricted to exact original recordings; ambiguous or unknown scenes remain unresolved.
+Add your device’s **K, D and LiDAR→camera transform** to `calibrations/device_<n>.json`. [Device 1 example](calibrations/device_1.json) · [Calibration details](LOCALIZATION.md).
 
-![Automatic full-camera crop and motion evidence](automatic_camera.png)
+![Automatic camera crop](automatic_camera.png)
 
-An optional manual crop is under **Acquisition settings**, or use `--camera-roi X Y WIDTH HEIGHT`. [Automatic camera checks](docs/AUTOMATIC_CAMERA_CHECKS.md).
+[![Livox detection at four wheel orientations](livox_detection.png)](livox_detection.png)
 
-Your supplied intrinsics/extrinsics are saved in [`calibrations/device_1.json`](calibrations/device_1.json). Add a matching device file for your own rig: calibration helps locate the wheel in the point cloud. The supplied fisheye calibration is for **484 × 366 pixels**, with translation in metres. These bags show roughly **31 px** of camera/LiDAR centre disagreement, flagged for alignment review. [Calibration and fallback details](LOCALIZATION.md).
+Four orientations from a recorded capture: depth-coloured clouds (top), selected wheel returns in orange (middle), and their angular histograms (bottom).
 
-![Full-scene LiDAR evidence and camera-guided target localization](target_localization.png)
+## Included example
 
-## Methods
+**Saved results** contains one labelled **Device 1 example**: 10 captures, 14,281 camera frames and 4,205 Livox scans. Open it to inspect individual captures and the combined timing estimate.
 
-![Independent camera and LiDAR estimation followed by timing analysis](method_overview.svg)
-
-| Camera | Livox Avia |
-|---|---|
-| Moving-region ellipse calibration; subpixel polar sampling; normalized grayscale harmonics. | Locate a compact depth-changing envelope; normalize its measured centre/radius; build 336 return features. |
-| Learn a periodic appearance model; refine each frame's phase. | Learn a periodic return model; refine each cloud's phase. |
-
-Camera geometry can guide localization; camera angles and RPM never enter LiDAR angle estimation. Each sensor estimates signed RPM from **its own data**; commanded motor RPM is never supplied. Speed initializes a phase-search branch, so the estimator still assumes repeated, approximately constant-speed motion. Five-fold and chronological validation report repeatability/agreement. Optional offline LiDAR smoothing uses future scans and is labeled separately.
-
-<p><img src="camera_detection.png" width="49%" alt="Measured camera crop, calibrated rotor, and polar appearance"><img src="livox_detection.png" width="49%" alt="Measured Livox returns and extracted rotation features"></p>
-
-For the original SHA256-verified recordings, a separate H5/3 timing signature preserves the previous phase convention while angle tracking uses the localized target. New scenes use H1; incompatible timing conventions cannot be mixed.
-
-Timing profiles a free phase for each lag. Across different signed speeds in a shared setup, circular phase regression separates fixed phase from a common delay and checks alternate wrap branches. A single constant-speed bag cannot establish the physical offset.
-
-## Included recordings
-
-Two original bags are under [`bagfiles/device_1/`](bagfiles/device_1/); Device 2–5 folders are ready for new data. Other streams remain in the bags, but processing uses only `/camera/image_raw` and `/livox/lidar`.
-
-| Bag | Measured camera RPM | Camera held-out STD | LiDAR held-out agreement STD |
-|---|---:|---:|---:|
-| `rig_20260828_192028_0.bag` | +9.99985 | 0.261° | 0.489° |
-| `rig_20260828_191845_0.bag` | +9.99967 | 0.201° | 0.492° |
-
-The table uses the updated automatic method. These bags were selected using the previous estimates and rank first/second by the original ranking score `sqrt(camera_STD² + LiDAR_agreement_STD²)` among ten captures. This is a selection heuristic, **not an absolute accuracy measurement**. See [all rankings](docs/bag_quality_ranking.csv) and [SHA256 manifest](bagfiles/manifest.json). Both examples have approximately +10 RPM; processing these two alone leaves overall timing unresolved. Positive/negative RPM indicates direction in the estimator's angle convention.
-
-## Updated automatic results
-
-All **10 captures · 14,281 camera frames · 4,205 clouds** completed. LiDAR held-out disagreement STD improved in **9 of 10** bags, with a **16.4% median per-bag reduction**. One bag worsened slightly. These measure agreement/repeatability; a tenfold improvement is not demonstrated.
-
-![Each capture: previous versus automatic LiDAR estimation](automatic_comparison.png)
-
-| Combined timing metric | Automatic | Previous |
-|---|---:|---:|
-| Model-based candidate, τ | **−25.95 ms** | −25.97 ms |
-| Standard error | 0.912 ms | 0.914 ms |
-| Conditional 95% interval | [−28.10, −23.79] ms | [−28.13, −23.81] ms |
-
-![Updated timing: matching-scene timestamps and RPM](automatic_device_1_timing.png)
-
-The modeled matching scene appears on Livox about **25.95 ms later**. Exposure/per-ray timing and physical ground truth remain uncalibrated; the interval excludes unknown systematic bias. The supplied calibration is a rough spatial guide, not a time calibration.
-
-[Automatic folder report](results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Old/new comparison](results/batch_device_1_20261007T064645Z_f2b206cc/AUTOMATIC_COMPARISON.md) · [Every capture's metrics](results/batch_device_1_20261007T064645Z_f2b206cc/capture_metrics.csv) · [Verification](docs/AUTOMATIC_CHECKS.md)
-
-## Previous Device 1 reference
-
-The saved analysis covers **10 bags · 14,281 camera frames · 4,205 clouds · 100,920,000 decoded LiDAR points**. Full detections, intermediate arrays, models, scan tables, and figures are included for all ten, although only two raw bags are distributed.
-
-| Combined timing metric | Value |
+| Timing metric | Value |
 |---|---:|
-| Model-based offset candidate, τ | **−25.97 ms** |
-| Standard error | **0.914 ms** |
-| Conditional 95% interval | **[−28.13, −23.81] ms** |
-| Phase-fit residual STD | **0.182°** |
+| Estimated τ | **−25.95 ms** |
+| Standard error | 0.912 ms |
+| Conditional 95% interval | [−28.10, −23.79] ms |
 
-![Timing explained with matching-scene timestamps and angle gaps versus RPM](device_1_timing.png)
+The modeled matching scene appears on Livox about **25.95 ms later**. This is a model-based timing candidate. Different RPMs help separate fixed angle differences from delay; exposure and per-ray timing require separate calibration.
 
-Read the top first: the same modeled scene at camera time **1.000000 s** appears at Livox time **1.025971 s**. The bottom uses **RPM**; each dot is one recording after removing fixed setup phase.
+![Example timing](automatic_device_1_timing.png)
 
-The matching LiDAR scene is recorded about **25.97 ms later**. Physical exposure/per-ray timing remains uncalibrated; the interval is conditional on the model and excludes unknown systematic bias. The signed model parameter is `τ = −25.97 ms`.
+[Example report](results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Capture metrics](results/batch_device_1_20261007T064645Z_f2b206cc/capture_metrics.csv).
 
-[Device 1 report](results/batch_device_1_20261007T005914Z_2e5dcccf/REPORT.md) · [Per-capture metrics](results/batch_device_1_20261007T005914Z_2e5dcccf/capture_metrics.csv) · [Cross-speed report](results/comparison_20261007T054924Z_01265fa4/REPORT.md) · [Methods and limitations](docs/METHODS.md) · [Detailed phase plot](results/comparison_20261007T054924Z_01265fa4/figures/cross_speed_timing_raw.png)
+Two raw bags are included in `bagfiles/device_1/`; Devices 2–5 are ready for your recordings. Both raw examples are near +10 RPM, so additional speeds are needed for combined timing. The saved ten-capture example uses the earlier camera crop; the current app also discovers that crop automatically.
 
-## Research background
+Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetch them before opening scan previews.
 
-- **Measurement:** Ranasinghe et al., [Correcting time offsets and enclosure-induced measurement distortions in LiDAR–camera systems](https://doi.org/10.1016/j.measurement.2026.122285), 285, 122285 (2026).
-- **Preprint:** Ranasinghe et al., [A Rotating Aperture Target with a Common Geometric Estimator for Temporal Calibration of Heterogeneous Sensors](https://doi.org/10.2139/ssrn.7513129), SSRN (2026).
-
-These papers provide the research background. This app implements independent periodic appearance/return models; its results are separate from the papers' reported offsets.
-
-## CLI and checks
+## CLI
 
 ```bash
-source /opt/ros/noetic/setup.bash
-OPENBLAS_NUM_THREADS=1 .venv/bin/python process_bag.py device_1/rig_20260828_192028_0.bag
-OPENBLAS_NUM_THREADS=1 .venv/bin/python process_bag.py --folder device_1
-OPENBLAS_NUM_THREADS=1 .venv/bin/python reproduce_reference.py
-OPENBLAS_NUM_THREADS=1 .venv/bin/python reproduce_automatic.py
-OPENBLAS_NUM_THREADS=1 .venv/bin/python -m unittest discover -s tests -v
+.venv/bin/python process_bag.py device_1/rig_20260828_192028_0.bag
+.venv/bin/python process_bag.py --folder device_1
+.venv/bin/python reproduce_automatic.py
 ```
 
-[App guide](docs/APP_GUIDE.md) · [Publication verification](docs/PUBLICATION_CHECKS.md) · [Software citation](CITATION.cff)
+[App guide](docs/APP_GUIDE.md) · [Methods](docs/METHODS.md) · [Audit and checks](docs/APP_AUDIT.md).
+
+## Papers
+
+- **Measurement:** [Correcting time offsets and enclosure-induced measurement distortions in LiDAR–camera systems](https://doi.org/10.1016/j.measurement.2026.122285).
+- **Preprint:** [A Rotating Aperture Target with a Common Geometric Estimator for Temporal Calibration of Heterogeneous Sensors](https://doi.org/10.2139/ssrn.7513129).
+
+The papers provide the research background; this app’s independent estimators and results are described above.

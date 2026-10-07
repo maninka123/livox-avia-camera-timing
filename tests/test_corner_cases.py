@@ -76,6 +76,128 @@ class CornerCases(unittest.TestCase):
         (self.results/'partial').mkdir()
         self.assertEqual(self.client.get('/api/jobs/partial').get_json()['status'],'failed')
         self.assertEqual(self.client.get('/api/runs/partial/files').status_code,200)
+
+    def test_wrong_progress_types_do_not_break_job_views(self):
+        out=self.run_folder('damaged','running')
+        for field,value in (('percent',None),('percent',101),('total',[]),('previews',[]),
+                            ('previews',{'livox':'invalid'}),('trace',{'FLIR':[{'t':0,'angle':'bad'}]}),('batch',{'entries':[]})):
+            common.save_json(out/'status.json',{'status':'running',field:value})
+            response=self.client.get('/api/jobs/damaged')
+            self.assertEqual(response.status_code,200)
+            self.assertEqual(response.get_json()['status'],'failed')
+            self.assertEqual(self.client.get('/api/runs').status_code,200)
+
+    def test_damaged_progress_does_not_release_a_live_worker_reservation(self):
+        out=self.run_folder('live','running');(out/'status.json').write_text('{damaged progress')
+        stopped=[]
+        job_registry.workers['live']=SimpleNamespace(poll=lambda:None,terminate=lambda:stopped.append(True))
+        self.assertEqual(job_registry.active_jobs(),['live'])
+        state=self.client.get('/api/jobs/live').get_json()
+        self.assertEqual(state['status'],'running');self.assertEqual(state['stage'],'recovering')
+        self.assertEqual(self.client.post('/api/jobs/live/cancel').status_code,200)
+        self.assertEqual(stopped,[True])
+        self.assertEqual(self.client.get('/api/jobs/live').get_json()['status'],'cancelling')
+
+    def test_cli_reservation_blocks_app_and_releases_on_initialization_failure(self):
+        import process_bag as cli
+        (self.bags/'device_1'/'valid.bag').touch()
+        request={'id':'cli_reserved','bag':'device_1/valid.bag'}
+        def callback(req):
+            job_registry.workers[req['id']]=SimpleNamespace(poll=lambda:None)
+            with patch.object(server,'inspect_bag',return_value=self.metadata()),patch.object(server,'spawn_worker') as spawn:
+                response=self.client.post('/api/jobs',json={'bag':req['bag'],'config':{'camera_topic':'/camera','livox_topic':'/livox'}})
+                self.assertEqual(response.status_code,409);spawn.assert_not_called()
+            raise ValueError('Intentional startup failure')
+        with patch.object(cli,'RESULTS',self.results),patch.object(cli,'remember_current'):
+            with self.assertRaisesRegex(ValueError,'startup failure'):cli.execute(request,callback)
+        self.assertEqual(common.read_json(self.results/'cli_reserved'/'status.json')['status'],'failed')
+        self.assertEqual(job_registry.active_jobs(),[])
+
+    def test_busy_app_blocks_cli_before_a_result_directory_is_created(self):
+        import process_bag as cli
+        out=self.run_folder('active','running');job_registry.workers['active']=SimpleNamespace(poll=lambda:None)
+        with patch.object(cli,'RESULTS',self.results):
+            with self.assertRaisesRegex(ValueError,'already being processed'):
+                cli.execute({'id':'blocked','bag':'a.bag'},lambda request:self.fail('Overlapping worker started'))
+        self.assertFalse((self.results/'blocked').exists())
+
+    def test_cli_reports_folder_failures_with_nonzero_exit_status(self):
+        import process_bag as cli
+        import batch_worker
+        (self.bags/'device_1'/'valid.bag').touch()
+        result={'totals':{'failed_bags':1},'overall_timing':{}}
+        with patch.object(cli,'RESULTS',self.results),patch.object(cli,'BAGS',self.bags),patch.object(cli,'remember_current'),\
+                patch.object(cli.sys,'argv',['process_bag.py','--folder','device_1']),\
+                patch.object(batch_worker,'run_batch',return_value=result):
+            self.assertEqual(cli.main(),1)
+
+    def test_cli_interruption_during_startup_has_consistent_cancelled_status(self):
+        import process_bag as cli
+        def interrupt(request):raise KeyboardInterrupt()
+        with patch.object(cli,'RESULTS',self.results),patch.object(cli,'remember_current'):
+            with self.assertRaises(KeyboardInterrupt):cli.execute({'id':'cancel_start','bag':'valid.bag'},interrupt)
+        state=common.read_json(self.results/'cancel_start'/'status.json')
+        self.assertEqual((state['status'],state['stage']),('cancelled','cancelled'))
+
+    def test_external_result_folders_are_not_listed_or_changed(self):
+        external=self.root/'external';external.mkdir()
+        common.save_json(external/'status.json',{'status':'running','bag':'outside.bag'})
+        before=(external/'status.json').read_bytes()
+        (self.results/'outside').symlink_to(external,target_is_directory=True)
+        self.assertEqual(self.client.get('/api/runs').get_json(),[])
+        self.assertEqual(job_registry.active_jobs(),[])
+        self.assertEqual((external/'status.json').read_bytes(),before)
+
+    def test_broken_result_symlinks_do_not_break_the_library(self):
+        (self.results/'broken').symlink_to(self.root/'missing',target_is_directory=True)
+        self.run_folder('good',summary=self.good_summary())
+        response=self.client.get('/api/runs')
+        self.assertEqual(response.status_code,200)
+        self.assertEqual([r['id'] for r in response.get_json()],['good'])
+
+    def test_example_label_is_display_metadata_and_new_runs_remain_visible(self):
+        self.run_folder('example',summary=self.good_summary('example'))
+        self.run_folder('new_run',summary=self.good_summary('new_run'))
+        common.save_json(self.root/'example_results.json',{'id':'example','label':'Device 1 · example'})
+        original=(self.results/'example'/'summary.json').read_bytes()
+        with patch.object(server,'ROOT',self.root):
+            rows={r['id']:r for r in self.client.get('/api/runs').get_json()}
+            self.assertEqual(set(rows),{'example','new_run'})
+            self.assertEqual(rows['example']['display_label'],'Device 1 · example')
+            self.assertIsNone(rows['new_run']['display_label'])
+            result=self.client.get('/api/runs/example/result').get_json()
+            self.assertEqual(result['display_label'],'Device 1 · example')
+        self.assertEqual((self.results/'example'/'summary.json').read_bytes(),original)
+
+    def test_malformed_scan_csv_and_missing_array_return_json_errors(self):
+        out=self.run_folder();(out/'scans').mkdir();(out/'intermediates').mkdir()
+        for content in ('scan_index,local_rpm\n0\n','scan_index\n0,10\n','scan_index\nbad\n'):
+            (out/'scans'/'scan_metrics.csv').write_text(content)
+            response=self.client.get('/api/runs/capture/scans')
+            self.assertEqual(response.status_code,400);self.assertIn('error',response.get_json())
+        np.savez_compressed(out/'intermediates'/'livox_extracted.npz',stamps=[0],offsets=[0,1])
+        response=self.client.get('/api/runs/capture/scan-preview')
+        self.assertEqual(response.status_code,400);self.assertIn('saved scan',response.get_json()['error'])
+
+    def test_resolution_change_is_rejected_even_when_manual_crop_still_fits(self):
+        import rosbag
+        import rospy
+        from sensor_msgs.msg import Image,PointCloud2
+        from bag_io import extract
+        path=self.bags/'device_1'/'resolution.bag'
+        with rosbag.Bag(str(path),'w') as bag:
+            for i,width in enumerate((64,65)):
+                bag.write('/camera',Image(height=64,width=width,step=width,encoding='mono8',data=b'\0'*(64*width)),rospy.Time(i+1))
+            bag.write('/livox',PointCloud2(),rospy.Time(3))
+        with self.assertRaisesRegex(ValueError,'resolution changes'):
+            extract(path,{'camera_topic':'/camera','livox_topic':'/livox','camera_roi':[0,0,60,60]},self.results,lambda *a,**k:None,lambda *a:None)
+
+    def test_invalid_saved_speeds_and_fractional_counts_are_not_presented(self):
+        for section,field,value in (('flir','rpm','wrong'),('livox','rpm',float('nan')),('flir','frames',150.5)):
+            result=self.good_summary('invalid');result[section][field]=value
+            self.run_folder('invalid',summary=result)
+            self.assertEqual(self.client.get('/api/runs/invalid/result').status_code,400)
+            self.assertEqual(self.client.get('/api/runs/invalid/files').status_code,200)
     def test_unreadable_single_bag_returns_json_error(self):
         (self.bags/'device_1'/'broken.bag').write_bytes(b'broken')
         for route in ('/api/bag-info?name=device_1/broken.bag','/api/bag-preview?name=device_1/broken.bag&topic=/camera'):

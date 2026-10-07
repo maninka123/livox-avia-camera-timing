@@ -1,0 +1,28 @@
+{
+  "checks": [
+    "An older delayed result response cannot replace the newer folder selection",
+    "A delayed file listing cannot attach another capture\u2019s artifacts to the current result",
+    "Returning to the workbench prevents pending result requests from switching the page back",
+    "Rapid bag changes keep the newest metadata and preserve its manual topic selection",
+    "Delayed dataset refresh keeps a device chosen while an import or catalogue update is finishing",
+    "Blank acquisition controls fail before a processing request and release the start button",
+    "Invalid and fractional scan indices are rejected; the final actual scan remains selectable",
+    "Delayed scan data cannot overwrite a newer scan selection",
+    "Repeated pagination clicks cannot skip pages or mismatch table rows and page labels",
+    "Damaged runs expose preserved files without hijacking active job tracking; complete-result links recover afterward",
+    "Offset remains saved and read-only with one-decimal display; visual expansion does not change numerical values",
+    "Comparison requires four distinct bags, and refresh preserves selected runs",
+    "Failed frame previews and invalid bag uploads show actionable messages and restore usable controls",
+    "Updated full folder results remain usable on a phone without page overflow"
+  ],
+  "javascript_errors": [],
+  "console_errors": [
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 400 (BAD REQUEST)"
+  ],
+  "expected_network_errors": [
+    "Failed to load resource: the server responded with a status of 400 (Bad Request)",
+    "Failed to load resource: the server responded with a status of 400 (BAD REQUEST)"
+  ],
+  "passed": true
+}

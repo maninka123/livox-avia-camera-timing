@@ -138,6 +138,10 @@ function config() {
     if(!$(id).value.trim() || !$(id).checkValidity())throw new Error('Check the camera crop and timing search settings. All fields need values within their displayed limits.');
   }
   if(!($('process-scope').value==='folder' && $('batch-auto-groups').checked) && !$('phase-group').value.trim())throw new Error('Enter a shared setup / illumination group.');
+  if($('manual-camera-crop').checked && state.recordedDimensions){
+    const [width,height]=state.recordedDimensions;
+    if(Number($('roi-x').value)+Number($('roi-w').value)>width || Number($('roi-y').value)+Number($('roi-h').value)>height)throw new Error(`Camera crop exceeds the ${width} × ${height} image. Adjust its position or size.`);
+  }
   return {camera_topic:$('camera-topic').value,livox_topic:$('livox-topic').value,phase_group:$('phase-group').value,
     livox_localization:'auto',camera_roi:$('manual-camera-crop').checked?['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)):null,timing_search_ms:Number($('timing-range').value)};
 }
@@ -157,7 +161,7 @@ function resetPreviews(){
   for(const sensor of ['flir','livox']){$(`${sensor}-preview`).hidden=true;$(`${sensor}-preview`).removeAttribute('src');$(`${sensor}-placeholder`).hidden=false;$(`${sensor}-live-label`).textContent='Awaiting capture';delete state.previewKeys[sensor];}
   $('trace-panel').hidden=true;if($('localization-live'))$('localization-live').hidden=true;
 }
-const stageNames={localization:'Locating the flywheel automatically',queued:'Preparing your recording',starting:'Preparing your recording',batch_start:'Preparing the next recording',batch_aggregate:'Comparing all captures and scans',extract:'Reading selected sensor data',flir_calibration:'Calibrating camera appearance',flir_detection:'Detecting camera angles',flir_validation:'Validating camera detections',livox_features:'Measuring Livox return patterns',livox_detection:'Detecting Livox angles',livox_validation:'Validating Livox detections',scan_variability:'Calculating scan variability and local RPM',timing:'Analyzing sensor timing',export:'Saving reports and figures',complete:'Capture processing complete',cancelled:'Run cancelled',failed:'Processing stopped',cancelling:'Cancelling run'};
+const stageNames={recovering:'Restoring worker progress',camera_localization:'Finding the flywheel in camera images',localization:'Locating the flywheel automatically',queued:'Preparing your recording',starting:'Preparing your recording',batch_start:'Preparing the next recording',batch_aggregate:'Comparing all captures and scans',extract:'Reading selected sensor data',flir_calibration:'Calibrating camera appearance',flir_detection:'Detecting camera angles',flir_validation:'Validating camera detections',livox_features:'Measuring Livox return patterns',livox_detection:'Detecting Livox angles',livox_validation:'Validating Livox detections',scan_variability:'Calculating scan variability and local RPM',timing:'Analyzing sensor timing',export:'Saving reports and figures',complete:'Capture processing complete',cancelled:'Run cancelled',failed:'Processing stopped',cancelling:'Cancelling run'};
 function drawTrace(trace) {
   const canvas=$('live-chart');const ratio=window.devicePixelRatio || 1;const width=Math.max(canvas.clientWidth-36,200);canvas.width=width*ratio;canvas.height=240*ratio;
   const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,width,240);
@@ -216,7 +220,11 @@ async function loadRuns() {
   for(const run of state.runs) {
     const tr=element('tr');const checkCell=element('td');
     if(run.status==='complete' && run.kind==='detection'){const checkbox=element('input');checkbox.type='checkbox';checkbox.value=run.id;checkbox.checked=selected.has(run.id);checkbox.className='run-check';checkbox.setAttribute('aria-label',`Select ${run.bag} run ${run.id}`);checkbox.dataset.bag=run.bag_path || run.bag;checkbox.addEventListener('change',updateCompare);checkCell.append(checkbox);}
-    const recording=element('td',run.bag);recording.append(element('small',run.id));const status=element('td');status.append(element('span',run.status,`status-badge ${run.status}`));
+    const recording=element('td',run.display_label || run.bag);recording.title=run.id;
+    const stamp=run.id.match(/_(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})Z_/);
+    const when=stamp?new Intl.DateTimeFormat('en-AU',{dateStyle:'medium',timeStyle:'medium',timeZone:'Australia/Sydney'}).format(new Date(`${stamp[1]}-${stamp[2]}-${stamp[3]}T${stamp[4]}:${stamp[5]}:${stamp[6]}Z`)):null;
+    const detail=run.display_label?`${run.captures || 0} captures · included example`:when;
+    if(detail)recording.append(element('small',detail));const status=element('td');status.append(element('span',run.status,`status-badge ${run.status}`));
     const action=element('td');const button=element('button',run.status==='complete'?'View results':'View progress','secondary small');
     if(run.message)tr.title=run.message;
     button.addEventListener('click',async()=>{try{if(run.status==='complete')await showResult(run.id);else if(['queued','running','cancelling'].includes(run.status)){state.currentJob=run.id;state.busy=true;$('cancel').disabled=run.status==='cancelling';page('workbench');await poll();}else await showPartial(run.id);}catch(error){notify(error.message);}});action.append(button);
@@ -246,8 +254,8 @@ function figure(id,name,caption) {
   footer.append(element('span',caption),full);fig.append(view,footer);return fig;
 }
 function metricTable(result) {
-  const card=element('div',undefined,'card result-table');card.append(element('h2','Repeatability and cross-modal agreement'));
-  const table=element('table');const head=element('thead');const hr=element('tr');for(const name of ['Metric','FLIR held-out repeatability','Livox held-out agreement','Livox held-out offline agreement'])hr.append(element('th',name));head.append(hr);table.append(head);
+  const card=element('div',undefined,'card result-table');card.append(element('h2','Repeatability and agreement'),element('p','Held-out camera repeatability and Livox–camera agreement. Offline results use future scans.','field-hint'));
+  const table=element('table');const head=element('thead');const hr=element('tr');for(const name of ['Metric','Camera','Livox','Livox · offline'])hr.append(element('th',name));head.append(hr);table.append(head);
   const body=element('tbody');const a=result.timing.agreement;
   for(const [label,key] of [['STD','std_deg'],['MAE','mae_deg'],['RMSE','rmse_deg'],['95th percentile','p95_deg']]){const row=element('tr');row.append(element('td',label),element('td',`${number(result.flir.heldout_residual[key],4)}°`),element('td',`${number(a.heldout_raw[key],4)}°`),element('td',`${number(a.heldout_offline_smoothed[key],4)}°`));body.append(row);}
   table.append(body);const wrap=element('div',undefined,'table-scroll');wrap.append(table);card.append(wrap);return card;
@@ -357,12 +365,12 @@ function renderBatch(result) {
     metric('Decoded LiDAR points',`${(totals.input_points/1e6).toFixed(2)}`,'million','Motion inference uses the measured target region.'),
     metric('Overall time-shift candidate',model.candidate_tau_ms===null?'Unresolved':number(model.candidate_tau_ms,1),model.candidate_tau_ms===null?'':'ms','Physical sensor synchronization remains uncalibrated.'));root.append(grid);
   const note=element('div',undefined,'card result-note');note.append(element('strong',`${totals.camera_frames.toLocaleString()} FLIR frames · ${totals.livox_clouds.toLocaleString()} Livox scans. `),document.createTextNode(result.interpretation));root.append(note);
-  if(result.automatic_comparison){const a=result.automatic_comparison;const note=element('section',undefined,'card result-note');note.append(element('strong',`${a.improved_bags} / ${a.bags} captures improved with automatic localization. `),document.createTextNode(`Median per-capture STD reduction ${number(a.median_per_bag_std_reduction_percent,1)}%. One capture worsened slightly; these are agreement statistics, not absolute angle accuracy.`));root.append(note,figure(result.id,'automatic_comparison','Each bag compared with its previous fixed-region result. Camera estimates are unchanged. Lower LiDAR held-out disagreement STD is better.'));}
+  if(result.automatic_comparison){const a=result.automatic_comparison;const note=element('section',undefined,'card result-note');note.append(element('strong',`${a.improved_bags} / ${a.bags} captures improved with automatic localization. `),document.createTextNode(`Median per-capture STD reduction ${number(a.median_per_bag_std_reduction_percent,1)}%. These are agreement statistics for the compared captures.`));root.append(note,figure(result.id,'automatic_comparison','Each bag compared with its previous fixed-region result. Lower LiDAR held-out disagreement STD is better.'));}
   root.append(TimingExplanation.mount(result));
   const issues=result.entries.filter(e=>e.status!=='complete');if(issues.length){const warning=element('div',undefined,'card timing-box');warning.append(element('h2','Captures requiring attention'));for(const entry of issues)warning.append(element('p',`${entry.bag_path}: ${entry.error || entry.status}`));root.append(warning);}
-  const tableCard=element('section',undefined,'card result-table');tableCard.append(element('h2','Each capture: speed, scan variability and agreement'),element('p','Local RPM STD includes estimation noise. Target-point STD measures variation across clouds. All angular STDs below are held-out repeatability or disagreement.','field-hint'));
+  const tableCard=element('section',undefined,'card result-table');tableCard.append(element('h2','Capture summary'),element('p','Angular STD: held-out scatter. RPM and return-count STD: scan variability.','field-hint'));
   const wrap=element('div',undefined,'table-scroll');const table=element('table');table.id='batch-captures';const head=element('thead');const hr=element('tr');
-  for(const title of ['Capture','Target search','Scans','Camera RPM','Livox RPM','Local RPM STD','Target points ± STD','FLIR STD','Livox STD','Offline STD','Inspect'])hr.append(element('th',title));head.append(hr);table.append(head);const body=element('tbody');
+  for(const title of ['Capture','Target','Scans','Camera RPM','Livox RPM','RPM STD','Returns ± STD','Camera STD','Livox STD','Offline STD',''])hr.append(element('th',title));head.append(hr);table.append(head);const body=element('tbody');
   for(const capture of result.captures){const tr=element('tr');tr.append(element('td',capture.bag),element('td',({camera_guided:'Camera + LiDAR',lidar_only:'LiDAR-only',legacy_checked:'Verified reference',legacy:'Previous fixed region'})[capture.localization_method || 'legacy'] || capture.localization_method));for(const value of [String(capture.livox_clouds),number(capture.camera_rpm,4),number(capture.livox_rpm,4),number(capture.livox_local_rpm_std,4),`${number(capture.target_points_mean,0)} ± ${number(capture.target_points_std,0)}`,`${number(capture.flir_std_deg)}°`,`${number(capture.livox_std_deg)}°`,`${number(capture.livox_offline_std_deg)}°`])tr.append(element('td',value));const cell=element('td');const button=element('button','View scans →','text-button');button.addEventListener('click',()=>showResult(capture.run_id,'scans').catch(e=>notify(e.message)));cell.append(button);tr.append(cell);body.append(tr);}
   table.append(body);wrap.append(table);tableCard.append(wrap);root.append(tableCard);
   const tabs=element('div',undefined,'tabs');const content=element('div');
@@ -385,7 +393,7 @@ async function showResult(id, initialTab) {
   const version=++state.resultVersion;notify('');
   let result;try{result=await api(`/api/runs/${encodeURIComponent(id)}/result`);}catch(error){if(version===state.resultVersion)throw error;return;}
   if(version!==state.resultVersion)return;state.currentResult=result;page('results-panel');$('file-list').replaceChildren();$('report-link').hidden=false;$('download-link').hidden=false;
-  $('result-title').textContent=result.kind==='comparison'?'Cross-speed timing comparison':result.kind==='batch'?`${result.bag} · folder results`:result.bag;
+  $('result-title').textContent=result.display_label || (result.kind==='comparison'?'Cross-speed timing comparison':result.kind==='batch'?`${result.bag} · folder results`:result.bag);
   $('result-subtitle').textContent=result.kind==='comparison'?`${result.multi_timing.bags} distinct recordings · inspectable phase and timing evidence`:result.kind==='batch'?`${result.totals.completed_bags} completed recordings · every scan and overall timestamp analysis`:`${result.config.camera_topic} + ${result.config.livox_topic} · saved run ${result.id}`;
   $('report-link').href=artifact(id,'report.html');$('download-link').href=`/api/runs/${encodeURIComponent(id)}/download`;
   try{if(result.kind==='comparison')renderComparison(result);else if(result.kind==='batch')renderBatch(result);else renderDetection(result,initialTab);}

@@ -71,5 +71,9 @@ def project(xyz, calibration, image_size_wh=None):
     if front.any():
         k = np.asarray(calibration['K'], float); d = np.asarray(calibration['D'], float)
         function = cv2.fisheye.projectPoints if calibration['camera_model'] == 'fisheye' else cv2.projectPoints
-        uv[front] = function(camera[front].reshape(-1, 1, 3), np.zeros(3), np.zeros(3), k, d)[0].reshape(-1, 2)
+        pixels = function(camera[front].reshape(-1, 1, 3), np.zeros(3), np.zeros(3), k, d)[0].reshape(-1, 2)
+        # OpenCV's default projection omits K[0,1]. Apply its skew term using
+        # the distorted normalized y coordinate for either supported model.
+        pixels[:,0] += k[0,1]*(pixels[:,1]-k[1,2])/k[1,1]
+        uv[front] = pixels
     return uv, front

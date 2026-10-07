@@ -70,9 +70,9 @@
     <section class="card trace-card" id="trace-panel" hidden><div class="preview-title"><span>Independent relative motion · live</span><span class="subtle">Each stream starts at its own zero; this chart is not a timing alignment.</span></div><canvas id="live-chart" height="240" aria-label="Live relative angle detections for both sensors"></canvas></section>
   </section>
   <section id="library" hidden>
-    <div class="page-title"><div><p class="eyebrow">PERSISTENT RESULTS</p><h1>Your processed captures</h1><p class="subtle">Every run keeps its observations, diagnostics, models and report.</p></div><button class="secondary" id="refresh-runs">Refresh</button></div>
+    <div class="page-title"><div><p class="eyebrow">PERSISTENT RESULTS</p><h1>Saved results</h1><p class="subtle">One included example. New runs appear here.</p></div><button class="secondary" id="refresh-runs">Refresh</button></div>
     <div class="card compare-banner"><div><h2>Separate time delay from fixed phase</h2><p>Select at least four distinct recordings from one device, with different speeds or directions within the same setup.</p></div><button class="primary" id="compare-runs" disabled>Compare selected runs →</button></div>
-    <div class="card table-scroll"><table class="runs-table"><thead><tr><th><input type="checkbox" id="select-latest" aria-label="Select latest completed run for each bag"></th><th>Recording / run</th><th>Status</th><th>Camera STD</th><th>Livox STD</th><th></th></tr></thead><tbody id="run-table"></tbody></table></div>
+    <div class="card table-scroll"><table class="runs-table"><thead><tr><th><input type="checkbox" id="select-latest" aria-label="Select latest completed run for each bag"></th><th>Result</th><th>Status</th><th>Camera STD</th><th>Livox STD</th><th></th></tr></thead><tbody id="run-table"></tbody></table></div>
   </section>
   <section id="results-panel" hidden>
     <div class="page-title"><div><p class="eyebrow">RUN RESULTS</p><h1 id="result-title">Capture results</h1><p id="result-subtitle" class="subtle"></p></div><div class="actions"><a id="report-link" class="secondary" target="_blank" rel="noopener">Open report ↗</a><a id="download-link" class="primary">Download artifacts ↓</a></div></div>

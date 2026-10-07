@@ -7,6 +7,7 @@ from common import save_json
 
 MAX_EDGE = 640
 SAMPLE_COUNT = 128
+MAX_PROPOSALS = 12
 
 
 def sample_frames(path, topic, progress=None):
@@ -77,7 +78,9 @@ def sample_frames(path, topic, progress=None):
 def detect(images, stamps):
     images = np.asarray(images)
     time = np.asarray(stamps, dtype=float)
-    if images.ndim != 3 or len(images) < 100 or len(time) != len(images) or not np.all(np.isfinite(time)) or not np.all(np.diff(time) > 0):
+    if (images.ndim != 3 or images.dtype != np.uint8 or min(images.shape[1:]) < 60 or
+            len(images) < 100 or time.ndim != 1 or len(time) != len(images) or
+            not np.all(np.isfinite(time)) or not np.all(np.diff(time) > 0)):
         raise ValueError('Camera discovery needs grayscale images with increasing timestamps.')
     time = time-time[0]
     height, width = images.shape[1:]
@@ -117,8 +120,10 @@ def detect(images, stamps):
             if any(np.linalg.norm(np.array([cx, cy])-p['center']) < max(a, b)*.3 for p in proposals):
                 continue
             proposals.append({'roi': [x, y, side, side], 'center': np.array([cx, cy]), 'fill': float(fill)})
+    if len(proposals)>MAX_PROPOSALS:
+        raise ValueError('Too many moving camera regions to select a unique wheel reliably. Supply a manual camera crop.')
     candidates = []
-    for proposal in proposals[:12]:
+    for proposal in proposals:
         x, y, w, h = proposal['roi']
         crops = images[:, y:y+h, x:x+w]
         try:

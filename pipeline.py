@@ -201,7 +201,7 @@ def run(request):
                                   'timing_status':t['single_bag_lag']['status']})
         job.publish();return result
     except BaseException as exc:
-        cancelled=isinstance(exc,Cancelled)
+        cancelled=isinstance(exc,(Cancelled,KeyboardInterrupt))
         signal.signal(signal.SIGTERM,signal.SIG_IGN)
         job.state.update(status='cancelled' if cancelled else 'failed',stage='cancelled' if cancelled else 'failed',message=str(exc))
         job.publish();(out/'error.txt').write_text(traceback.format_exc())

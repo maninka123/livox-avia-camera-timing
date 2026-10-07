@@ -49,11 +49,14 @@ def extract(path,config,output,progress,preview,localization=None):
     images=[];ct=[];ch=[];lt=[];lh=[];points=[];offsets=[0];full=[];point_counts=[];finite_counts=[];reference_h5=[]
     roi=config.get('resolved_camera_roi') or config['camera_roi']
     if roi is None:raise ValueError('Resolve the automatic camera crop before extraction.')
-    x,y,w,h=roi;processed=0
+    x,y,w,h=roi;processed=0;camera_size=None
     with rosbag.Bag(str(path)) as bag:
         for topic,msg,ts in bag.read_messages(topics=[config['camera_topic'],config['livox_topic']]):
             if topic==config['camera_topic']:
                 image=grayscale(msg)
+                size=(image.shape[1],image.shape[0])
+                if camera_size is None:camera_size=size
+                if size!=camera_size:raise ValueError('Camera resolution changes within this recording. Use a constant-resolution capture.')
                 if x+w>image.shape[1] or y+h>image.shape[0]:raise ValueError('Camera crop exceeds this image. Adjust the crop in acquisition settings.')
                 crop=image[y:y+h,x:x+w].copy();images.append(crop);ct.append(ts.to_sec());ch.append(msg.header.stamp.to_sec())
                 if len(images)==1 or len(images)%350==0:

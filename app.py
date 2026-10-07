@@ -33,6 +33,14 @@ def folder(run_id):
 
 def new_id(prefix):return file_prefix(prefix)+'_'+datetime.now(timezone.utc).strftime('%Y%m%dT%H%M%SZ')+'_'+uuid.uuid4().hex[:8]
 
+def example_label(identifier):
+    try:
+        example=read_json(ROOT/'example_results.json')
+        label=example.get('label')
+        return label if example.get('id')==identifier and isinstance(label,str) and label.strip() else None
+    except ValueError:
+        return None
+
 @app.errorhandler(ValueError)
 def value_error(exc):return jsonify(error=str(exc)),400
 
@@ -67,8 +75,12 @@ def summary(out):
         for part in field.split('.'):
             if not isinstance(value,dict) or part not in value:raise ValueError('The saved summary is incomplete: '+field)
             value=value[part]
-        if field.endswith(('frames','bags','points')) and (isinstance(value,bool) or not isinstance(value,(int,float)) or not np.isfinite(value) or value<0):
+        if field.endswith(('frames','bags','points')) and (isinstance(value,bool) or not isinstance(value,(int,float)) or not np.isfinite(value) or value<0 or value!=int(value)):
             raise ValueError('The saved summary has an invalid observation count: '+field)
+        if field.endswith('.rpm') and (isinstance(value,bool) or not isinstance(value,(int,float)) or not np.isfinite(value)):
+            raise ValueError('The saved summary has invalid speed data: '+field)
+        if field.endswith('candidate_tau_ms') and value is not None and (isinstance(value,bool) or not isinstance(value,(int,float)) or not np.isfinite(value)):
+            raise ValueError('The saved summary has invalid timing data: '+field)
         if field in ('id','bag') or field.endswith(('topic','status','domain')):
             if not isinstance(value,str):raise ValueError('The saved summary has an invalid field: '+field)
         if field.endswith(('heldout_residual','heldout_raw','heldout_offline_smoothed')) and not isinstance(value,dict):
@@ -255,7 +267,8 @@ def cancel_job(run_id):
 @app.get('/api/runs')
 def runs():
     rows=[]
-    for path in sorted(RESULTS.iterdir(),key=lambda p:p.stat().st_mtime_ns,reverse=True):
+    paths=(p for p in RESULTS.iterdir() if p.is_dir() and RESULTS.resolve() in p.resolve().parents)
+    for path in sorted(paths,key=lambda p:p.stat().st_mtime_ns,reverse=True):
         if not path.is_dir() or not (path/'status.json').exists():continue
         if path.name.startswith('.'):continue
         with lock:state=status(path.name,path)
@@ -264,6 +277,7 @@ def runs():
             try:result=summary(path)
             except ValueError as exc:state={**state,'status':'failed','message':str(exc)}
         rows.append({'id':path.name,'bag':state.get('bag','Cross-speed timing'),'status':state['status'],
+                     'display_label':example_label(path.name),'captures':result.get('totals',{}).get('completed_bags'),
                      'bag_path':result.get('bag_path','device_1/'+result['bag'] if result.get('bag','').endswith('.bag') else None),
                      'kind':result.get('kind',state.get('kind','detection')),'elapsed_s':state.get('elapsed_s'),'message':state.get('message'),
                      'flir_std_deg':result.get('flir',{}).get('heldout_residual',{}).get('std_deg'),
@@ -276,7 +290,7 @@ def run_result(run_id):
     if not path.exists():raise ValueError('The final result is not ready yet.')
     with lock:state=status(run_id,path.parent)
     if state['status']!='complete':raise ValueError('This run has not completed. Inspect its saved files and diagnostic log.')
-    return jsonify(summary(path.parent))
+    return jsonify({**summary(path.parent),'display_label':example_label(run_id)})
 
 @app.get('/api/runs/<path:run_id>/files')
 def run_files(run_id):
@@ -314,12 +328,17 @@ def scan_data(run_id):
     if start<0 or not 1<=limit<=1000:raise ValueError('Use a nonnegative scan start and a limit between 1 and 1000.')
     with file.open() as stream:rows=list(csv.DictReader(stream))
     typed=[]
-    for row in rows[start:start+limit]:
+    for offset,row in enumerate(rows[start:start+limit],start=start):
         item={}
         for key,value in row.items():
-            if value=='':item[key]=None
-            elif value in ('True','False'):item[key]=value=='True'
-            else:item[key]=float(value)
+            if key is None or value is None or not isinstance(value,str):
+                raise ValueError(f'Saved scan table is malformed at row {offset+1}. Inspect scan_metrics.csv or reprocess this capture.')
+            try:
+                if value=='':item[key]=None
+                elif value in ('True','False'):item[key]=value=='True'
+                else:item[key]=float(value)
+            except ValueError as exc:
+                raise ValueError(f'Saved scan table has invalid {key} at row {offset+1}. Inspect scan_metrics.csv or reprocess this capture.') from exc
         typed.append(item)
     return jsonify(native({'total':len(rows),'start':start,'rows':typed}))
 

@@ -63,7 +63,7 @@ window.TimingExplanation = (() => {
     const tauLabel=node('div',undefined,'offset-readout');const tauCaption=node('span','Estimated time offset');tauCaption.id='offset-delay-label';
     const value=node('output',tau===null?'Unavailable':`${rounded(tau)} ms`);value.id='offset-delay';value.setAttribute('aria-labelledby',tauCaption.id);tauLabel.append(tauCaption,value);
     if(tau===null || !ctx.speeds.length){
-      if(tau!==null)explanation.textContent='The saved offset is shown below. No measured rotation speed is available, so the flywheel illustration cannot be drawn.';
+      if(tau!==null)explanation.textContent='The calculated offset is shown below. No measured rotation speed is available, so the flywheel illustration cannot be drawn.';
       controls.append(tauLabel);card.append(controls);return card;
     }
     const speedLabel=node(ctx.speeds.length>1?'label':'div',undefined,'offset-readout');

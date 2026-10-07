@@ -1,50 +1,36 @@
 # App guide
 
-## Start and select data
+## Process
 
-Run `bash setup.sh` once, then `bash launch.sh`. ROS Noetic must be sourced and compatible with the Python interpreter. The local virtual environment retains ROS system packages. `STUDIO_BASE_PYTHON` selects the setup interpreter; `STUDIO_PYTHON` selects an already configured runtime interpreter.
+1. Start with `bash setup.sh`, then `bash launch.sh`.
+2. Open **http://127.0.0.1:8765** and select a device.
+3. Choose one bag or the entire folder. Topics and the camera crop are selected automatically.
+4. Start; watch counts, progress and measured detections.
+5. Open results to inspect plots, every scan, reports or downloads.
 
-Device 1 contains two example bags. Device 2–5 are empty destinations for additional recordings. Import into the selected device, or copy `.bag` files into its directory. Inspect message types/counts before processing; automatic selection prefers camera Image and Livox PointCloud2 topics. Manual selection remains available.
+Import bags into the selected device or copy them to `bagfiles/device_<n>/`. Add calibration to `calibrations/device_<n>.json`. Optional topics, crop and setup group are under **Acquisition settings**.
 
-Camera cropping defaults to automatic (`camera_roi: null`). The detector searches the full image for coherent wheel motion, then uses the measured camera position with device calibration to guide LiDAR. **Use a manual camera crop** remains available under Acquisition settings, or pass `--camera-roi X Y WIDTH HEIGHT` in the CLI. Review the setup group before timing comparisons: captures within a group must share sensor pose and phase convention. The normal/red filename suggestions apply only to these recordings.
+## Saved results
 
-## Processing and results
+One **Device 1 · example** folder is included, containing ten captures and their combined timing result. Two raw bags are distributed; all ten saved captures remain inspectable inside the example.
 
-Choose one bag or the entire device folder. The app displays stages, processed/remaining counts, elapsed time, live measured previews and angle traces. Each run saves a new directory. Folder runs isolate failures and continue with other bags. Cancellation preserves completed captures and partial artifacts. Restarting the server reconnects to matching live workers.
+New runs appear alongside the example. Each creates a fresh folder; app and CLI processing share one worker slot. Folder failures are isolated. Cancellation preserves partial output; server restarts reconnect to active workers.
 
-The result view has detection/quality/timing plots and a scan browser. Every cloud is available with input/retained point counts, relative orientation (0–360°), accumulated rotation, local RPM, depth spread and quality flags. Both angles use the first scan as zero; accumulated rotation retains every turn and is used for RPM. For scan 396 at 39.6 s and approximately −15 RPM, −3564.317° accumulated rotation corresponds to 35.683° orientation. Neither is a calibrated absolute angle. The scan CSV keeps `relative_angle_deg` as the accumulated rotation; `livox/angles.csv` also exports `relative_wrapped_angle_deg`. [Display checks](SCAN_ANGLE_CHECKS.md). Local RPM and optional LiDAR smoothing are offline quantities using future observations.
+## Read the numbers
 
-Saved reference results cover all ten original Device 1 captures. Eight source bags are absent from this distribution; their saved arrays, models, angles and scan tables remain available. The included batch is complete and its reports can be viewed immediately. Running the two examples creates a new two-capture batch, not the original ten-capture result.
+| Value | Meaning |
+|---|---|
+| Camera STD | Held-out angle repeatability |
+| Livox STD | Held-out agreement with the camera |
+| Offline STD | Agreement after smoothing with future scans |
+| Orientation | Angle from the first scan, wrapped to 0–360° |
+| Accumulated rotation | All turns from the first scan; used for RPM |
+| Time offset | Calculated fitting candidate; compare different RPMs for stronger timing evidence |
 
-## Timing interpretation
+The flywheel illustration uses the calculated offset. Its displayed value is rounded to one decimal; calculations retain full precision. Visual expansion changes the drawing only.
 
-For nearly constant-speed captures, the app displays the **estimated time offset** with a recommendation to compare different RPMs: the fixed angular difference and time delay give the same apparent separation. Their single-bag fitting minima are diagnostic candidates. Combine captures at different RPMs to estimate the shared time shift. A cross-speed comparison requires at least four distinct captures with enough signed-speed variation in stable setup groups. The two shipped +10 RPM examples do not meet this requirement.
+## Files
 
-The saved ten-capture comparison is a model-based −25.97 ms candidate, with conditional interval [−28.13, −23.81] ms. Camera content leads on bag-record time. Matching LiDAR scenes have later recorded timestamps. Exposure/per-ray timing and absolute angles require separate calibration.
+`results/<run>/` contains sensor angles/models, extracted arrays, scan tables, timing metrics, figures and reports. Folder runs also contain individual outputs in `captures/`. Use **Open report**, **Download artifacts**, or an individual file link.
 
-The flywheel explanation automatically uses the saved timing candidate. Offset and measured RPM are shown to one decimal place; calculations keep their full precision. The offset is read-only. For a folder or comparison, select the capture to illustrate, adjust visual expansion or scene time, and export SVG. Expansion changes the drawing only. Missing estimates or rotation speeds are shown as unavailable; no example values are substituted. [Illustration checks](TIMING_ILLUSTRATION_CHECKS.md).
-
-## Saved artifacts
-
-```text
-results/<run>/
-  summary.json, metadata.json, request.json, status.json
-  REPORT.md, report.html, metrics.csv
-  flir/                 Camera CSVs, features, final/validation models
-  livox/                LiDAR CSVs, features, final/validation models
-  intermediates/        Camera crops and measured central-ray arrays
-  timing/               Agreement, profiles, bootstrap, clocks
-  figures/              Detection, quality, timing, scan plots
-```
-
-Folder outputs also contain `captures/`, combined CSVs and `timing/overall_offset.json`. Numerical `flir` field/directory names are retained for format compatibility; UI labels use camera. View an HTML report directly, download a file, or export a complete run ZIP. Download all LFS objects before browsing arrays or scans.
-
-The original long-form development validation record is archived as `WORKSPACE_VALIDATION.md`. Its referenced development screenshots/scripts are workspace evidence; publication-specific checks are documented separately in `PUBLICATION_CHECKS.md`.
-
-## Automatic target search
-
-Keep the default Automatic setting. A device calibration file guides the search when valid; missing or unsupported calibration triggers independent LiDAR localization. Live previews and the saved result explain which method was used. The LiDAR result includes a full-scene localization figure and alignment review. Folder tables show the method for each capture. See [LOCALIZATION.md](../LOCALIZATION.md) for calibration and diagnostic CLI flags.
-
-## Readable results and plot sizes
-
-The interface uses a scalable text hierarchy with 16 px main text and 14–15 px supporting text. The residual correlation matrix has a compact display, while long scan-trace figures scroll inside a bounded panel. Use **Full-size image** beneath a plot to inspect its original labels and pixels. Individual scan previews load only the requested cloud instead of allocating the entire saved point array. [Readability and memory checks](READABILITY_CHECKS.md).
+Plots retain their original resolution. The correlation matrix displays compactly; long figures scroll. [Calibration](../LOCALIZATION.md) · [Methods](METHODS.md) · [Checks](APP_AUDIT.md).

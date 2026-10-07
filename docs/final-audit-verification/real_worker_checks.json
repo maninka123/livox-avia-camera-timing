@@ -1,0 +1,54 @@
+{
+  "run_id": "rig_20260828_193309_0_20261007T125540Z_deb5794c",
+  "passed": true,
+  "app_second_job_http_status": 409,
+  "second_cli_exit_status": 2,
+  "worker_exit_status": 0,
+  "worker_peak_rss_mib": 513.8671875,
+  "sampled_stages": [
+    "camera_localization",
+    "localization",
+    "extract",
+    "flir_calibration",
+    "flir_detection",
+    "flir_validation",
+    "livox_features",
+    "livox_detection",
+    "livox_validation",
+    "scan_variability",
+    "export",
+    "complete"
+  ],
+  "camera_frames": 1443,
+  "livox_scans": 423,
+  "input_points": 10152000,
+  "resolved_camera_roi": [
+    244,
+    160,
+    96,
+    96
+  ],
+  "independent_rpm": {
+    "camera": -14.99928645570143,
+    "livox": -14.99994814882784
+  },
+  "single_bag_candidate_ms": -16.000000000000014,
+  "rpm_matches_previous_run": {
+    "camera_rpm": true,
+    "livox_rpm": true
+  },
+  "required_artifacts_present": [
+    "camera_localization/summary.json",
+    "localization/summary.json",
+    "intermediates/camera_extracted.npz",
+    "intermediates/livox_extracted.npz",
+    "flir/angles.csv",
+    "livox/angles.csv",
+    "scans/scan_metrics.csv",
+    "timing/summary.json",
+    "figures/error_matrix.png",
+    "REPORT.md",
+    "report.html"
+  ],
+  "elapsed_s": 18.091739407002024
+}

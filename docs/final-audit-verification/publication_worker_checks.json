@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "run_id": "rig_20260828_191845_0_20261007T125852Z_9e71de0d",
+  "camera_frames": 1423,
+  "livox_scans": 419,
+  "input_points": 10056000,
+  "camera_roi": [
+    234,
+    146,
+    113,
+    113
+  ],
+  "localization_method": "camera_guided",
+  "independent_rpm": {
+    "camera": 9.999671842705975,
+    "livox": 10.000187120585496
+  },
+  "flir_heldout_std_deg": 0.20148111430732601,
+  "livox_heldout_std_deg": 0.4916087102086261,
+  "single_bag_candidate_ms": 45.00000000000004,
+  "elapsed_s": 19.334346330997505,
+  "runtime": "Publication Python environment with pinned requirements"
+}
