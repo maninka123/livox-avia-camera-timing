@@ -19,6 +19,47 @@ function page(name) {
   for(const id of ['workbench','library','results-panel'])$(id).hidden=id!==name;
   $('nav-workbench').classList.toggle('active',name==='workbench');
   $('nav-results').classList.toggle('active',name!=='workbench');
+  $('page-location').textContent=name==='workbench'?'Process captures':name==='library'?'Saved results':'Capture results';
+  for(const [id,active] of [['nav-workbench',name==='workbench'],['nav-results',name!=='workbench']]){if(active)$(id).setAttribute('aria-current','page');else $(id).removeAttribute('aria-current');}
+}
+async function loadCalibrationStatus(device){
+  $('calibration-status').textContent='Checking this device’s calibration…';
+  try{const data=await api(`/api/calibration?device=${encodeURIComponent(device)}`);if($('dataset-select').value!==device)return;
+    const c=data.calibration;$('calibration-status').textContent=data.message+(c?` ${c.camera_model} · ${c.image_size_wh.join(' × ')} px.`:'');
+  }catch(error){if($('dataset-select').value===device)$('calibration-status').textContent='Calibration status unavailable. Automatic localization will check it during processing.';}
+}
+function resetRecordedPreview(){
+  state.recordedPreviewVersion=(state.recordedPreviewVersion || 0)+1;state.recordedDimensions=null;
+  $('recorded-camera-preview').hidden=true;$('recorded-camera-preview').removeAttribute('src');$('crop-overlay').setAttribute('hidden','');
+  $('recorded-preview-status').hidden=false;$('recorded-preview-status').textContent='Choose a recording to preview its camera image.';
+}
+function updateCropOverlay(){
+  if(!state.recordedDimensions)return;
+  const [width,height]=state.recordedDimensions;$('crop-overlay').setAttribute('viewBox',`0 0 ${width} ${height}`);
+  for(const [attribute,id] of [['x','roi-x'],['y','roi-y'],['width','roi-w'],['height','roi-h']])$('preview-crop').setAttribute(attribute,$(id).value || '0');
+}
+function loadRecordedPreview(){
+  resetRecordedPreview();const version=state.recordedPreviewVersion;const bag=$('bag-select').value,topic=$('camera-topic').value;
+  if(!state.metadata || !topic)return;
+  $('recorded-preview-status').textContent='Loading the first recorded camera frame…';const loader=new Image();
+  loader.onload=()=>{if(version!==state.recordedPreviewVersion || bag!==$('bag-select').value || topic!==$('camera-topic').value)return;
+    state.recordedDimensions=[loader.naturalWidth,loader.naturalHeight];$('recorded-camera-preview').src=loader.src;$('recorded-camera-preview').hidden=false;$('crop-overlay').removeAttribute('hidden');$('recorded-preview-status').hidden=true;updateCropOverlay();};
+  loader.onerror=()=>{if(version===state.recordedPreviewVersion)$('recorded-preview-status').textContent='Camera preview unavailable. Check the selected topic and image encoding.';};
+  loader.src=`/api/bag-preview?name=${encodeURIComponent(bag)}&topic=${encodeURIComponent(topic)}`;
+}
+function localizationCard(result){
+  const local=result.localization;const names={camera_guided:'Camera-guided + LiDAR verification',lidar_only:'Independent LiDAR localization',legacy_checked:'Verified reference-rig fallback'};
+  const card=element('section',undefined,'card localization-result');card.append(element('div','AUTOMATIC TARGET SEARCH','localization-method'),element('h2',names[local.method] || local.method));
+  const g=local.geometry;
+  if(g)card.append(element('p',`Target depth ≈ ${number(g.foreground_depth_m,2)} m · ${local.sampled_clouds} discovery scans · every ${local.total_clouds} recorded cloud is used for angle estimation.`));
+  for(const attempt of local.attempts || []){const line=element('div',undefined,'localization-attempt');line.append(element('strong',`${names[attempt.method] || attempt.method}: ${attempt.status}. `),document.createTextNode(attempt.reason));card.append(line);}
+  if(local.preserve_reference_timing_phase)card.append(element('p','This exact reference recording retains its established H5/3 timing phase; target-centred angle tracking does not change the cross-speed zero.','field-hint'));
+  if(local.calibration_alignment_review)card.append(element('p',local.calibration_alignment_review,'field-hint'));
+  if(local.fallback_review)card.append(element('p',local.fallback_review,'field-hint'));
+  card.append(element('p','The camera guides position only. LiDAR angles and speed are inferred independently. The selected region and discovery evidence are saved with this run.'));return card;
+}
+function localizationFigure(result){
+  const fig=element('figure',undefined,'card figure-card');const img=element('img');img.src=artifact(result.id,'localization/target_localization.png');img.alt='Full LiDAR depth view, selected moving wheel region, and camera guidance';img.loading='lazy';fig.append(img,element('figcaption','Automatic localization: the full point-cloud view, depth-changing evidence and selected wheel region. Camera calibration supplies a rough spatial prior; it supplies no LiDAR angle or RPM.'));return fig;
 }
 function topicSelect(id,topics,type,suggested) {
   const select=$(id); select.replaceChildren();
@@ -30,7 +71,7 @@ function markTopics() {
   for(const row of $('topic-table').children)row.classList.toggle('selected-topic',[ $('camera-topic').value,$('livox-topic').value ].includes(row.dataset.name));
   const folder=$('process-scope').value==='folder';
   $('start').disabled=state.busy || state.starting || state.importing || !state.bags.length || (!folder && !state.metadata) || (!(folder && $('batch-auto-topics').checked) && (!state.metadata || !$('camera-topic').value || !$('livox-topic').value));
-  $('start').textContent=folder?`Process entire folder · ${state.bags.length} bags →`:'Run detection & timing →';
+  $('start').textContent=state.starting?'Preparing processing…':folder?`Process entire folder · ${state.bags.length} bags →`:'Run detection & timing →';
 }
 async function loadDatasets(preferred) {
   const atStart=$('dataset-select').value;const selected=preferred || atStart || 'device_1';
@@ -46,7 +87,7 @@ function scopeView() {
   $('bag-select-label').textContent=folder?'Preview recording · every bag below will be processed':'Recording';markTopics();
 }
 async function loadBags(preferred) {
-  const dataset=$('dataset-select').value;const version=state.catalogueVersion=(state.catalogueVersion || 0)+1;
+  const dataset=$('dataset-select').value;loadCalibrationStatus(dataset);resetRecordedPreview();const version=state.catalogueVersion=(state.catalogueVersion || 0)+1;
   state.bags=[];state.metadata=null;markTopics();
   const bags=await api(`/api/bags?dataset=${encodeURIComponent(dataset)}`);
   if(version!==state.catalogueVersion || dataset!==$('dataset-select').value)return;
@@ -60,7 +101,7 @@ async function loadBags(preferred) {
   scopeView();
 }
 async function inspectBag() {
-  const name=$('bag-select').value;const version=++state.inspectVersion;state.metadata=null;notify('');
+  const name=$('bag-select').value;const version=++state.inspectVersion;state.metadata=null;notify('');resetRecordedPreview();
   for(const id of ['camera-topic','livox-topic']){$(id).replaceChildren();$(id).disabled=true;}
   $('topic-table').replaceChildren();$('bag-facts').replaceChildren();$('recorded-at').textContent='';markTopics();
   if(!name)return;
@@ -80,8 +121,8 @@ async function inspectBag() {
       tr.append(nameCell,element('td',topic.messages.toLocaleString()),element('td',number(topic.frequency_hz,1)));$('topic-table').append(tr);
     }
     $('recorded-at').textContent=`Recorded ${new Intl.DateTimeFormat('en-AU',{dateStyle:'medium',timeStyle:'short',timeZone:'Australia/Sydney'}).format(new Date(meta.start_s*1000))} · Sydney time`;
-    $('topic-hint').textContent=meta.suggested_camera_topic && meta.suggested_livox_topic ? 'Camera and Livox Avia topics matched automatically. Change either selection if needed.' : 'Automatic selection is incomplete. Choose both compatible topics before processing.';
-    markTopics();
+    $('topic-hint').textContent=meta.suggested_camera_topic && meta.suggested_livox_topic ? 'Camera and Livox topics matched automatically. Change either selection if needed.' : 'Automatic selection is incomplete. Choose both compatible topics before processing.';
+    markTopics();loadRecordedPreview();
   }catch(error){if($('bag-select').value===name && version===state.inspectVersion){notify(error.message);$('topic-hint').textContent='Recording metadata could not be read. Automatic folder processing can report this bag as failed and continue.';markTopics();}}
 }
 function config() {
@@ -90,7 +131,7 @@ function config() {
   }
   if(!($('process-scope').value==='folder' && $('batch-auto-groups').checked) && !$('phase-group').value.trim())throw new Error('Enter a shared setup / illumination group.');
   return {camera_topic:$('camera-topic').value,livox_topic:$('livox-topic').value,phase_group:$('phase-group').value,
-    camera_roi:['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)),timing_search_ms:Number($('timing-range').value)};
+    livox_localization:'auto',camera_roi:['roi-x','roi-y','roi-w','roi-h'].map(id=>Number($(id).value)),timing_search_ms:Number($('timing-range').value)};
 }
 async function start() {
   if(state.starting || state.busy)return;
@@ -106,11 +147,11 @@ async function start() {
 }
 function resetPreviews(){
   for(const sensor of ['flir','livox']){$(`${sensor}-preview`).hidden=true;$(`${sensor}-preview`).removeAttribute('src');$(`${sensor}-placeholder`).hidden=false;$(`${sensor}-live-label`).textContent='Awaiting capture';delete state.previewKeys[sensor];}
-  $('trace-panel').hidden=true;
+  $('trace-panel').hidden=true;if($('localization-live'))$('localization-live').hidden=true;
 }
-const stageNames={queued:'Preparing your recording',starting:'Preparing your recording',batch_start:'Preparing the next recording',batch_aggregate:'Comparing all captures and scans',extract:'Reading selected sensor data',flir_calibration:'Calibrating camera appearance',flir_detection:'Detecting camera angles',flir_validation:'Validating camera detections',livox_features:'Measuring Livox return patterns',livox_detection:'Detecting Livox angles',livox_validation:'Validating Livox detections',scan_variability:'Calculating scan variability and local RPM',timing:'Analyzing sensor timing',export:'Saving reports and figures',complete:'Capture processing complete',cancelled:'Run cancelled',failed:'Processing stopped',cancelling:'Cancelling run'};
+const stageNames={localization:'Locating the flywheel automatically',queued:'Preparing your recording',starting:'Preparing your recording',batch_start:'Preparing the next recording',batch_aggregate:'Comparing all captures and scans',extract:'Reading selected sensor data',flir_calibration:'Calibrating camera appearance',flir_detection:'Detecting camera angles',flir_validation:'Validating camera detections',livox_features:'Measuring Livox return patterns',livox_detection:'Detecting Livox angles',livox_validation:'Validating Livox detections',scan_variability:'Calculating scan variability and local RPM',timing:'Analyzing sensor timing',export:'Saving reports and figures',complete:'Capture processing complete',cancelled:'Run cancelled',failed:'Processing stopped',cancelling:'Cancelling run'};
 function drawTrace(trace) {
-  const canvas=$('live-chart');const ratio=window.devicePixelRatio || 1;const width=Math.max(canvas.clientWidth-36,400);canvas.width=width*ratio;canvas.height=240*ratio;
+  const canvas=$('live-chart');const ratio=window.devicePixelRatio || 1;const width=Math.max(canvas.clientWidth-36,200);canvas.width=width*ratio;canvas.height=240*ratio;
   const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.clearRect(0,0,width,240);
   const all=[...trace.FLIR,...trace.Livox];if(!all.length)return;
   const maxT=Math.max(...all.map(p=>p.t),1);const left=40,top=14,h=180,w=width-65;
@@ -120,7 +161,7 @@ function drawTrace(trace) {
     ctx.fillStyle=color;for(const p of trace[sensor]){ctx.beginPath();ctx.arc(left+p.t/maxT*w,top+h-p.angle/360*h,1.8,0,Math.PI*2);ctx.fill();}
   }
   ctx.fillStyle='#82978a';ctx.fillText('0 s',left,223);ctx.fillText(`${maxT.toFixed(1)} s`,left+w-32,223);
-  ctx.fillStyle='#15766e';ctx.fillText('● Camera',width/2-55,223);ctx.fillStyle='#dc7937';ctx.fillText('● Livox',width/2+5,223);
+  ctx.fillStyle='#15766e';ctx.fillText('● FLIR',width/2-55,223);ctx.fillStyle='#dc7937';ctx.fillText('● Livox',width/2+5,223);
 }
 function progressView(job) {
   $('progress-panel').hidden=false;$('stage-title').textContent=stageNames[job.stage] || job.stage;$('stage-message').textContent=job.message;
@@ -136,6 +177,8 @@ function progressView(job) {
     $('batch-queue').replaceChildren();
     for(const entry of batch.entries){const row=element('tr');const m=entry.metrics || {};row.append(element('td',entry.bag_path.split('/').pop()),element('td',entry.status),element('td',number(m.camera_rpm,4)),element('td',number(m.livox_rpm,4)),element('td',`${number(m.livox_std_deg)}°`));if(entry.error)row.title=entry.error;$('batch-queue').append(row);}
   }
+  const location=job.previews?.localization;if($('localization-live'))$('localization-live').hidden=!location;
+  if(location && $('localization-preview')){$('localization-preview').src=artifact(job.id,location.path);$('localization-live-label').textContent=location.method==='camera_guided'?'Camera-guided + LiDAR evidence':location.method==='lidar_only'?'LiDAR-only fallback':'Verified reference-rig fallback';}
   for(const sensor of ['flir','livox']){
     const preview=job.previews?.[sensor];if(!preview){$(`${sensor}-preview`).hidden=true;$(`${sensor}-preview`).removeAttribute('src');$(`${sensor}-placeholder`).hidden=false;$(`${sensor}-live-label`).textContent='Awaiting capture';delete state.previewKeys[sensor];continue;}
     const key=`${preview.path}/${preview.frame}/${preview.relative_angle_deg}`;
@@ -190,7 +233,7 @@ function figure(id,name,caption) {
 }
 function metricTable(result) {
   const card=element('div',undefined,'card result-table');card.append(element('h2','Repeatability and cross-modal agreement'));
-  const table=element('table');const head=element('thead');const hr=element('tr');for(const name of ['Metric','Camera held-out repeatability','Livox held-out agreement','Livox held-out offline agreement'])hr.append(element('th',name));head.append(hr);table.append(head);
+  const table=element('table');const head=element('thead');const hr=element('tr');for(const name of ['Metric','FLIR held-out repeatability','Livox held-out agreement','Livox held-out offline agreement'])hr.append(element('th',name));head.append(hr);table.append(head);
   const body=element('tbody');const a=result.timing.agreement;
   for(const [label,key] of [['STD','std_deg'],['MAE','mae_deg'],['RMSE','rmse_deg'],['95th percentile','p95_deg']]){const row=element('tr');row.append(element('td',label),element('td',`${number(result.flir.heldout_residual[key],4)}°`),element('td',`${number(a.heldout_raw[key],4)}°`),element('td',`${number(a.heldout_offline_smoothed[key],4)}°`));body.append(row);}
   table.append(body);card.append(table);return card;
@@ -198,30 +241,31 @@ function metricTable(result) {
 function timingBox(result) {
   const lag=result.timing.single_bag_lag;const box=element('div',undefined,'card timing-box');box.append(element('h2',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Actual sensor offset: unresolved':'Time-shift candidate from varying motion'));
   box.append(element('p',lag.reason));box.append(element('p',`Conditional profile minimum ${number(lag.candidate_tau_ms,1)} ms · phase-profile 95% range [${number(lag.profile_95_low_ms,1)}, ${number(lag.profile_95_high_ms,1)}] ms · block-bootstrap 95% range [${number(lag.block_bootstrap_95_low_ms,1)}, ${number(lag.block_bootstrap_95_high_ms,1)}] ms.`));
-  box.append(element('p','A constant phase is fitted separately for every time shift. A conditional minimum is not an established physical offset. Positive tau means Livox content leads camera on bag-record time; negative tau means Camera leads.'));
+  box.append(element('p','A constant phase is fitted separately for every time shift. A conditional minimum is not an established physical offset. Positive tau means Livox content leads FLIR on bag-record time; negative tau means FLIR leads.'));
   box.append(element('p',`Camera nonlinear-motion scatter ${number(lag.camera_nonconstant_motion_std_deg,3)}°; estimated camera scatter ${number(lag.camera_noise_floor_deg,3)}°. Livox header clock: ${result.timing.clocks.livox.domain.replaceAll('_',' ')}. Different clock epochs cannot be subtracted directly.`));
   return box;
 }
 function renderDetection(result, initialTab='overview') {
   const root=$('result-body');root.replaceChildren();const agreement=result.timing.agreement;const lag=result.timing.single_bag_lag;
   const grid=element('div',undefined,'metric-grid');grid.append(
-    metric('Camera · held-out STD',number(result.flir.heldout_residual.std_deg),'°',`${result.flir.frames.toLocaleString()} native camera frames`),
-    metric('Livox · held-out STD',number(agreement.heldout_raw.std_deg),'°','Per-cloud disagreement with camera'),
+    metric('FLIR · held-out STD',number(result.flir.heldout_residual.std_deg),'°',`${result.flir.frames.toLocaleString()} native camera frames`),
+    metric('Livox · held-out STD',number(agreement.heldout_raw.std_deg),'°','Per-cloud disagreement with FLIR'),
     metric('Livox · offline STD',number(agreement.heldout_offline_smoothed.std_deg),'°',`${number(result.livox.future_lookahead_s,1)} s of future data used`),
     metric('Actual sensor offset',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Unresolved':'Candidate','',lag.status==='NOT_IDENTIFIABLE_FROM_THIS_BAG'?'Constant phase and time delay cannot be separated reliably.':'Conditional estimate; physical synchronization uncalibrated.'));
   root.append(grid);
-  const note=element('div',undefined,'card result-note');note.append(element('strong',`Camera ${number(result.flir.rpm,5)} RPM · Livox ${number(result.livox.rpm,5)} RPM. `));note.append(document.createTextNode('Each sensor infers its own speed. These metrics measure repeatability and agreement; no encoder validates absolute accuracy. Livox angles are relative, and the camera geometry zero is approximate.'));
+  const note=element('div',undefined,'card result-note');note.append(element('strong',`FLIR ${number(result.flir.rpm,5)} RPM · Livox ${number(result.livox.rpm,5)} RPM. `));note.append(document.createTextNode('Each sensor infers its own speed. These metrics measure repeatability and agreement; no encoder validates absolute accuracy. Livox angles are relative, and the camera geometry zero is approximate.'));
   if(result.flir.status==='REVIEW' || result.livox.status==='REVIEW')note.append(element('p','Detection quality requires review. Inspect branch flags and validation plots before using these results.'));
   root.append(note);
+  if(result.localization)root.append(localizationCard(result));
   root.append(TimingExplanation.mount(result));
   if(result.parent_batch){const back=element('button','← Back to device folder results','secondary');back.addEventListener('click',()=>showResult(result.parent_batch).catch(e=>notify(e.message)));root.append(back);}
-  const tabs=element('div',undefined,'tabs');const content=element('div');const choices=[['overview','Overview'],['flir','Camera detection'],['livox','Livox detection']];if(result.scans)choices.push(['scans','Individual scans']);choices.push(['timing','Timing evidence']);
+  const tabs=element('div',undefined,'tabs');const content=element('div');const choices=[['overview','Overview'],['flir','FLIR detection'],['livox','Livox detection']];if(result.scans)choices.push(['scans','Individual scans']);choices.push(['timing','Timing evidence']);
   for(const [key,label] of choices){const button=element('button',label,'tab');button.dataset.tab=key;button.addEventListener('click',()=>selectTab(key));tabs.append(button);}root.append(tabs,content);
   function selectTab(key){
-    for(const button of tabs.children)button.classList.toggle('active',button.dataset.tab===key);content.replaceChildren();
+    for(const button of tabs.children){button.classList.toggle('active',button.dataset.tab===key);button.setAttribute('aria-pressed',String(button.dataset.tab===key));}content.replaceChildren();
     if(key==='overview'){content.append(figure(result.id,'overview','Both sensors on bag-record time, with one constant angular phase alignment. This alignment does not establish a physical time offset.'),metricTable(result),figure(result.id,'error_matrix','Correlation of detection residuals; the shared angular ramp is excluded.'));}
     if(key==='flir'){content.append(figure(result.id,'flir_detection_stages','Measured grayscale rotor crops, fitted ellipse and subpixel polar intensity samples. Geometry angle is approximate.'),figure(result.id,'flir_quality','Relative motion, held-out residual distribution, appearance features and per-image residuals.'));}
-    if(key==='livox'){content.append(figure(result.id,'livox_detection_stages','Only real returned rays are displayed. Depth filtering and annulus selection retain the moving near-surface evidence.'),figure(result.id,'livox_quality','Relative cloud detections, optional offline smoothing, retained return counts, harmonic evidence and disagreement distributions.'));}
+    if(key==='livox'){if(result.localization)content.append(localizationFigure(result));content.append(figure(result.id,'livox_detection_stages','Only real returned rays are displayed. Depth filtering and annulus selection retain the moving near-surface evidence.'),figure(result.id,'livox_quality','Relative cloud detections, optional offline smoothing, retained return counts, harmonic evidence and disagreement distributions.'));}
     if(key==='scans'){content.append(figure(result.id,'scan_variability','Every Livox scan: point counts, target depth spread, angle residuals and independent local RPM. Local slopes use up to one second of future data.'));scanExplorer(result,content);}
     if(key==='timing'){content.append(timingBox(result),figure(result.id,'timing_profile','Joint phase/time profile and block-bootstrap timing distribution. A broad or boundary result is weak evidence.'),figure(result.id,'clock_diagnostics','Affine mapping of recorded header and bag clocks. These mapping residuals are not exposure-to-ray delay.'));}
   }
@@ -230,7 +274,7 @@ function renderDetection(result, initialTab='overview') {
 function renderComparison(result) {
   const model=result.multi_timing;const root=$('result-body');root.replaceChildren();const grid=element('div',undefined,'metric-grid');
   grid.append(metric('Cross-speed candidate',number(model.candidate_tau_ms,1),'ms','Stable per-setup phase is assumed.'),metric('Standard error',number(model.standard_error_ms,1),'ms','Student-t interval reported below.'),metric('Phase-fit residual STD',number(model.phase_residual_std_deg),'°',`${model.degrees_of_freedom} residual degrees of freedom`),metric('Independent captures',String(model.bags),'bags',`${model.groups.length} setup / illumination groups`));root.append(grid);
-  const box=element('div',undefined,'card timing-box');box.append(element('h2',model.status.replaceAll('_',' ').toLowerCase()),element('p',`95% interval: [${number(model.student_t_95_low_ms,1)}, ${number(model.student_t_95_high_ms,1)}] ms. ${model.reason}`),element('p','This remains a timing candidate, not calibrated physical synchronization. Positive tau means Livox content leads camera on bag-record time. No encoder or native per-ray acquisition timing is available.'));root.append(box,TimingExplanation.mount(result),figure(result.id,'cross_speed_timing','Read the timing estimate first, then compare the remaining angle gaps versus RPM after setup correction.'));
+  const box=element('div',undefined,'card timing-box');box.append(element('h2',model.status.replaceAll('_',' ').toLowerCase()),element('p',`95% interval: [${number(model.student_t_95_low_ms,1)}, ${number(model.student_t_95_high_ms,1)}] ms. ${model.reason}`),element('p','This remains a timing candidate, not calibrated physical synchronization. Positive tau means Livox content leads FLIR on bag-record time. No encoder or native per-ray acquisition timing is available.'));root.append(box,TimingExplanation.mount(result),figure(result.id,'cross_speed_timing','Read the timing estimate first, then compare the remaining angle gaps versus RPM after setup correction.'));
 }
 function scanExplorer(result, root) {
   const card=element('section',undefined,'card scan-explorer');card.id='scan-explorer';
@@ -274,7 +318,7 @@ function scanExplorer(result, root) {
     }catch(error){if(card.isConnected && version===pageVersion)notify(error.message);}
     finally{if(card.isConnected && version===pageVersion){prev.disabled=start===0;next.disabled=start+100>=result.scans.scans;}}
   }
-  index.addEventListener('change',()=>selectScan(index.value));slider.addEventListener('change',()=>selectScan(slider.value));
+  index.addEventListener('change',()=>selectScan(index.value));slider.addEventListener('input',()=>{index.value=slider.value;slider.setAttribute('aria-valuetext',`Scan ${slider.value}`);});slider.addEventListener('change',()=>selectScan(slider.value));
   prev.addEventListener('click',()=>{pageStart=Math.max(0,pageStart-100);loadPage();});next.addEventListener('click',()=>{pageStart+=100;loadPage();});
   selectScan(0);loadPage();
 }
@@ -285,18 +329,19 @@ function renderBatch(result) {
     metric('Every Livox scan',totals.livox_clouds.toLocaleString(),'clouds','All recorded clouds in successful captures.'),
     metric('Decoded LiDAR points',`${(totals.input_points/1e6).toFixed(2)}`,'million','Motion inference uses the measured target region.'),
     metric('Overall time-shift candidate',model.candidate_tau_ms===null?'Unresolved':number(model.candidate_tau_ms,1),model.candidate_tau_ms===null?'':'ms','Physical sensor synchronization remains uncalibrated.'));root.append(grid);
-  const note=element('div',undefined,'card result-note');note.append(element('strong',`${totals.camera_frames.toLocaleString()} camera frames · ${totals.livox_clouds.toLocaleString()} Livox scans. `),document.createTextNode(result.interpretation));root.append(note);
+  const note=element('div',undefined,'card result-note');note.append(element('strong',`${totals.camera_frames.toLocaleString()} FLIR frames · ${totals.livox_clouds.toLocaleString()} Livox scans. `),document.createTextNode(result.interpretation));root.append(note);
+  if(result.automatic_comparison){const a=result.automatic_comparison;const note=element('section',undefined,'card result-note');note.append(element('strong',`${a.improved_bags} / ${a.bags} captures improved with automatic localization. `),document.createTextNode(`Median per-capture STD reduction ${number(a.median_per_bag_std_reduction_percent,1)}%. One capture worsened slightly; these are agreement statistics, not absolute angle accuracy.`));root.append(note,figure(result.id,'automatic_comparison','Each bag compared with its previous fixed-region result. Camera estimates are unchanged. Lower LiDAR held-out disagreement STD is better.'));}
   root.append(TimingExplanation.mount(result));
   const issues=result.entries.filter(e=>e.status!=='complete');if(issues.length){const warning=element('div',undefined,'card timing-box');warning.append(element('h2','Captures requiring attention'));for(const entry of issues)warning.append(element('p',`${entry.bag_path}: ${entry.error || entry.status}`));root.append(warning);}
   const tableCard=element('section',undefined,'card result-table');tableCard.append(element('h2','Each capture: speed, scan variability and agreement'),element('p','Local RPM STD includes estimation noise. Target-point STD measures variation across clouds. All angular STDs below are held-out repeatability or disagreement.','field-hint'));
   const wrap=element('div',undefined,'table-scroll');const table=element('table');table.id='batch-captures';const head=element('thead');const hr=element('tr');
-  for(const title of ['Capture','Scans','Camera RPM','Livox RPM','Local RPM STD','Target points ± STD','Camera STD','Livox STD','Offline STD','Inspect'])hr.append(element('th',title));head.append(hr);table.append(head);const body=element('tbody');
-  for(const capture of result.captures){const tr=element('tr');tr.append(element('td',capture.bag));for(const value of [String(capture.livox_clouds),number(capture.camera_rpm,4),number(capture.livox_rpm,4),number(capture.livox_local_rpm_std,4),`${number(capture.target_points_mean,0)} ± ${number(capture.target_points_std,0)}`,`${number(capture.flir_std_deg)}°`,`${number(capture.livox_std_deg)}°`,`${number(capture.livox_offline_std_deg)}°`])tr.append(element('td',value));const cell=element('td');const button=element('button','View scans →','text-button');button.addEventListener('click',()=>showResult(capture.run_id,'scans').catch(e=>notify(e.message)));cell.append(button);tr.append(cell);body.append(tr);}
+  for(const title of ['Capture','Target search','Scans','Camera RPM','Livox RPM','Local RPM STD','Target points ± STD','FLIR STD','Livox STD','Offline STD','Inspect'])hr.append(element('th',title));head.append(hr);table.append(head);const body=element('tbody');
+  for(const capture of result.captures){const tr=element('tr');tr.append(element('td',capture.bag),element('td',({camera_guided:'Camera + LiDAR',lidar_only:'LiDAR-only',legacy_checked:'Verified reference',legacy:'Previous fixed region'})[capture.localization_method || 'legacy'] || capture.localization_method));for(const value of [String(capture.livox_clouds),number(capture.camera_rpm,4),number(capture.livox_rpm,4),number(capture.livox_local_rpm_std,4),`${number(capture.target_points_mean,0)} ± ${number(capture.target_points_std,0)}`,`${number(capture.flir_std_deg)}°`,`${number(capture.livox_std_deg)}°`,`${number(capture.livox_offline_std_deg)}°`])tr.append(element('td',value));const cell=element('td');const button=element('button','View scans →','text-button');button.addEventListener('click',()=>showResult(capture.run_id,'scans').catch(e=>notify(e.message)));cell.append(button);tr.append(cell);body.append(tr);}
   table.append(body);wrap.append(table);tableCard.append(wrap);root.append(tableCard);
   const tabs=element('div',undefined,'tabs');const content=element('div');
   for(const [key,label] of [['overview','Folder overview'],['variability','Scan variability'],['timing','Overall timing']]){const button=element('button',label,'tab');button.dataset.tab=key;button.addEventListener('click',()=>selectTab(key));tabs.append(button);}root.append(tabs,content);
   function selectTab(key){
-    for(const button of tabs.children)button.classList.toggle('active',button.dataset.tab===key);content.replaceChildren();
+    for(const button of tabs.children){button.classList.toggle('active',button.dataset.tab===key);button.setAttribute('aria-pressed',String(button.dataset.tab===key));}content.replaceChildren();
     if(key==='overview' && result.captures.length)content.append(figure(result.id,'batch_overview','Every capture: independent signed RPM, held-out angular scatter, and target-return count variability. RPM error bars show fold sensitivity.'),figure(result.id,'batch_return_distributions','Point-count distributions use every scan from each successful capture.'));
     if(key==='variability' && result.captures.length)content.append(figure(result.id,'batch_variability_matrix','Within-capture held-out residual STD in 20 time bins; colors reveal periods with noisier detection.'),figure(result.id,'batch_scan_traces','Each recording has its own scan-count and local RPM traces. A centered two-second slope uses future data; its variability includes estimation noise.'));
     if(key==='timing'){
@@ -319,7 +364,7 @@ async function showResult(id, initialTab) {
   try{if(result.kind==='comparison')renderComparison(result);else if(result.kind==='batch')renderBatch(result);else renderDetection(result,initialTab);}
   catch(error){$('result-body').replaceChildren(element('p','The saved result has missing or unsupported fields. Inspect its files below or rerun this capture.','notice'));notify(error.message);}
   await loadFileList(id,version);
-  if(version===state.resultVersion)window.scrollTo({top:0,behavior:'smooth'});
+  if(version===state.resultVersion)window.scrollTo({top:0,behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'});
 }
 async function loadFileList(id,version){
   let files;try{files=await api(`/api/runs/${encodeURIComponent(id)}/files`);}catch(error){if(version===state.resultVersion)throw error;return;}
@@ -350,7 +395,7 @@ function importBag(event) {
   xhr.onload=async()=>{try{const response=JSON.parse(xhr.responseText);if(xhr.status>=400)throw new Error(response.error || 'The recording could not be imported.');progress.textContent='Recording imported.';const current=$('dataset-select').value;await loadDatasets(current);if($('dataset-select').value===dataset)await loadBags(response.name);}catch(error){progress.textContent='Import failed.';notify(error.message);}finally{finish();}};
   xhr.onerror=()=>{progress.textContent='Import connection failed.';notify('Upload connection failed. Check the device folder before retrying.');finish();};xhr.onabort=()=>{progress.textContent='Import cancelled.';finish();};xhr.send(data);
 }
-$('bag-select').addEventListener('change',inspectBag);$('camera-topic').addEventListener('change',markTopics);$('livox-topic').addEventListener('change',markTopics);$('start').addEventListener('click',start);
+$('bag-select').addEventListener('change',inspectBag);$('camera-topic').addEventListener('change',()=>{markTopics();loadRecordedPreview();});$('livox-topic').addEventListener('change',markTopics);$('start').addEventListener('click',start);
 $('dataset-select').addEventListener('change',()=>loadBags().catch(e=>notify(e.message)));$('process-scope').addEventListener('change',scopeView);$('batch-auto-topics').addEventListener('change',markTopics);
 $('nav-workbench').addEventListener('click',()=>{state.resultVersion++;page('workbench');});$('nav-results').addEventListener('click',async()=>{state.resultVersion++;page('library');try{await loadRuns();}catch(e){notify(e.message);}});
 $('refresh-runs').addEventListener('click',()=>loadRuns().catch(e=>notify(e.message)));$('compare-runs').addEventListener('click',compare);$('bag-upload').addEventListener('change',importBag);
@@ -360,5 +405,7 @@ $('show-full-frame').addEventListener('click',()=>{if(!state.metadata || !$('cam
 $('full-frame').addEventListener('load',()=>{$('full-frame').hidden=false;$('frame-status').textContent='Use this image to check the target location before adjusting the crop.';});
 $('full-frame').addEventListener('error',()=>{$('full-frame').hidden=true;$('frame-status').textContent='This frame could not be decoded or loaded. Check the camera encoding and selected topic.';});
 $('close-dialog').addEventListener('click',()=>$('full-frame-dialog').close());
+$('inspect-frame').addEventListener('click',()=>$('show-full-frame').click());
+for(const id of ['roi-x','roi-y','roi-w','roi-h'])$(id).addEventListener('input',updateCropOverlay);
 async function initialize(){try{await loadDatasets();await Promise.all([loadBags(),loadRuns()]);const active=state.runs.find(r=>['queued','running','cancelling'].includes(r.status));if(active){state.currentJob=active.id;state.busy=true;$('cancel').disabled=false;await poll();}}catch(error){notify(error.message);}}
 initialize();

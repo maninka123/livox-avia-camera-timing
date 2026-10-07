@@ -20,7 +20,7 @@ from visuals import preview_image,diagnostics
 from scan_variability import analyze_scans,plot_scans
 from job_registry import remember_current
 
-STAGES={'extract':(0,18),'flir_calibration':(18,22),'flir_detection':(22,40),'flir_validation':(40,55),
+STAGES={'localization':(0,7),'extract':(7,18),'flir_calibration':(18,22),'flir_detection':(22,40),'flir_validation':(40,55),
         'livox_features':(55,60),'livox_detection':(60,74),'livox_validation':(74,87),
         'scan_variability':(87,89),'timing':(89,94),'export':(94,99)}
 
@@ -34,7 +34,7 @@ class Job:
             'elapsed_s':0,'metrics':{},'previews':{},'detections':{},'trace':{'FLIR':[],'Livox':[]}}
         signal.signal(signal.SIGTERM,self.cancel)
         remember_current(self.out)
-        self.code_hashes={str(file.relative_to(ROOT)):hashlib.sha256(file.read_bytes()).hexdigest() for file in ROOT.rglob('*.py') if 'tests' not in file.parts and 'verification' not in file.parts}
+        self.code_hashes={str(file.relative_to(ROOT)):hashlib.sha256(file.read_bytes()).hexdigest() for file in ROOT.rglob('*.py') if not any(part in ('tests','verification','.venv','.git') for part in file.parts)}
         self.publish()
     def cancel(self,*args):raise Cancelled('Processing cancelled. Partial artifacts are preserved.')
     def publish(self):
@@ -103,17 +103,17 @@ Camera nonconstant-motion scatter is {lag['camera_nonconstant_motion_std_deg']:.
 
 FLIR header-clock domain: `{clock['flir']['domain']}`. Livox header-clock domain: `{clock['livox']['domain']}`. Clock/header differences and affine mappings are in `timing/clock_metrics.csv`. Device uptime cannot be subtracted from Unix time to obtain a physical offset. The affine mapping residual is recording-clock behavior, not exposure-to-ray delay.
 
-Cross-speed timing is available after processing multiple distinct bags. Its phase observations use the common empirical H5/3 convention modulo 120°, rather than each independently learned template's arbitrary time-zero phase. A stable phase within each setup group remains an assumption. Different signed speeds within shared groups are required; the comparison reports confidence bounds and setup-dependent systematic risk. The previous −66.7 ms candidate is not reused or assumed.
+Cross-speed timing is available after processing multiple distinct bags. New-scene target-centred runs use the empirical H1 convention modulo 360°. Exact SHA256-verified known-rig inputs preserve their original H5/3 convention modulo 120° from the original sensor-coordinate rays, independently of target-centred angle tracking. Different conventions cannot be mixed; independently learned template time-zero phases are not compared directly. A stable phase within each setup group remains an assumption. Different signed speeds within shared groups are required; the comparison reports confidence bounds and setup-dependent systematic risk. The previous −66.7 ms candidate is not reused or assumed.
 
 ## Algorithms and validation
 
 FLIR: grayscale subpixel polar sampling, 12 radial rings, 12 spatial orders, 24-component appearance representation, 32-order periodic template, and continuous per-image phase registration. Camera-header time is used when valid; bag time is the fallback. The camera uses its own data only.
 
-Livox: real measured returns, four depth bands, four radial weight windows, angular harmonics 0–10 (336 features), 48-component representation, 12-order periodic template, regularized correlated-noise precision and generalized-least-squares rate refinement. Directions for missing returns are never invented. The Livox estimator accepts no camera observations.
+Livox: real measured returns from the automatically localized region (or explicitly selected reference fixed region), four depth bands, four radial weight windows, angular harmonics 0–10 (336 features), 48-component representation, 12-order periodic template, regularized correlated-noise precision and generalized-least-squares rate refinement. Directions for missing returns are never invented. The Livox angle estimator accepts no camera angle or RPM observations; optional camera geometry guides localization only.
 
 The estimators infer RPM from data; commanded 5/10/15 RPM values are not supplied. Estimated RPM calibrates the periodic appearance model and initializes a ±40° camera / ±20° Livox phase search. Observations determine the registration within that branch. These offline models assume repeated, approximately constant-speed motion in a fixed scene and are not validated for abrupt reversals.
 
-Five-fold held-out validation and a chronological first-60%/last-40% test are saved. Camera ellipse calibration and template fitting use training images only. Livox holds out 2 s blocks and purges the smoothing half-window around test observations. Parameters were developed on these hardware recordings; this is internal validation, not a benchmark on unseen rigs.
+Five-fold held-out validation and a chronological first-60%/last-40% test are saved. Automatic LiDAR localization uses discovery samples across the whole recording; these angle metrics are conditional on that shared ROI, not a fully held-out test of localization. Camera ellipse calibration and template fitting use training images only. Livox holds out 2 s blocks and purges the smoothing half-window around test observations. Parameters were developed on these hardware recordings; this is internal validation, not a benchmark on unseen rigs.
 
 ## Saved artifacts
 
@@ -121,7 +121,7 @@ Five-fold held-out validation and a chronological first-60%/last-40% test are sa
 - `flir/angles.csv`, `livox/angles.csv`: all observations with bag and header timestamps, quality flags and separate output types.
 - `flir/model.npz`, `livox/model.npz`, `validation_model_*.npz`: final and held-out appearance models.
 - `flir/features.npz`, `livox/features.npz`: all measured feature/signature intermediates.
-- `intermediates/camera_extracted.npz`, `livox_extracted.npz`: every extracted crop and measured central ray used by the algorithms. Full source observations remain in `bagfiles/{result['bag_path']}`.
+- `intermediates/camera_extracted.npz`, `livox_extracted.npz`: every extracted crop and measured selected-region ray used by the algorithms. Full source observations remain in `bagfiles/{result['bag_path']}`.
 - `scans/scan_metrics.csv`, `camera_local_rpm.csv`, `summary.json`: every Livox scan's statistics, independent local RPM traces and variability summaries.
 - `intermediates/*detection*`: selected annotated crops, measured cloud arrays and masks. Full camera example images are also saved.
 - `timing/paired_detections.csv`, `lag_profile.csv`, `bootstrap_lags.csv`, `summary.json`: all timing calculations and diagnostics.
@@ -131,21 +131,31 @@ Five-fold held-out validation and a chronological first-60%/last-40% test are sa
 
 Every run has its own folder; reprocessing creates a fresh run and preserves earlier results. Original captures and pre-existing algorithms are untouched.
 '''
+    localization=result.get('localization')
+    if localization:
+        attempts='\n'.join('- '+a['method']+': '+a['status']+' — '+a['reason'] for a in localization['attempts'])
+        text+='\n## Automatic target localization\n\nSelected method: **'+localization['method']+'**. Geometry: `'+json.dumps(native(localization['geometry']))+'`.\n\n'+attempts+'\n\n'+localization['note']+'\n\n'+localization.get('calibration_alignment_review','')+'\n\nThe camera supplies a spatial prior only; LiDAR angle and RPM remain independently inferred. `localization/` saves sampled full-scene rays, depth maps, decision history, calibration snapshot and figure. Original metre depth is preserved; exported angular coordinates are target-centred and radius-normalized.\n'
     (out/'REPORT.md').write_text(text)
     import html
     # Standalone shareable report with local images and a readable plain-text narrative.
     body='<h1>Livox / FLIR processing report</h1><pre>'+html.escape(text)+'</pre>'
     for name in ('overview','flir_detection_stages','livox_detection_stages','scan_variability','timing_profile','clock_diagnostics','error_matrix'):
         body+=f'<figure><img src="figures/{name}.png" alt="{name.replace("_"," ")}"></figure>'
+    if localization:body+='<figure><img src="localization/target_localization.png" alt="Automatic target localization"></figure>'
     (out/'report.html').write_text('<!doctype html><meta charset="utf-8"><title>Livox / FLIR report</title><style>body{max-width:1100px;margin:40px auto;padding:0 24px;font:16px system-ui;color:#233b3a}pre{white-space:pre-wrap;line-height:1.6;font:14px system-ui}img{max-width:100%}figure{margin:32px 0}</style>'+body)
 
 def run(request):
     job=Job(request);out=job.out
     try:
         config=request['config'];path=bag_path(request['bag']);source_stat=path.stat()
-        job.progress('extract',0,1,'Checking source recording identity before extraction')
+        job.progress('localization',0,1,'Checking source recording identity before target localization')
         source_hash=sha256_file(path)
-        cr,lr,meta=extract(path,config,out,job.progress,job.preview);save_json(out/'metadata.json',meta)
+        from localization import discover
+        localization=discover(path,config,out,job.progress)
+        if localization:
+            job.state['previews']['localization']={'path':'localization/target_localization.png','frame':0,'bag_stamp_s':None,'relative_angle_deg':None,'method':localization['method'],'attempts':localization['attempts']}
+            job.publish()
+        cr,lr,meta=extract(path,config,out,job.progress,job.preview,localization);save_json(out/'metadata.json',meta)
         c=flir(cr,config,out/'flir',job.progress,job.preview)
         l=livox(lr,config,out/'livox',job.progress,job.preview)
         job.progress('scan_variability',0,1,'Calculating every cloud’s point statistics and local RPM variability')
@@ -155,14 +165,14 @@ def run(request):
         t,p,paired=analyze(c,l,config,out/'timing')
         job.progress('timing',2,2,'Timing confidence and cross-modal agreement calculated')
         diagnostics(c,l,cr,lr,t,p,paired,out,job.progress)
-        plot_scans(scan_rows,c['time'],camera_rpm,out/'figures'/'scan_variability.png')
+        plot_scans(scan_rows,c['time'],camera_rpm,out/'figures'/'scan_variability.png',lr.get('geometry'))
         current_stat=path.stat()
         if (current_stat.st_size,current_stat.st_mtime_ns,current_stat.st_ino)!=(source_stat.st_size,source_stat.st_mtime_ns,source_stat.st_ino):
             raise ValueError('The source bag changed during processing. Partial files are preserved; retry with a stable recording.')
         result={'id':request['id'],'bag':path.name,'bag_path':str(path.relative_to(ROOT/'bagfiles')),
                 'device':path.parent.name if path.parent!=ROOT/'bagfiles' else None,'parent_batch':request.get('parent_batch'),
                 'config':config,'metadata':meta,'flir':c['summary'],'livox':l['summary'],'scans':scans,
-                'timing':t,'provenance':{'bag_size':source_stat.st_size,'bag_mtime_ns':source_stat.st_mtime_ns,'bag_sha256':source_hash,
+                'timing':t,'localization':localization,'provenance':{'bag_size':source_stat.st_size,'bag_mtime_ns':source_stat.st_mtime_ns,'bag_sha256':source_hash,
                                       'algorithm_sha256':job.code_hashes,'python':sys.version,'only_selected_topics_processed':True},
                 'elapsed_s':time.monotonic()-job.started}
         save_json(out/'summary.json',result);report(result,out)

@@ -1,0 +1,94 @@
+{
+  "schema_version": 1,
+  "device": "device_1",
+  "label": "Device 1 \u00b7 enclosure off",
+  "camera_model": "fisheye",
+  "image_size_wh": [
+    484,
+    366
+  ],
+  "translation_units": "metres",
+  "K": [
+    [
+      228.059423,
+      0,
+      241.320785
+    ],
+    [
+      0,
+      222.950553,
+      187.613203
+    ],
+    [
+      0,
+      0,
+      1
+    ]
+  ],
+  "D": [
+    0.06942399,
+    0,
+    0,
+    0
+  ],
+  "T_lidar_to_camera": [
+    [
+      0.05109709,
+      0.10883883,
+      -0.99274528,
+      0.05855702
+    ],
+    [
+      -0.02244409,
+      0.9939179,
+      0.10781219,
+      0.00743325
+    ],
+    [
+      0.99844146,
+      0.01677238,
+      0.0532291,
+      0.00088174
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "T_camera_to_lidar": [
+    [
+      0.05109709,
+      -0.02244409,
+      0.99844146,
+      -0.00370563
+    ],
+    [
+      0.10883883,
+      0.9939179,
+      0.01677238,
+      -0.0137761
+    ],
+    [
+      -0.99274528,
+      0.10781219,
+      0.0532291,
+      0.05728387
+    ],
+    [
+      0,
+      0,
+      0,
+      1
+    ]
+  ],
+  "source": "User-supplied enclosure-off parameters from 2026_09_29_multi_capture/CALIBRATION_PARAMETERS.md",
+  "reported_calibration_validation": {
+    "heldout_projection_error_px": 0.517,
+    "bootstrap_p95_rotation_deg": 2.11,
+    "bootstrap_p95_translation_mm": 215
+  },
+  "localization_padding_px": 40,
+  "notes": "Search prior only. These calibration validation statistics come from the September calibration run, not from the August rotating-target bags. Confirm sensor pose and enclosure state for new data."
+}

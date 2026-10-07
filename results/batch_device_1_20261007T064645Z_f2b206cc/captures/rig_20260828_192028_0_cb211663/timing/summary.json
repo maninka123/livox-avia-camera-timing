@@ -1,0 +1,122 @@
+{
+  "single_bag_lag": {
+    "status": "NOT_IDENTIFIABLE_FROM_THIS_BAG",
+    "candidate_tau_ms": -59.0,
+    "candidate_phase_deg": -255.72939104459863,
+    "profile_95_low_ms": -84.99999999999997,
+    "profile_95_high_ms": -44.999999999999986,
+    "block_bootstrap_95_low_ms": -398.675,
+    "block_bootstrap_95_high_ms": 500.0,
+    "search_limit_ms": 500.0,
+    "effective_samples": 295.13437810310285,
+    "matched_samples": 397,
+    "camera_nonconstant_motion_std_deg": 0.1816474208145517,
+    "camera_noise_floor_deg": 0.2607651412488571,
+    "rmse_at_candidate_deg": 0.39743860380273066,
+    "rmse_at_zero_deg": 0.40666195693659796,
+    "profile_rmse_range_deg": 0.027622109708933473,
+    "sign_convention": "theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.",
+    "physical_offset_calibrated": false,
+    "reason": "Constant-rate motion and an unknown sensor phase are confounded. The fitted minimum is a conditional candidate, not a measured physical offset.",
+    "bootstrap_samples": 300,
+    "bootstrap_seed": 42
+  },
+  "clocks": {
+    "flir": {
+      "sensor": "FLIR",
+      "domain": "unix_epoch",
+      "samples": 1425,
+      "record_minus_header_mean_ms": 0.7503134744209156,
+      "record_minus_header_std_ms": 0.19870308098181205,
+      "record_minus_header_p95_ms": 1.0901451110839844,
+      "affine_rate_ppm": 1.6822675190653058,
+      "affine_residual_std_ms": 0.19771243415593562,
+      "mapping_header_origin_s": 1787908830.246133,
+      "mapping_bag_origin_s": 1787908830.246849,
+      "mapping_slope": 1.000001682267519,
+      "interpretation": "Observed recording/header difference; not exposure-to-ray synchronization."
+    },
+    "livox": {
+      "sensor": "Livox",
+      "domain": "device_or_other_epoch",
+      "samples": 419,
+      "record_minus_header_mean_ms": null,
+      "record_minus_header_std_ms": null,
+      "record_minus_header_p95_ms": null,
+      "affine_rate_ppm": 34.338233857456046,
+      "affine_residual_std_ms": 1.76895450408943,
+      "mapping_header_origin_s": 6488.99967287,
+      "mapping_bag_origin_s": 1787908829.1195624,
+      "mapping_slope": 1.0000343382338575,
+      "interpretation": "Different clock epoch. Absolute sensor offset cannot be obtained by header subtraction."
+    }
+  },
+  "agreement": {
+    "raw": {
+      "n": 397,
+      "mae_deg": 0.32926468555388516,
+      "std_deg": 0.41291518194162624,
+      "rmse_deg": 0.41322414954058817,
+      "p95_deg": 0.8290793056250663,
+      "bias_deg": 0.026167129518013563
+    },
+    "offline_smoothed": {
+      "n": 397,
+      "mae_deg": 0.17885088853441639,
+      "std_deg": 0.22921854387710297,
+      "rmse_deg": 0.22893490837193753,
+      "p95_deg": 0.4718607757146286,
+      "bias_deg": 0.0015481786373513023
+    },
+    "heldout_raw": {
+      "n": 397,
+      "mae_deg": 0.3892762174168525,
+      "std_deg": 0.4886775935072314,
+      "rmse_deg": 0.49073161046705877,
+      "p95_deg": 0.9412541402682336,
+      "bias_deg": 0.05111994753486347
+    },
+    "heldout_offline_smoothed": {
+      "n": 397,
+      "mae_deg": 0.19820787012288243,
+      "std_deg": 0.2537294517556495,
+      "rmse_deg": 0.2536810311439373,
+      "p95_deg": 0.5156410420102248,
+      "bias_deg": 0.011730033325090629
+    },
+    "second_half_heldout_raw": {
+      "n": 199,
+      "mae_deg": 0.40494815554390057,
+      "std_deg": 0.5052274593335826,
+      "rmse_deg": 0.5109983729785333,
+      "p95_deg": 0.9477665466536108,
+      "bias_deg": 0.08454134424759523
+    },
+    "second_half_heldout_offline_smoothed": {
+      "n": 199,
+      "mae_deg": 0.20216773214947387,
+      "std_deg": 0.2555588273710091,
+      "rmse_deg": 0.25900375234292167,
+      "p95_deg": 0.5212885901501522,
+      "bias_deg": 0.045834724984164854
+    },
+    "alignment_phase_deg": -259.31572000900104,
+    "alignment_calibration_samples": 198,
+    "comparison_samples": 397,
+    "rate_difference_rpm": 0.000743215873939107,
+    "reference": "New per-image FLIR observations, not encoder truth; constant phase calibrated on first half."
+  },
+  "cross_speed_phase_observation": {
+    "group": "normal",
+    "omega_deg_s": 59.99911889440577,
+    "phase_delta_deg": -34.89207576076066,
+    "phase_period_deg": 120.0,
+    "phase_convention": "legacy_h5_over_3",
+    "phase_residual_std_deg": 0.41291518194162574,
+    "physical_zero_calibrated": false,
+    "convention": "Common H5 / 3, modulo 120 degrees; empirical sensor phase.",
+    "phase_delta_mod120_deg": -34.89207576076066
+  },
+  "absolute_header_offset_status": "NOT_COMPARABLE_CLOCK_EPOCHS",
+  "absolute_sensor_offset_ms": null
+}

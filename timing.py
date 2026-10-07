@@ -104,11 +104,15 @@ def analyze(camera,lidar,config,out):
                'alignment_phase_deg':offset,'alignment_calibration_samples':int(calibration.sum()),
                'comparison_samples':int(keep.sum()),'rate_difference_rpm':float(lidar['summary']['rpm']-camera['summary']['rpm']),
                'reference':'New per-image FLIR observations, not encoder truth; constant phase calibrated on first half.'}
-    phase_delta=periodic_mean(lidar['canonical'][keep]-reference[keep])
-    phase_error=periodic_residual(lidar['canonical'][keep]-reference[keep],phase_delta)
+    period=lidar['summary'].get('phase_period_deg',120)
+    convention=lidar['summary'].get('phase_convention','legacy_h5_over_3')
+    phase_delta=periodic_mean(lidar['canonical'][keep]-reference[keep],period)
+    phase_error=periodic_residual(lidar['canonical'][keep]-reference[keep],phase_delta,period)
     phase_summary={'group':config['phase_group'],'omega_deg_s':camera['summary']['rpm']*6,
-                   'phase_delta_mod120_deg':phase_delta,'phase_residual_std_deg':float(np.std(phase_error,ddof=1)),
-                   'physical_zero_calibrated':False,'convention':'Common ellipse-normalized H5 phase / 3, modulo 120 degrees; empirical sensor phase.'}
+                   'phase_delta_deg':phase_delta,'phase_period_deg':period,'phase_convention':convention,
+                   'phase_residual_std_deg':float(np.std(phase_error,ddof=1)),
+                   'physical_zero_calibrated':False,'convention':'Target-centred H1, modulo 360 degrees; empirical sensor phase.' if period==360 else 'Common H5 / 3, modulo 120 degrees; empirical sensor phase.'}
+    if period==120:phase_summary['phase_delta_mod120_deg']=phase_delta
     profile,data=lag_profile(camera_stamp,camera['smooth'][valid_camera],lidar['stamps'][~lidar['boundary']],
                              lidar['angle'][~lidar['boundary']],camera['summary']['heldout_residual']['std_deg'],config['timing_search_ms'])
     result={'single_bag_lag':profile,'clocks':{'flir':cclock,'livox':lclock},'agreement':agreement,'cross_speed_phase_observation':phase_summary,
@@ -127,10 +131,16 @@ def analyze(camera,lidar,config,out):
 def fit_multi(observations):
     if not observations or any(not isinstance(o.get('group'),str) or not o['group'].strip() for o in observations):
         raise ValueError('Every timing observation needs a shared setup group.')
+    conventions={o.get('phase_convention','legacy_h5_over_3') for o in observations}
+    periods={o.get('phase_period_deg',120) for o in observations}
+    if len(conventions)!=1 or len(periods)!=1:
+        raise ValueError('Different localization/phase conventions cannot share a timing fit. Compare like conventions, or reprocess every bag with --localization lidar_only to start a target-centred analysis. Old reference results are preserved.')
+    period=periods.pop()
+    if period not in (120,360):raise ValueError('Unsupported empirical phase period.')
     groups=sorted(set(o['group'] for o in observations));n=len(observations);g=len(groups)
     if n<g+3:raise ValueError('Select more distinct bags: each setup needs repeated speeds, and the model needs at least two residual degrees of freedom.')
     try:
-        omega=np.asarray([o['omega_deg_s'] for o in observations],dtype=float);phase=np.asarray([o['phase_delta_mod120_deg'] for o in observations],dtype=float)
+        omega=np.asarray([o['omega_deg_s'] for o in observations],dtype=float);phase=np.asarray([o['phase_delta_deg'] if 'phase_delta_deg' in o else o['phase_delta_mod120_deg'] for o in observations],dtype=float)
     except (KeyError,TypeError,ValueError) as exc:
         raise ValueError('Cross-speed timing requires numeric rotation rates and phase observations.') from exc
     if omega.shape!=(n,) or phase.shape!=(n,):raise ValueError('Every timing observation needs a scalar rate and phase.')
@@ -141,8 +151,8 @@ def fit_multi(observations):
     if np.linalg.matrix_rank(design)<g+1:raise ValueError('Time delay is not identifiable: vary signed speed within a shared setup group.')
     search=np.linspace(-1,1,4001);costs=[]
     for tau in search:
-        beta=np.asarray([periodic_mean(phase[group_index==i]-omega[group_index==i]*tau) for i in range(g)])
-        residual=periodic_residual(phase-omega*tau,beta[group_index]);cost=np.sum(residual**2)
+        beta=np.asarray([periodic_mean(phase[group_index==i]-omega[group_index==i]*tau,period) for i in range(g)])
+        residual=periodic_residual(phase-omega*tau,beta[group_index],period);cost=np.sum(residual**2)
         costs.append(cost)
     costs=np.asarray(costs);indices=np.flatnonzero((costs<=np.r_[np.inf,costs[:-1]])&(costs<=np.r_[costs[1:],np.inf]))
     candidates=[];dof=n-g-1
@@ -150,9 +160,9 @@ def fit_multi(observations):
     # equally good phase wrap (for example only +15/-15 RPM observations).
     for index in indices:
         initial=search[index]
-        beta=np.asarray([periodic_mean(phase[group_index==i]-omega[group_index==i]*initial) for i in range(g)])
+        beta=np.asarray([periodic_mean(phase[group_index==i]-omega[group_index==i]*initial,period) for i in range(g)])
         predicted=beta[group_index]+omega*initial
-        unwrapped=phase+120*np.round((predicted-phase)/120)
+        unwrapped=phase+period*np.round((predicted-phase)/period)
         coefficients=np.linalg.lstsq(design,unwrapped,rcond=None)[0];residual=unwrapped-design@coefficients
         if not any(abs(coefficients[-1]-candidate[1][-1])<1e-6 for candidate in candidates):
             candidates.append((float(np.sum(residual**2)),coefficients,residual,unwrapped))
@@ -170,8 +180,8 @@ def fit_multi(observations):
             'candidate_tau_ms':tau*1000,'standard_error_ms':se*1000,'student_t_95_low_ms':low,'student_t_95_high_ms':high,
             'phase_residual_std_deg':float(np.std(residual,ddof=g+1)),'degrees_of_freedom':dof,'bags':n,'groups':groups,
             'group_phase_intercepts_deg':{name:float(coefficients[i]) for i,name in enumerate(groups)},
-            'search_limit_ms':1000,'periodic_branches_checked':len(candidates),
+            'search_limit_ms':1000,'periodic_branches_checked':len(candidates),'phase_period_deg':period,'phase_convention':next(iter(conventions)),
             'sign_convention':SIGN,'physical_offset_calibrated':False,
-            'reason':'Cross-speed separation assumes a stable H5 phase convention and fixed sensor phase within each setup. Pose, calibration and scan-phase changes can bias this candidate.'}
+            'reason':'Cross-speed separation assumes a stable empirical harmonic phase and fixed sensor phase within each setup. Pose, localization, calibration and scan-phase changes can bias this candidate.'}
     return result,{'omega_deg_s':omega,'phase_unwrapped_deg':unwrapped,'prediction_deg':design@coefficients,
                    'residual_deg':residual,'group_index':group_index,'parameter_covariance':covariance}

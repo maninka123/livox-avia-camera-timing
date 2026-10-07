@@ -42,11 +42,11 @@ def grayscale(msg):
     if encoding!='mono8':raise ValueError('Unsupported camera encoding: '+msg.encoding)
     return raw.copy()
 
-def extract(path,config,output,progress,preview):
+def extract(path,config,output,progress,preview,localization=None):
     meta=inspect(path)
     counts={row['name']:row['messages'] for row in meta['topics']}
     total=counts[config['camera_topic']]+counts[config['livox_topic']]
-    images=[];ct=[];ch=[];lt=[];lh=[];points=[];offsets=[0];full=[];point_counts=[];finite_counts=[]
+    images=[];ct=[];ch=[];lt=[];lh=[];points=[];offsets=[0];full=[];point_counts=[];finite_counts=[];reference_h5=[]
     x,y,w,h=config['camera_roi'];processed=0
     with rosbag.Bag(str(path)) as bag:
         for topic,msg,ts in bag.read_messages(topics=[config['camera_topic'],config['livox_topic']]):
@@ -62,13 +62,25 @@ def extract(path,config,output,progress,preview):
                 if not all(field in pc.dtype.names for field in ('x','y','z')):raise ValueError('The selected LiDAR topic must contain x, y and z fields.')
                 xyz=np.column_stack([pc[field] for field in ('x','y','z')])
                 point_counts.append(len(xyz));finite_counts.append(int(np.all(np.isfinite(xyz),axis=1).sum()))
-                valid=np.all(np.isfinite(xyz),axis=1)&(xyz[:,0]>.5)
-                xyz=xyz[valid];u=xyz[:,1]/xyz[:,0];v=xyz[:,2]/xyz[:,0]
-                keep=np.hypot(u,v)<.20
-                intensity=pc['intensity'][valid][keep] if 'intensity' in pc.dtype.names else np.zeros(keep.sum())
-                p=np.column_stack([u[keep],v[keep],xyz[keep,0],intensity]).astype('f4')
+                valid=np.all(np.isfinite(xyz),axis=1)&(xyz[:,0]>(.1 if localization else .5))
+                xyz=xyz[valid]
+                if localization and localization.get('preserve_reference_timing_phase'):
+                    uv=xyz[:,1:3]/xyz[:,:1];rad=np.hypot(uv[:,0],uv[:,1])
+                    mask=(rad>.025)&(rad<.135)&(xyz[:,0]>1.2)&(xyz[:,0]<2.7)
+                    phi=np.arctan2(uv[mask,1],uv[mask,0]);weight=rad[mask]
+                    reference_h5.append(np.sum(weight*np.exp(5j*phi))/max(weight.sum(),1e-9))
+                if localization and localization.get('geometry'):
+                    from localization import transform
+                    intensity=pc['intensity'][valid] if 'intensity' in pc.dtype.names else None
+                    measured=transform(xyz,localization['geometry'],intensity)
+                    keep=np.hypot(measured[:,0],measured[:,1])<.20
+                    p=measured[keep]
+                else:
+                    u=xyz[:,1]/xyz[:,0];v=xyz[:,2]/xyz[:,0];keep=np.hypot(u,v)<.20
+                    intensity=pc['intensity'][valid][keep] if 'intensity' in pc.dtype.names else np.zeros(keep.sum())
+                    p=np.column_stack([u[keep],v[keep],xyz[keep,0],intensity]).astype('f4')
                 points.append(p);offsets.append(offsets[-1]+len(p));lt.append(ts.to_sec());lh.append(msg.header.stamp.to_sec())
-                if len(lt)==1 or len(lt)%100==0:preview('livox',p,None,len(lt)-1,ts.to_sec(),None)
+                if len(lt)==1 or len(lt)%100==0:preview('livox',p,localization.get('geometry') if localization else None,len(lt)-1,ts.to_sec(),None)
             processed+=1
             if processed%50==0 or processed==total:
                 progress('extract',processed,total,f'Reading selected topics: {len(images)} camera frames, {len(lt)} Livox clouds',
@@ -80,8 +92,15 @@ def extract(path,config,output,progress,preview):
     camera={'images':np.asarray(images),'stamps':np.asarray(ct),'headers':np.asarray(ch)}
     lidar={'points':np.concatenate(points),'offsets':np.asarray(offsets),'stamps':np.asarray(lt),'headers':np.asarray(lh),
            'total_point_counts':np.asarray(point_counts),'finite_point_counts':np.asarray(finite_counts)}
+    if reference_h5:lidar['reference_timing_h5']=np.asarray(reference_h5)
     intermediate=output/'intermediates';intermediate.mkdir(exist_ok=True)
     np.savez_compressed(intermediate/'camera_extracted.npz',**camera,crop_origin_xy=[x,y])
-    np.savez_compressed(intermediate/'livox_extracted.npz',**lidar)
+    geometry=localization.get('geometry') if localization else None
+    np.savez_compressed(intermediate/'livox_extracted.npz',**lidar,
+                        coordinate_system='target_centred' if geometry else 'sensor_y_over_x_z_over_x',
+                        depth_bounds_m=geometry['depth_bounds_m'] if geometry else [1.2,2.7],
+                        center_uv=geometry['center_uv'] if geometry else [0.,0.],
+                        radius_uv=geometry['radius_uv'] if geometry else .10)
+    lidar['geometry']=geometry;lidar['localization']=localization
     for frame,image in full:cv2.imwrite(str(intermediate/f'camera_full_frame_{frame:05d}.png'),image)
     return camera,lidar,meta

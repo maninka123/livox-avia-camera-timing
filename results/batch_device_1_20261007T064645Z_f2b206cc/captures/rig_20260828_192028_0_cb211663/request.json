@@ -1,0 +1,22 @@
+{
+  "id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_192028_0_cb211663",
+  "bag": "device_1/rig_20260828_192028_0.bag",
+  "config": {
+    "camera_topic": "/camera/image_raw",
+    "livox_topic": "/livox/lidar",
+    "camera_roi": [
+      235,
+      150,
+      110,
+      110
+    ],
+    "phase_group": "normal",
+    "timing_search_ms": 500.0,
+    "camera_order": 32,
+    "livox_order": 12,
+    "livox_smoothing_frames": 21,
+    "validation_folds": 5,
+    "livox_localization": "auto"
+  },
+  "parent_batch": "batch_device_1_20261007T064645Z_f2b206cc"
+}

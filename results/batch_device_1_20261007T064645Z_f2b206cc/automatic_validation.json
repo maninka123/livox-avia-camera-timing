@@ -1,0 +1,152 @@
+{
+  "previous_batch_id": "batch_device_1_20261007T005914Z_2e5dcccf",
+  "automatic_batch_id": "batch_device_1_20261007T064645Z_f2b206cc",
+  "bags": 10,
+  "improved_bags": 9,
+  "median_previous_std_deg": 0.6296446794921483,
+  "median_automatic_std_deg": 0.5829296088556712,
+  "median_per_bag_std_reduction_percent": 16.402074583139623,
+  "calibration_alignment_distance_px_range": [
+    30.305889626615958,
+    31.935794857733953
+  ],
+  "overall_timing": {
+    "status": "PHASE_MODEL_CANDIDATE",
+    "candidate_tau_ms": -25.946689773256537,
+    "standard_error_ms": 0.9120487126529516,
+    "student_t_95_low_ms": -28.10334227729843,
+    "student_t_95_high_ms": -23.790037269214643,
+    "phase_residual_std_deg": 0.18168466197183777,
+    "degrees_of_freedom": 7,
+    "bags": 10,
+    "groups": [
+      "normal",
+      "red"
+    ],
+    "group_phase_intercepts_deg": {
+      "normal": -33.14730021960844,
+      "red": -31.581523824976617
+    },
+    "search_limit_ms": 1000,
+    "periodic_branches_checked": 3,
+    "phase_period_deg": 120.0,
+    "phase_convention": "legacy_h5_over_3",
+    "sign_convention": "theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.",
+    "physical_offset_calibrated": false,
+    "reason": "Cross-speed separation assumes a stable empirical harmonic phase and fixed sensor phase within each setup. Pose, localization, calibration and scan-phase changes can bias this candidate.",
+    "excluded_quality_review_bags": [],
+    "excluded_duplicate_source_bags": []
+  },
+  "rows": [
+    {
+      "bag": "rig_20260828_191635_0.bag",
+      "previous_livox_std_deg": 0.6102882143880428,
+      "automatic_livox_std_deg": 0.654620893657,
+      "percent_std_reduction": -7.264220121539,
+      "camera_std_deg": 0.18763848148063547,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.897350001335144,
+      "camera_prior_distance_px": 30.305889626615958,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_191845_0.bag",
+      "previous_livox_std_deg": 0.6045135609609988,
+      "automatic_livox_std_deg": 0.4916087102086261,
+      "percent_std_reduction": 18.676975678244045,
+      "camera_std_deg": 0.201280711189568,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.8967000603675843,
+      "camera_prior_distance_px": 30.478712765108526,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192028_0.bag",
+      "previous_livox_std_deg": 0.5738409309878187,
+      "automatic_livox_std_deg": 0.4886775935072314,
+      "percent_std_reduction": 14.840931150377479,
+      "camera_std_deg": 0.2607651412488571,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.8978499472141266,
+      "camera_prior_distance_px": 31.296876996049875,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192202_0.bag",
+      "previous_livox_std_deg": 0.7886779666350091,
+      "automatic_livox_std_deg": 0.6578021626726632,
+      "percent_std_reduction": 16.594327405993536,
+      "camera_std_deg": 0.25956969585043854,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.8960000276565552,
+      "camera_prior_distance_px": 31.402568941920908,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192433_0.bag",
+      "previous_livox_std_deg": 0.6271978458532423,
+      "automatic_livox_std_deg": 0.6035821125052105,
+      "percent_std_reduction": 3.7652765397982013,
+      "camera_std_deg": 0.25146566173524604,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.8952000379562377,
+      "camera_prior_distance_px": 31.16585682684987,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192618_0.bag",
+      "previous_livox_std_deg": 0.6116467920796418,
+      "automatic_livox_std_deg": 0.46992658777133367,
+      "percent_std_reduction": 23.170268550980133,
+      "camera_std_deg": 0.2538536123910393,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.8981999635696412,
+      "camera_prior_distance_px": 31.022174455718144,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192752_0.bag",
+      "previous_livox_std_deg": 0.8221625127243011,
+      "automatic_livox_std_deg": 0.6740344515356422,
+      "percent_std_reduction": 18.016883389370875,
+      "camera_std_deg": 0.26276306972907565,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.899999976158142,
+      "camera_prior_distance_px": 31.476887036593453,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_192952_0.bag",
+      "previous_livox_std_deg": 0.6710537165794304,
+      "automatic_livox_std_deg": 0.5622771052061318,
+      "percent_std_reduction": 16.209821760285713,
+      "camera_std_deg": 0.2266973044250683,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.6867499828338623,
+      "camera_prior_distance_px": 31.570415077693156,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_193136_0.bag",
+      "previous_livox_std_deg": 0.6320915131310543,
+      "automatic_livox_std_deg": 0.5164070890838152,
+      "percent_std_reduction": 18.301847381908097,
+      "camera_std_deg": 0.2362974112892714,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.690000057220459,
+      "camera_prior_distance_px": 31.935794857733953,
+      "reference_h5_max_abs_difference": 0.0
+    },
+    {
+      "bag": "rig_20260828_193309_0.bag",
+      "previous_livox_std_deg": 0.706455103781511,
+      "automatic_livox_std_deg": 0.6742024255450794,
+      "percent_std_reduction": 4.5654250445342655,
+      "camera_std_deg": 0.23032349104307628,
+      "localization_method": "camera_guided",
+      "wheel_depth_m": 1.6864499688148498,
+      "camera_prior_distance_px": 31.63387309500421,
+      "reference_h5_max_abs_difference": 0.0
+    }
+  ]
+}

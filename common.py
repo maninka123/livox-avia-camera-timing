@@ -137,6 +137,8 @@ def validate_options(metadata, options):
     if not isinstance(config['phase_group'],str) or not config['phase_group'].strip() or len(config['phase_group'])>60:
         raise ValueError('Provide a setup/illumination group name of 1–60 characters.')
     config['phase_group']=config['phase_group'].strip()
+    if config.get('livox_localization','auto') not in ('auto','camera_guided','lidar_only','legacy'):
+        raise ValueError('Unknown target localization method. Use auto, camera_guided, lidar_only or legacy.')
     try:config['timing_search_ms']=float(config['timing_search_ms'])
     except (TypeError,ValueError):raise ValueError('Timing search must be a number between 10 and 2000 ms.')
     if not 10<=config['timing_search_ms']<=2000:raise ValueError('Timing search must be between 10 and 2000 ms.')

@@ -1,5 +1,14 @@
 [
   {
+    "name": "rig_20260828_191635_0.bag",
+    "size_bytes": 596944455,
+    "sha256": "ca3953218f88a5a4dcd233c29c96bfcee920e3f62ed61e506ee28b5ef3c6d986",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_191635_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
     "name": "rig_20260828_191845_0.bag",
     "size_bytes": 599397873,
     "sha256": "c852bf9c0df565a01e6ed451a42fcd105acb37a97a4f1d6545f0ffe89c6e798d",
@@ -18,5 +27,68 @@
     "device": "device_1",
     "raw_bag_in_repository": true,
     "selection_joint_residual_std_deg": 0.6303109335617644
+  },
+  {
+    "name": "rig_20260828_192202_0.bag",
+    "size_bytes": 612671184,
+    "sha256": "9e30a562f0d4d2d5a1a5b3023af12c5305b3f80cc89f56fa9fbb56d2dbee03b4",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192202_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_192433_0.bag",
+    "size_bytes": 607151987,
+    "sha256": "4342dec1fc61f39598729fd1076d9b121709048bf6ffe9cf000abd97a4055488",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192433_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_192618_0.bag",
+    "size_bytes": 605420749,
+    "sha256": "7e798f5f5ce451fd8e0c4654fc4705b29d0a8544d7dc35a66c9ef522693220c3",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192618_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_192752_0.bag",
+    "size_bytes": 605486762,
+    "sha256": "dd14f35865a0259c528c4e0661e32c60fd54b11ba49138c3244d8740917d7c80",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192752_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_192952_0.bag",
+    "size_bytes": 600996023,
+    "sha256": "e940d2b9c93814cf339f4ea03a121360ba53a7af447312c49c4be171ccc15012",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_192952_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_193136_0.bag",
+    "size_bytes": 602126773,
+    "sha256": "b905c454bbb85f2bbc3a8828c3429689b8395ad5abefe98017a6a572714bad92",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_193136_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
+  },
+  {
+    "name": "rig_20260828_193309_0.bag",
+    "size_bytes": 609889635,
+    "sha256": "2dc7b129540424e98ac10d200664c49b37b0ea338f99fcf8003d8430d33007cf",
+    "independent_file_copy": true,
+    "path": "device_1/rig_20260828_193309_0.bag",
+    "device": "device_1",
+    "raw_bag_in_repository": false
   }
 ]

@@ -1,0 +1,59 @@
+{
+  "scans": 420,
+  "all_recorded_clouds_processed": true,
+  "input_points_total": 10080000,
+  "angular_coordinates": "target-centred, radius-normalized",
+  "local_rpm_window_s": 2.0,
+  "local_rpm_uses_future_s": 1.0,
+  "livox_local_rpm": {
+    "n": 420,
+    "mean": 10.00086940267555,
+    "std": 0.02169302046111099,
+    "median": 9.999442601322793,
+    "p05": 9.965848273121454,
+    "p95": 10.036418431562222,
+    "min": 9.94999707509445,
+    "max": 10.076604558077419
+  },
+  "flir_local_rpm": {
+    "n": 1426,
+    "mean": 10.000308536451056,
+    "std": 0.013958946123682427,
+    "median": 10.001068323909127,
+    "p05": 9.977411723976273,
+    "p95": 10.02138660464547,
+    "min": 9.955531959969422,
+    "max": 10.071031166337937
+  },
+  "input_point_count": {
+    "n": 420,
+    "mean": 24000.0,
+    "std": 0.0,
+    "median": 24000.0,
+    "p05": 24000.0,
+    "p95": 24000.0,
+    "min": 24000.0,
+    "max": 24000.0
+  },
+  "target_point_count": {
+    "n": 420,
+    "mean": 859.9333333333333,
+    "std": 136.30922774638054,
+    "median": 837.0,
+    "p05": 659.8,
+    "p95": 1095.2499999999998,
+    "min": 600.0,
+    "max": 1176.0
+  },
+  "target_depth_std_m": {
+    "n": 420,
+    "mean": 0.10363831435957815,
+    "std": 0.010375484680367203,
+    "median": 0.10323809610074376,
+    "p05": 0.08651981772274486,
+    "p95": 0.12081062682805836,
+    "min": 0.07773393696206984,
+    "max": 0.129641069955555
+  },
+  "explanation": "Local RPM is a centered 2-second phase slope, using up to 1 second of future data. Its scatter includes detection noise and model effects. Point-depth spread describes spatial returns, not rotor-angle error. Every recorded cloud is decoded; motion inference uses the target region, and the full cloud remains in the source bag."
+}

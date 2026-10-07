@@ -1,0 +1,4 @@
+metric,FLIR own-fit residual,Livox held-out disagreement,Livox filtered disagreement
+FLIR own-fit residual,1.0,-0.28605012421223996,-0.5899742036877305
+Livox held-out disagreement,-0.28605012421223996,1.0,0.3968956321484594
+Livox filtered disagreement,-0.5899742036877305,0.39689563214845947,1.0

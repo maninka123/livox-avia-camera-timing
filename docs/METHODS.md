@@ -11,12 +11,14 @@ The motion trajectory initializes the local phase branch; frame registration doe
 
 ## Livox Avia angle estimation
 
-1. Decode every selected PointCloud2 message; retain finite measured returns in the central angular region. Work in normalized ray coordinates and observed depth.
-2. Construct 336 channels over four depth bands and four radial weights, using angular harmonics 0–10, including background evidence.
-3. Initialize signed speed from an empirical H5 signature winding three times per physical revolution in this rig. Learn a periodic return model and a regularized training-only noise covariance.
-4. Register each cloud against the weighted model and flag phase-search boundaries or weak observations. Export raw phases, modeled trajectories, and a separate optional 21-cloud offline smoother.
+1. Sample the full forward view to find a compact depth-changing envelope; verify coherent rotation with several angular harmonics. A calibrated camera centre is an optional spatial prior, with a LiDAR-only retry.
+2. Decode every selected PointCloud2 message. Normalize angular rays around the learned target centre/radius; retain original forward depth in metres and learn foreground/background feature bands.
+3. Construct 336 depth/radial/angular channels. Estimate signed speed from several measured spatial orders, learn a periodic return model, and regularize training-only noise covariance.
+4. Register each cloud against the weighted model. Export raw phases, quality flags, modeled trajectories, and a separately labelled 21-cloud offline smoother.
 
-The H5/3 relation is specific to these captures. Target geometry, depth gates, crop and speed limits require review before using another rig. Livox physical absolute angle zero is uncalibrated. The smoother uses roughly one second of future observations; local RPM uses a centered two-second phase slope.
+Automatic searches that fail do not use arbitrary fixed geometry. Only exact source-SHA-verified original rig recordings qualify for a fixed-region backup after independent signal checks; ambiguous multiple targets remain unresolved. [Selection rules and calibration format](../LOCALIZATION.md).
+
+The `--localization legacy` diagnostic reproduces the original central-region, empirical H5/3 method. Automatic original-recording timing retains that signature directly from the original rays, separately from improved target-centred relative angles. New-scene H1 timing is modulo 360°; mixed conventions are rejected. Absolute angle zero remains uncalibrated. Discovery geometry uses the full sequence, so angle validation is conditional on this shared ROI.
 
 ## Validation and bag selection
 
@@ -30,7 +32,7 @@ The two distributed bags minimize `sqrt(camera_heldout_STD² + livox_heldout_agr
 
 For approximately constant motion, the phase difference is `phase_group + omega * tau`, with signed angular rate `omega = 6 * RPM` in degrees/second. A single speed cannot distinguish fixed phase from delay. The single-bag analysis therefore fits free phase at every lag, bootstraps one-second blocks, and reports unresolved timing when motion variation is insufficient.
 
-Cross-speed regression estimates a shared delay and one phase intercept per genuinely stable rig/illumination group. Livox phase is anchored to the empirical H5/3 convention modulo 120°. All candidate circular branches inside ±1000 ms are checked; competing plausible branches or a best minimum outside the range leave the result unresolved. Distinct source SHA256 hashes prevent renamed recordings from becoming independent replicates.
+Cross-speed regression estimates a shared delay and one phase intercept per genuinely stable rig/illumination group. For the exact reference recordings, Livox timing phase is anchored to the empirical H5/3 convention modulo 120°; new scenes use target-centred H1 modulo 360°. All candidate circular branches inside ±1000 ms are checked; competing plausible branches or a best minimum outside the range leave the result unresolved. Distinct source SHA256 hashes prevent renamed recordings from becoming independent replicates.
 
 The ten-bag result uses two groups, normal/red, and seven residual degrees of freedom. Its standard error and Student-t interval are conditional regression uncertainty. The phase residual STD describes scatter about that fitted model. None includes unmeasured systematic timing/phase bias.
 

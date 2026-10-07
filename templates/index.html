@@ -2,38 +2,40 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Livox Avia + Camera · Capture Studio</title>
+  <title>Livox Avia + Camera · Timing Studio</title>
   <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/static/style.css">
   <script defer src="/static/timing_explanation.js"></script>
   <script defer src="/static/app.js"></script>
 </head>
 <body>
+<a class="skip-link" href="#main-content">Skip to workspace</a>
 <aside class="sidebar">
-  <a class="brand" href="/" aria-label="Capture Studio home"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M20 20 L20 4 A16 16 0 0 1 34 28 Z" fill="currentColor"/><circle cx="20" cy="20" r="4" fill="#183c39"/></svg><span>CAPTURE<span class="brand-sub">STUDIO</span></span></a>
+  <a class="brand" href="/" aria-label="Timing Studio home"><span class="brand-mark"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="15" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M20 20V5a15 15 0 0 1 13 22z" fill="currentColor"/><circle cx="20" cy="20" r="3" fill="#fff"/></svg></span><span>Timing Studio<span class="brand-sub">LIVOX AVIA + CAMERA</span></span></a>
   <p class="side-label">WORKSPACE</p>
-  <button class="nav active" id="nav-workbench">◉ <span>Process captures</span></button>
-  <button class="nav" id="nav-results">▤ <span>Saved results</span><span id="run-count" class="count">0</span></button>
-  <div class="side-rule"></div><p class="side-label">CONNECTED DATA</p>
+  <button class="nav active" id="nav-workbench" aria-current="page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8V5a1 1 0 0 1 1-1h3m8 0h3a1 1 0 0 1 1 1v3m0 8v3a1 1 0 0 1-1 1h-3m-8 0H5a1 1 0 0 1-1-1v-3M4 12h16"/></svg><span>Process captures</span></button>
+  <button class="nav" id="nav-results"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M4 10h16M10 10v10"/></svg><span>Saved results</span><span id="run-count" class="count">0</span></button>
+  <div class="side-rule"></div><p class="side-label">SENSOR PAIR</p>
   <div class="sensor-label"><i class="dot teal"></i> Camera <span>Images</span></div>
-  <div class="sensor-label"><i class="dot orange"></i> Livox LiDAR <span>Point clouds</span></div>
+  <div class="sensor-label"><i class="dot orange"></i> Livox Avia <span>Point clouds</span></div>
   <div class="side-bottom"><i class="dot teal"></i> Local processing<span>Data and results stay in this workspace.</span></div>
 </aside>
-<main>
-  <header><span class="breadcrumb">Capture Studio <span>/</span> Livox Avia + Camera</span><span class="local-pill">● Local workspace</span></header>
+<main id="main-content" tabindex="-1">
+  <header><span class="breadcrumb">Workspace <span>/</span> <strong id="page-location">Process captures</strong></span><span class="local-pill"><i class="dot teal"></i> Local workspace</span></header>
   <div id="notice" class="notice" role="alert" hidden></div>
-  <section id="workbench">
-    <div class="page-title"><div><p class="eyebrow">SENSOR MOTION & TIMING</p><h1>Process a bag or device folder</h1><p class="subtle">Inspect every scan, compare captured speeds, and calculate overall timing evidence.</p></div><span class="outline-pill">Two independent estimators</span></div>
+  <section id="workbench" tabindex="-1">
+    <div class="page-title"><div><p class="eyebrow">LIVOX AVIA + CAMERA</p><h1>Bring your captures<br>into focus.</h1><p class="subtle">Two sensor streams. Independent angle estimates.<br class="desktop-break"> Clear timing evidence, from every recorded scan.</p></div><div class="hero-pair"><span><i class="dot teal"></i>Camera</span><span class="pair-join">+</span><span><i class="dot orange"></i>Livox Avia</span><small>One workspace for motion & timing</small></div></div>
     <div class="setup-grid">
       <section class="card setup-card">
-        <div class="card-heading"><span class="step-number">01</span><div><h2>Select your dataset</h2><p>Choose one recording or process every bag in a device folder.</p></div></div>
+        <div class="card-heading"><span class="step-number">1</span><div><h2>Choose your capture</h2><p>Choose one recording or process every bag in a device folder.</p></div></div>
         <div class="field-row"><div><label for="dataset-select">Device folder</label><select id="dataset-select"><option value="device_1">Device 1</option></select></div><div><label for="process-scope">Processing scope</label><select id="process-scope"><option value="bag">One bag file</option><option value="folder">Entire device folder</option></select></div></div>
         <p class="field-hint" id="dataset-hint"></p>
         <label for="bag-select" id="bag-select-label">Recording</label><select id="bag-select"><option value="">Loading recordings…</option></select>
-        <div id="batch-options" hidden><label class="checkbox-line"><input id="batch-auto-topics" type="checkbox" checked> Automatically match Camera and Livox topics in each bag</label><label class="checkbox-line"><input id="batch-auto-groups" type="checkbox" checked> Use each bag's suggested setup / illumination group</label><p class="field-hint">The recording below previews one bag. Folder mode processes every recording in the selected device. Clear a checkbox to apply the topics or group selected here to every bag.</p></div>
+        <div id="batch-options" hidden><label class="checkbox-line"><input id="batch-auto-topics" type="checkbox" checked> Automatically match camera and Livox topics in each bag</label><label class="checkbox-line"><input id="batch-auto-groups" type="checkbox" checked> Use each bag's suggested setup / illumination group</label><p class="field-hint">The recording below previews one bag. Folder mode processes every recording in the selected device. Clear a checkbox to apply the topics or group selected here to every bag.</p></div>
         <div class="bag-facts" id="bag-facts"><span>— duration</span><span>— size</span><span>— topics</span></div>
         <div class="field-row"><div><label for="camera-topic"><i class="dot teal"></i> Camera image topic</label><select id="camera-topic" disabled></select></div><div><label for="livox-topic"><i class="dot orange"></i> Livox cloud topic</label><select id="livox-topic" disabled></select></div></div>
         <p class="field-hint" id="topic-hint">Compatible topics are selected automatically; you can change either selection.</p>
+        <div class="localization-status"><span class="auto-symbol" aria-hidden="true">✦</span><div><strong>Automatic target search</strong><p id="calibration-status">Checking this device’s calibration…</p></div></div>
         <details id="acquisition-settings"><summary>Acquisition settings</summary><div class="settings-body">
           <label for="phase-group">Shared setup / illumination group</label><input id="phase-group" value="normal" maxlength="60"><p class="field-hint">Use the same group only when sensor pose and illumination remain consistent. Used for cross-speed timing.</p>
           <label>Camera crop · x, y, width, height (pixels)</label><div class="crop-fields"><input id="roi-x" aria-label="Crop x" type="number" min="0" value="235"><input id="roi-y" aria-label="Crop y" type="number" min="0" value="150"><input id="roi-w" aria-label="Crop width" type="number" min="60" value="110"><input id="roi-h" aria-label="Crop height" type="number" min="60" value="110"></div>
@@ -44,10 +46,11 @@
         <div class="actions"><button id="start" class="primary" disabled>Run detection & timing <span>→</span></button><label class="import-button" for="bag-upload">Import .bag<input id="bag-upload" type="file" accept=".bag" hidden></label></div>
         <div class="import-progress" id="import-progress" hidden></div>
       </section>
-      <section class="card topic-card"><div class="card-heading"><span class="step-number">02</span><div><h2>Inspect the recorded data</h2><p>Only the selected image and cloud topics are processed.</p></div></div>
-        <div class="table-scroll"><table><thead><tr><th>Topic</th><th>Messages</th><th>Avg /s</th></tr></thead><tbody id="topic-table"><tr><td colspan="3" class="empty-cell">Choose a recording to inspect its topics.</td></tr></tbody></table></div>
+      <section class="card topic-card"><div class="card-heading"><span class="step-number">2</span><div><h2>Know what’s in your bag</h2><p>Only the selected image and cloud topics are processed.</p></div></div>
+        <div class="table-scroll topic-scroll"><table><thead><tr><th>Topic</th><th>Messages</th><th>Avg /s</th></tr></thead><tbody id="topic-table"><tr><td colspan="3" class="empty-cell">Choose a recording to inspect its topics.</td></tr></tbody></table></div>
         <p class="field-hint">Rates are averaged over the bag duration; arrival bursts do not indicate the sensor's sampling rate.</p>
         <p class="recorded-at" id="recorded-at"></p>
+        <div class="recorded-view"><div class="recorded-view-heading"><span>Camera view <small>First recorded frame</small></span><button class="text-button" id="inspect-frame">Expand ↗</button></div><div class="recorded-image-wrap"><img id="recorded-camera-preview" alt="First recorded camera image with the configured crop outlined" hidden><svg id="crop-overlay" aria-hidden="true" hidden><rect id="preview-crop" fill="none" stroke="#64e8bd" stroke-width="2"/></svg><p id="recorded-preview-status">Choose a recording to preview its camera image.</p></div><p class="field-hint">The outline shows the camera crop. Target localization is verified during processing.</p></div>
       </section>
     </div>
     <section id="progress-panel" class="card progress-card" hidden>
@@ -56,11 +59,12 @@
       <div class="progress-numbers"><span><strong id="processed">0</strong> processed this stage</span><span><strong id="remaining">0</strong> remaining this stage</span><span>Elapsed <strong id="elapsed">0s</strong></span></div>
       <div class="stage-steps"><span id="step-extract">Read bag</span><span id="step-flir">Camera detection</span><span id="step-livox">Livox detection</span><span id="step-timing">Timing evidence</span><span id="step-export">Save results</span></div>
     </section>
+    <section id="localization-live" class="card localization-live" hidden><div class="preview-title"><span>Flywheel location verified</span><span id="localization-live-label" class="subtle"></span></div><img id="localization-preview" alt="Automatic flywheel localization in the full LiDAR view and camera image"></section>
     <section id="batch-progress" class="card batch-progress" hidden><div class="card-heading"><div><h2>Folder queue</h2><p id="batch-progress-summary"></p></div></div><div class="table-scroll"><table><thead><tr><th>Capture</th><th>Status</th><th>Camera RPM</th><th>Livox RPM</th><th>Livox STD</th></tr></thead><tbody id="batch-queue"></tbody></table></div></section>
     <div class="live-heading"><h2>Detection previews</h2><span class="subtle" id="preview-note">Measured data appears here as the run progresses.</span></div>
     <div class="preview-grid">
-      <section class="card preview-card"><div class="preview-title"><span><i class="dot teal"></i> Camera</span><span id="flir-live-label" class="mono">Awaiting capture</span></div><div class="preview-content" id="flir-placeholder"><div class="empty-icon">◉</div><p>Rotor images and calibration overlay</p><span>Every camera frame is processed.</span></div><img id="flir-preview" alt="Live Camera rotor crop with calibration overlay and frame details" hidden></section>
-      <section class="card preview-card"><div class="preview-title"><span><i class="dot orange"></i> Livox LiDAR</span><span id="livox-live-label" class="mono">Awaiting capture</span></div><div class="preview-content" id="livox-placeholder"><div class="empty-icon">⠿</div><p>Measured point cloud and retained returns</p><span>Only real observed rays are used.</span></div><img id="livox-preview" alt="Live Livox measured-ray crop with near-surface filtering and frame details" hidden></section>
+      <section class="card preview-card"><div class="preview-title"><span><i class="dot teal"></i> Camera</span><span id="flir-live-label" class="mono">Awaiting capture</span></div><div class="preview-content" id="flir-placeholder"><div class="empty-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><rect x="10" y="18" width="44" height="31" rx="8"/><path d="m23 18 4-6h10l4 6"/><circle cx="32" cy="33" r="9"/></svg></div><p>Wheel images & calibrated outline</p><span>Every camera frame is processed.</span></div><img id="flir-preview" alt="Live camera rotor crop with calibration overlay and frame details" hidden></section>
+      <section class="card preview-card"><div class="preview-title"><span><i class="dot orange"></i> Livox Avia</span><span id="livox-live-label" class="mono">Awaiting capture</span></div><div class="preview-content" id="livox-placeholder"><div class="empty-icon"><svg viewBox="0 0 64 64" aria-hidden="true"><circle cx="32" cy="32" r="20" stroke-dasharray="2 8"/><circle cx="32" cy="32" r="11" stroke-dasharray="2 6"/><circle cx="32" cy="32" r="2"/></svg></div><p>Point clouds & selected target returns</p><span>Only real observed rays are used.</span></div><img id="livox-preview" alt="Live Livox measured-ray crop with near-surface filtering and frame details" hidden></section>
     </div>
     <section class="card trace-card" id="trace-panel" hidden><div class="preview-title"><span>Independent relative motion · live</span><span class="subtle">Each stream starts at its own zero; this chart is not a timing alignment.</span></div><canvas id="live-chart" height="240" aria-label="Live relative angle detections for both sensors"></canvas></section>
   </section>

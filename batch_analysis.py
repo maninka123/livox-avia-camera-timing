@@ -17,7 +17,10 @@ def timing_plot(model, data, path):
 def summarize_capture(result):
     agreement=result['timing']['agreement'];scans=result['scans']
     return {'bag':result['bag'],'bag_path':result['bag_path'],'run_id':result['id'],
-            'group':result['config']['phase_group'],'camera_frames':result['flir']['frames'],
+            'group':result['config']['phase_group'],
+            'localization_method':(result.get('localization') or {}).get('method','legacy'),
+            'localization_review':(result.get('localization') or {}).get('calibration_alignment_review',''),
+            'phase_convention':result['livox'].get('phase_convention','legacy_h5_over_3'),'camera_frames':result['flir']['frames'],
             'livox_clouds':result['livox']['frames'],'input_points_total':scans['input_points_total'],
             'camera_rpm':result['flir']['rpm'],'livox_rpm':result['livox']['rpm'],
             'camera_fold_rpm_std':describe(result['flir']['fold_rpm'])['std'],

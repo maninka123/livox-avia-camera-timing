@@ -20,15 +20,23 @@ bash launch.sh
 
 Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the entire folder → inspect topics → **Start processing**. Change the crop/topics for your own recordings. Use `bash launch.sh --port 8766` for another port.
 
-**Explore without processing:** open **Saved results** to view the included ten-capture Device 1 analysis and cross-speed comparison. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. The complete LFS download is about **1.7 GB**.
+**Explore without processing:** open **Saved results** to view the included previous and automatic ten-capture Device 1 analyses. Bags and numerical arrays use [Git LFS](https://docs.github.com/en/repositories/working-with-files/managing-large-files/about-git-large-file-storage); a normal ZIP download may contain pointers instead of data. The complete LFS download is about **2.3 GB**.
 
 ## What you can do
 
-- Process one bag or a device folder, with automatic/manual camera and LiDAR topic selection.
+- Process one bag or a device folder; the app selects sensor topics and locates the flywheel automatically.
 - Watch progress, remaining counts, measured detections, and relative-angle traces.
 - Inspect every point cloud: angle, local RPM, target returns, depth spread, and quality flags.
 - Compare captures and explore exaggerated flywheel/timestamp diagrams explaining the offset.
 - Save angles, models, intermediate arrays, plots, metrics, HTML/Markdown reports, and ZIP bundles under a fresh `results/<run>/`.
+
+## Automatic target finding
+
+No method selector is needed. **Camera calibration + LiDAR evidence** is tried first; unsupported or missing calibration falls back to **LiDAR-only**. The app shows the selected method and reasons. A checked fixed-region fallback is restricted to exact original recordings; ambiguous or unknown scenes remain unresolved.
+
+Your supplied intrinsics/extrinsics are saved in [`calibrations/device_1.json`](calibrations/device_1.json). Add a matching device file for your own rig: calibration helps locate the wheel in the point cloud. The supplied fisheye calibration is for **484 × 366 pixels**, with translation in metres. These bags show roughly **31 px** of camera/LiDAR centre disagreement, flagged for alignment review. [Calibration and fallback details](LOCALIZATION.md).
+
+![Full-scene LiDAR evidence and camera-guided target localization](target_localization.png)
 
 ## Methods
 
@@ -36,12 +44,14 @@ Open **http://127.0.0.1:8765** → choose **Device 1** → select one bag or the
 
 | Camera | Livox Avia |
 |---|---|
-| Moving-region ellipse calibration; subpixel polar sampling; normalized grayscale harmonics. | Measured-ray depth/radial/angular signatures: 336 features with regularized correlated-noise weighting. |
+| Moving-region ellipse calibration; subpixel polar sampling; normalized grayscale harmonics. | Locate a compact depth-changing envelope; normalize its measured centre/radius; build 336 return features. |
 | Learn a periodic appearance model; refine each frame's phase. | Learn a periodic return model; refine each cloud's phase. |
 
-Each sensor estimates signed RPM from **its own data**; commanded motor RPM is never supplied. Speed initializes a phase-search branch, so the estimator still assumes repeated, approximately constant-speed motion. Five-fold and chronological validation report repeatability/agreement. Optional offline LiDAR smoothing uses future scans and is labeled separately.
+Camera geometry can guide localization; camera angles and RPM never enter LiDAR angle estimation. Each sensor estimates signed RPM from **its own data**; commanded motor RPM is never supplied. Speed initializes a phase-search branch, so the estimator still assumes repeated, approximately constant-speed motion. Five-fold and chronological validation report repeatability/agreement. Optional offline LiDAR smoothing uses future scans and is labeled separately.
 
 <p><img src="camera_detection.png" width="49%" alt="Measured camera crop, calibrated rotor, and polar appearance"><img src="livox_detection.png" width="49%" alt="Measured Livox returns and extracted rotation features"></p>
+
+For the original SHA256-verified recordings, a separate H5/3 timing signature preserves the previous phase convention while angle tracking uses the localized target. New scenes use H1; incompatible timing conventions cannot be mixed.
 
 Timing profiles a free phase for each lag. Across different signed speeds in a shared setup, circular phase regression separates fixed phase from a common delay and checks alternate wrap branches. A single constant-speed bag cannot establish the physical offset.
 
@@ -51,12 +61,30 @@ Two original bags are under [`bagfiles/device_1/`](bagfiles/device_1/); Device 2
 
 | Bag | Measured camera RPM | Camera held-out STD | LiDAR held-out agreement STD |
 |---|---:|---:|---:|
-| `rig_20260828_192028_0.bag` | +9.99985 | 0.261° | 0.574° |
-| `rig_20260828_191845_0.bag` | +9.99967 | 0.201° | 0.605° |
+| `rig_20260828_192028_0.bag` | +9.99985 | 0.261° | 0.489° |
+| `rig_20260828_191845_0.bag` | +9.99967 | 0.201° | 0.492° |
 
-These rank first/second by the ranking score `sqrt(camera_STD² + LiDAR_agreement_STD²)` among ten captures. This is a selection heuristic, **not an absolute accuracy measurement**. See [all rankings](docs/bag_quality_ranking.csv) and [SHA256 manifest](bagfiles/manifest.json). Both examples have approximately +10 RPM; processing these two alone leaves overall timing unresolved. Positive/negative RPM indicates direction in the estimator's angle convention.
+The table uses the updated automatic method. These bags were selected using the previous estimates and rank first/second by the original ranking score `sqrt(camera_STD² + LiDAR_agreement_STD²)` among ten captures. This is a selection heuristic, **not an absolute accuracy measurement**. See [all rankings](docs/bag_quality_ranking.csv) and [SHA256 manifest](bagfiles/manifest.json). Both examples have approximately +10 RPM; processing these two alone leaves overall timing unresolved. Positive/negative RPM indicates direction in the estimator's angle convention.
 
-## Device 1 reference results
+## Updated automatic results
+
+All **10 captures · 14,281 camera frames · 4,205 clouds** completed. LiDAR held-out disagreement STD improved in **9 of 10** bags, with a **16.4% median per-bag reduction**. One bag worsened slightly. These measure agreement/repeatability, not encoder-verified accuracy; a tenfold improvement is not demonstrated.
+
+![Each capture: previous versus automatic LiDAR estimation](automatic_comparison.png)
+
+| Combined timing metric | Automatic | Previous |
+|---|---:|---:|
+| Model-based candidate, τ | **−25.95 ms** | −25.97 ms |
+| Standard error | 0.912 ms | 0.914 ms |
+| Conditional 95% interval | [−28.10, −23.79] ms | [−28.13, −23.81] ms |
+
+![Updated timing: matching-scene timestamps and RPM](automatic_device_1_timing.png)
+
+The modeled matching scene appears on Livox about **25.95 ms later**. Exposure/per-ray timing and physical ground truth remain uncalibrated; the interval excludes unknown systematic bias. The supplied calibration is a rough spatial guide, not a time calibration.
+
+[Automatic folder report](results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Old/new comparison](results/batch_device_1_20261007T064645Z_f2b206cc/AUTOMATIC_COMPARISON.md) · [Every capture's metrics](results/batch_device_1_20261007T064645Z_f2b206cc/capture_metrics.csv) · [Verification](docs/AUTOMATIC_CHECKS.md)
+
+## Previous Device 1 reference
 
 The saved analysis covers **10 bags · 14,281 camera frames · 4,205 clouds · 100,920,000 decoded LiDAR points**. Full detections, intermediate arrays, models, scan tables, and figures are included for all ten, although only two raw bags are distributed.
 
@@ -89,6 +117,7 @@ source /opt/ros/noetic/setup.bash
 OPENBLAS_NUM_THREADS=1 .venv/bin/python process_bag.py device_1/rig_20260828_192028_0.bag
 OPENBLAS_NUM_THREADS=1 .venv/bin/python process_bag.py --folder device_1
 OPENBLAS_NUM_THREADS=1 .venv/bin/python reproduce_reference.py
+OPENBLAS_NUM_THREADS=1 .venv/bin/python reproduce_automatic.py
 OPENBLAS_NUM_THREADS=1 .venv/bin/python -m unittest discover -s tests -v
 ```
 

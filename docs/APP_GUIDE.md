@@ -40,3 +40,7 @@ results/<run>/
 Folder outputs also contain `captures/`, combined CSVs and `timing/overall_offset.json`. Numerical `flir` field/directory names are retained for format compatibility; UI labels use camera. View an HTML report directly, download a file, or export a complete run ZIP. Download all LFS objects before browsing arrays or scans.
 
 The original long-form development validation record is archived as `WORKSPACE_VALIDATION.md`. Its referenced development screenshots/scripts are workspace evidence; publication-specific checks are documented separately in `PUBLICATION_CHECKS.md`.
+
+## Automatic target search
+
+Keep the default Automatic setting. A device calibration file guides the search when valid; missing or unsupported calibration triggers independent LiDAR localization. Live previews and the saved result explain which method was used. The LiDAR result includes a full-scene localization figure and alignment review. Folder tables show the method for each capture. See [LOCALIZATION.md](../LOCALIZATION.md) for calibration and diagnostic CLI flags.

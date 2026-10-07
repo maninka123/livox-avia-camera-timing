@@ -24,6 +24,7 @@ from job_registry import workers,remember,status,active_jobs,restore,ACTIVE
 from werkzeug.exceptions import HTTPException
 
 app=Flask(__name__);app.config['MAX_CONTENT_LENGTH']=8*1024**3
+app.config['TEMPLATES_AUTO_RELOAD']=True
 lock=threading.RLock()
 
 def folder(run_id):
@@ -105,6 +106,19 @@ def datasets():
 def bag_info():
     path=bag_path(request.args.get('name'))
     return jsonify(native(inspect_bag(path)))
+
+@app.get('/api/calibration')
+def device_calibration():
+    from calibration import load_device
+    device=request.args.get('device')
+    # Validate the device independently of calibration availability.
+    dataset_path(device)
+    try:
+        data=load_device(device)
+        return jsonify(available=data is not None,calibration=data,
+                       message='Automatic: camera-guided search, with LiDAR-only fallback.' if data else 'Automatic: LiDAR-only search; add device calibration to enable camera guidance.')
+    except (ValueError,OSError) as exc:
+        return jsonify(available=False,calibration=None,message='Device calibration needs review; automatic LiDAR-only fallback. '+str(exc))
 
 @app.get('/api/bag-preview')
 def bag_preview():
@@ -316,15 +330,17 @@ def scan_preview(run_id):
     with np.load(file) as data:
         if not 0<=index<len(data['stamps']):raise ValueError('Scan index is outside this capture.')
         offsets=data['offsets'];points=data['points'][offsets[index]:offsets[index+1]]
+        low,high=data['depth_bounds_m'] if 'depth_bounds_m' in data else (1.2,2.7)
+        localized='coordinate_system' in data and str(data['coordinate_system'])=='target_centred'
     image=np.full((600,760,3),250,np.uint8)
-    radius=np.hypot(points[:,0],points[:,1]);target=(radius>.025)&(radius<.135)&(points[:,2]>1.2)&(points[:,2]<2.7)
+    radius=np.hypot(points[:,0],points[:,1]);target=(radius>.025)&(radius<.135)&(points[:,2]>low)&(points[:,2]<high)
     for mask,color in ((~target,(183,189,189)),(target,(55,121,220))):
         positions=np.column_stack((380+points[mask,0]*1250,280-points[mask,1]*1250)).astype(int)
         for x,y in positions:
             if 0<=x<760 and 0<=y<530:cv2.circle(image,(x,y),1,color,-1)
     cv2.circle(image,(380,280),169,(145,158,153),1)
-    cv2.putText(image,f'Livox scan {index} | central measured rays {len(points)} | target {target.sum()}',(20,550),cv2.FONT_HERSHEY_SIMPLEX,.50,(40,65,65),1,cv2.LINE_AA)
-    cv2.putText(image,'Orange: moving near surface. Gray: other central returns.',(20,577),cv2.FONT_HERSHEY_SIMPLEX,.47,(60,80,80),1,cv2.LINE_AA)
+    cv2.putText(image,f'Livox scan {index} | selected measured rays {len(points)} | target {target.sum()}',(20,550),cv2.FONT_HERSHEY_SIMPLEX,.50,(40,65,65),1,cv2.LINE_AA)
+    cv2.putText(image,'Orange: target returns. '+('Target-centred, radius-normalized view.' if localized else 'Sensor y/x, z/x view.'),(20,577),cv2.FONT_HERSHEY_SIMPLEX,.47,(60,80,80),1,cv2.LINE_AA)
     ok,encoded=cv2.imencode('.png',image)
     if not ok:raise ValueError('Unable to render this scan.')
     from io import BytesIO
@@ -370,7 +386,7 @@ Student-t 95% interval: [{model['student_t_95_low_ms']:+.2f}, {model['student_t_
 Standard error: {model['standard_error_ms']:.2f} ms. Phase-fit residual STD: {model['phase_residual_std_deg']:.3f} degrees.
 Distinct bags: {model['bags']}. Setup groups: {', '.join(model['groups'])}. Residual degrees of freedom: {model['degrees_of_freedom']}.
 
-Model: `{model['sign_convention']}`. Fixed phase is fitted separately within each acquisition group. Different signed speeds within a group separate the model's phase intercept from its time-shift slope. The Livox phase is anchored to the common empirical H5/3 convention modulo 120 degrees; arbitrary per-bag template time-zero phases are not compared directly.
+Model: `{model['sign_convention']}`. Fixed phase is fitted separately within each acquisition group. Different signed speeds within a group separate the model's phase intercept from its time-shift slope. The saved phase convention is `{model.get('phase_convention','legacy_h5_over_3')}` modulo {model.get('phase_period_deg',120):g} degrees; arbitrary per-bag template time-zero phases are not compared directly.
 
 {model['reason']} These results are **not a calibrated physical sensor offset**, even if the statistical interval excludes zero. No encoder, exposure midpoint or native per-ray Livox acquisition time is available. Group definitions must genuinely share the same sensor pose and phase convention; the copied recordings' normal/red default grouping is editable before processing. The hardware data were also used to develop the observation estimators. Independent repeated captures are required to validate systematic accuracy.
 

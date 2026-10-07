@@ -1,0 +1,50 @@
+{
+  "frames": 1423,
+  "rpm": 9.999671842705975,
+  "line_rpm": 9.999702104971343,
+  "clock_source": "camera_header",
+  "calibration": [
+    54.985137939453125,
+    57.36846160888672,
+    25.088706970214844,
+    25.330839157104492,
+    1.1010107823423112
+  ],
+  "geometry_anchor_deg": 285.93327102661135,
+  "coherence_sum_0_to_5": 4.072741318607893,
+  "raw_residual": {
+    "n": 1423,
+    "mae_deg": 0.15468975968418955,
+    "std_deg": 0.19824428186975143,
+    "rmse_deg": 0.19817586347471366,
+    "p95_deg": 0.37793007736661344,
+    "bias_deg": 0.0007041575432634298
+  },
+  "heldout_residual": {
+    "n": 1423,
+    "mae_deg": 0.15763952749827329,
+    "std_deg": 0.201280711189568,
+    "rmse_deg": 0.20135895063115378,
+    "p95_deg": 0.3778524824932674,
+    "bias_deg": -0.007744229183337611
+  },
+  "chronological_residual": {
+    "n": 569,
+    "mae_deg": 0.15740722706689256,
+    "std_deg": 0.2001871910888026,
+    "rmse_deg": 0.20035627273046705,
+    "p95_deg": 0.38711669916738173,
+    "bias_deg": 0.01175393426930787
+  },
+  "fold_rpm": [
+    9.99958113159578,
+    9.999737058022198,
+    9.999689732163986,
+    9.999631669087119,
+    9.999731258206241
+  ],
+  "boundary_hits": 0,
+  "heldout_boundary_hits": 0,
+  "status": "TRACK_RECOVERED",
+  "absolute_accuracy": "Unverified: geometry anchor is approximate; no encoder reference."
+}

@@ -33,7 +33,8 @@ def analyze_scans(camera, lidar, raw, output):
     rows=[]
     for i,(start,stop) in enumerate(zip(raw['offsets'][:-1],raw['offsets'][1:])):
         points=raw['points'][start:stop];r=np.hypot(points[:,0],points[:,1])
-        target=points[(r>.025)&(r<.135)&(points[:,2]>1.2)&(points[:,2]<2.7)]
+        from localization import target_mask
+        target=points[target_mask(points,raw.get('geometry'))]
         depth=describe(target[:,2]);radial=describe(np.hypot(target[:,0],target[:,1]))
         rows.append({'scan_index':i,'bag_stamp_s':raw['stamps'][i],'header_stamp_s':raw['headers'][i],
             'time_s':lidar['time'][i],'input_point_count':raw['total_point_counts'][i],
@@ -52,6 +53,7 @@ def analyze_scans(camera, lidar, raw, output):
                'rejected_branch_boundary':bool(camera['boundary'][i])} for i in range(len(crpm))])
     summary={'scans':len(rows),'all_recorded_clouds_processed':len(rows)==len(raw['stamps']),
              'input_points_total':int(raw['total_point_counts'].sum()),
+             'angular_coordinates':'target-centred, radius-normalized' if raw.get('geometry') else 'sensor y/x, z/x',
              'local_rpm_window_s':2.,'local_rpm_uses_future_s':1.,
              'livox_local_rpm':describe(lrpm),'flir_local_rpm':describe(crpm),
              'input_point_count':describe(raw['total_point_counts']),
@@ -62,23 +64,23 @@ def analyze_scans(camera, lidar, raw, output):
     return summary,rows,crpm
 
 
-def plot_scans(rows, camera_time, camera_rpm, output):
+def plot_scans(rows, camera_time, camera_rpm, output, geometry=None):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
     time=np.array([r['time_s'] for r in rows]);val=lambda key:np.array([r[key] if r[key] is not None else np.nan for r in rows],dtype=float)
     fig,axes=plt.subplots(3,2,figsize=(13,10))
     axes[0,0].plot(time,val('input_point_count'),label='All input points',color='#526679')
-    axes[0,0].plot(time,val('central_point_count'),label='Central region',color='#aa8c53')
+    axes[0,0].plot(time,val('central_point_count'),label='Selected region' if geometry else 'Central region',color='#aa8c53')
     axes[0,0].plot(time,val('target_point_count'),label='Rotating near surface',color='#dc7937');axes[0,0].set_ylabel('Points / cloud');axes[0,0].legend(fontsize=8)
     axes[0,1].plot(time,val('local_rpm'),label='Livox',color='#dc7937')
     axes[0,1].plot(camera_time,camera_rpm,label='FLIR',color='#15766e');axes[0,1].set_ylabel('Signed local RPM');axes[0,1].legend(fontsize=8)
     mean=val('target_depth_mean_m');spread=val('target_depth_std_m')
     axes[1,0].plot(time,mean,color='#15766e');axes[1,0].fill_between(time,mean-spread,mean+spread,alpha=.18,color='#15766e');axes[1,0].set_ylabel('Target depth mean ± spatial STD (m)')
-    axes[1,1].plot(time,val('target_u_centroid'),label='Horizontal u');axes[1,1].plot(time,val('target_v_centroid'),label='Vertical v');axes[1,1].set_ylabel('Target centroid (y/x, z/x)');axes[1,1].legend(fontsize=8)
+    axes[1,1].plot(time,val('target_u_centroid'),label='Horizontal u');axes[1,1].plot(time,val('target_v_centroid'),label='Vertical v');axes[1,1].set_ylabel('Target centroid (normalized u, v)' if geometry else 'Target centroid (y/x, z/x)');axes[1,1].legend(fontsize=8)
     axes[2,0].plot(time,val('raw_motion_residual_deg'),label='Raw',alpha=.5,color='#dc7937')
     axes[2,0].plot(time,val('heldout_motion_residual_deg'),label='Held-out',color='#15766e',alpha=.7);axes[2,0].set_ylabel('Residual to fitted motion (deg)');axes[2,0].legend(fontsize=8)
-    axes[2,1].plot(time,val('h5_magnitude'),color='#526679');axes[2,1].set_ylabel('Measured H5 magnitude')
+    axes[2,1].plot(time,val('h5_magnitude'),color='#526679');axes[2,1].set_ylabel('Measured H1 magnitude' if geometry else 'Measured H5 magnitude')
     for ax in axes.flat:ax.set_xlabel('Time in recording (s)');ax.grid(alpha=.18)
     fig.suptitle('Every Livox scan: return variability, relative motion and phase-derived RPM\nLocal RPM uses a centered 2-second window; spatial spread is not angular error',fontsize=12)
     fig.tight_layout(rect=(0,0,1,.94));fig.savefig(output,dpi=150);plt.close(fig)

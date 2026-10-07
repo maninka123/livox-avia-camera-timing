@@ -19,7 +19,8 @@ def preview_image(sensor,data,cal,frame,stamp,angle,path):
         canvas=np.full((430,460,3),245,np.uint8)
         u,v,x=data[:,0],data[:,1],data[:,2]
         xx=np.clip(((u+.20)/.40*430+15).astype(int),0,459);yy=np.clip(((.20-v)/.40*400+15).astype(int),0,429)
-        near=(x>=1.2)&(x<2.7);annulus=(np.hypot(u,v)>.025)&(np.hypot(u,v)<.135)
+        lo,hi=cal['depth_bounds_m'] if cal else (1.2,2.7)
+        near=(x>=lo)&(x<hi);annulus=(np.hypot(u,v)>.025)&(np.hypot(u,v)<.135)
         for mask,color in ((~near,(199,205,211)),(near,(55,155,223)),(near&annulus,(65,160,32))):
             canvas[yy[mask],xx[mask]]=color
         cv2.circle(canvas,(230,215),round(.135/.40*430),(50,60,70),1)
@@ -68,19 +69,22 @@ def diagnostics(camera,lidar,cr,lr,timing,profile,paired,out,progress):
     selected=[int(np.argmin(np.abs((lidar['relative']%360-a+180)%360-180))) for a in (0,90,180,270)]
     fig,axes=plt.subplots(3,4,figsize=(14,11))
     for column,i in enumerate(selected):
-        p=lr['points'][lr['offsets'][i]:lr['offsets'][i+1]];u,v,x=p[:,0],p[:,1],p[:,2];near=(x>1.2)&(x<2.7);rad=np.hypot(u,v);ann=near&(rad>.025)&(rad<.135)
-        axes[0,column].scatter(u,v,c=np.clip(x,1.2,5),s=2,cmap='viridis',vmin=1.2,vmax=5);axes[0,column].set_title(f'Frame {i} / relative {lidar["relative"][i]%360:.2f}°')
+        geometry=lr.get('geometry');lo,hi=geometry['depth_bounds_m'] if geometry else (1.2,2.7)
+        upper=geometry['background_depth_m']+1 if geometry else 5
+        p=lr['points'][lr['offsets'][i]:lr['offsets'][i+1]];u,v,x=p[:,0],p[:,1],p[:,2];near=(x>lo)&(x<hi);rad=np.hypot(u,v);ann=near&(rad>.025)&(rad<.135)
+        axes[0,column].scatter(u,v,c=np.clip(x,lo,upper),s=2,cmap='viridis',vmin=lo,vmax=upper);axes[0,column].set_title(f'Frame {i} / relative {lidar["relative"][i]%360:.2f}°')
         axes[1,column].scatter(u[~near],v[~near],s=2,color='0.8');axes[1,column].scatter(u[ann],v[ann],s=3,color=COLORS['livox'])
         axes[2,column].hist(np.degrees(np.arctan2(v[ann],u[ann])),bins=60,color=COLORS['livox']);axes[2,column].set(xlabel='Measured near-return direction (deg)',ylabel='Returns')
-        for a in axes[:2,column]:a.set(xlim=(-.2,.2),ylim=(-.2,.2),xlabel='y/x',ylabel='z/x',aspect='equal')
+        for a in axes[:2,column]:a.set(xlim=(-.2,.2),ylim=(-.2,.2),xlabel='Target u' if geometry else 'y/x',ylabel='Target v' if geometry else 'z/x',aspect='equal')
         np.savez_compressed(out/'intermediates'/f'livox_detection_{i:05d}.npz',measured_u_v_x_intensity=p,near_mask=near,retained_annulus_mask=ann)
-        preview_image('livox',p,None,i,lidar['stamps'][i],lidar['relative'][i],out/'intermediates'/f'livox_detection_{i:05d}.png')
+        preview_image('livox',p,geometry,i,lidar['stamps'][i],lidar['relative'][i],out/'intermediates'/f'livox_detection_{i:05d}.png')
     save(fig,figures/'livox_detection_stages.png')
     progress('export',4,8,'Saving Livox quality and return statistics')
     fig,axes=plt.subplots(2,2,figsize=(12,8))
     axes[0,0].plot(lt,lidar['relative'],'.',ms=2,color=COLORS['livox']);axes[0,0].plot(lt,lidar['smooth']-lidar['smooth'][0],lw=1,color=COLORS['flir']);axes[0,0].set(xlabel='Bag time (s)',ylabel='Relative angle (deg)')
     axes[0,1].plot(lt,lidar['counts'],color=COLORS['livox']);axes[0,1].set(xlabel='Bag time (s)',ylabel='Measured near-annulus returns')
-    axes[1,0].scatter(lidar['h5'].real,lidar['h5'].imag,c=lt,s=4,cmap='viridis');axes[1,0].set(xlabel='H5 real',ylabel='H5 imaginary')
+    harmonic='H1' if lr.get('geometry') else 'H5'
+    axes[1,0].scatter(lidar['h5'].real,lidar['h5'].imag,c=lt,s=4,cmap='viridis');axes[1,0].set(xlabel=harmonic+' real',ylabel=harmonic+' imaginary')
     axes[1,1].hist(paired['cv'][keep],bins=40,alpha=.65,color=COLORS['livox'],label='Held-out raw');axes[1,1].hist(paired['cvs'][keep],bins=40,alpha=.6,color=COLORS['flir'],label='Held-out offline');axes[1,1].set(xlabel='FLIR disagreement (deg)',ylabel='Clouds');axes[1,1].legend()
     save(fig,figures/'livox_quality.png')
     progress('export',5,8,'Saving timing profile and confidence diagnostics')

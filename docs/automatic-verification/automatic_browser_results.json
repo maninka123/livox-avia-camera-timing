@@ -1,0 +1,19 @@
+{
+  "batch_id": "batch_device_1_20261007T064645Z_f2b206cc",
+  "run_id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_192028_0_cb211663",
+  "checks": [
+    "Recorded camera preview and configured crop overlay render",
+    "Frame modal opens and Escape returns to workspace",
+    "Empty device and calibration-free fallback are explained, with processing disabled",
+    "Saved real-bag result includes selected method, calibration review and decision history",
+    "LiDAR result shows source-backed target localization and angle diagnostics",
+    "Arbitrary individual scan loads target-centred measured rays and numerical statistics",
+    "All ten captures and the honest old/new quality comparison render",
+    "Timing illustration and plot use the exact saved candidate",
+    "Workspace and real results fit 320/390-pixel mobile widths",
+    "Reduced-motion preference removes progress transitions and press transforms",
+    "ZIP bundle contains readable localization evidence, extracted arrays and reports"
+  ],
+  "browser_errors": [],
+  "bundle_entries": 75
+}

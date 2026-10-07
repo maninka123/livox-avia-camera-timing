@@ -1,0 +1,949 @@
+{
+  "id": "batch_device_1_20261007T064645Z_f2b206cc/captures/rig_20260828_192952_0_167849ac",
+  "bag": "rig_20260828_192952_0.bag",
+  "bag_path": "device_1/rig_20260828_192952_0.bag",
+  "device": "device_1",
+  "parent_batch": "batch_device_1_20261007T064645Z_f2b206cc",
+  "config": {
+    "camera_topic": "/camera/image_raw",
+    "livox_topic": "/livox/lidar",
+    "camera_roi": [
+      235,
+      150,
+      110,
+      110
+    ],
+    "phase_group": "red",
+    "timing_search_ms": 500.0,
+    "camera_order": 32,
+    "livox_order": 12,
+    "livox_smoothing_frames": 21,
+    "validation_folds": 5,
+    "livox_localization": "auto"
+  },
+  "metadata": {
+    "name": "rig_20260828_192952_0.bag",
+    "size_bytes": 600996023,
+    "start_s": 1787909393.3290637,
+    "end_s": 1787909435.2636569,
+    "duration_s": 41.934593200683594,
+    "topics": [
+      {
+        "name": "/camera/camera_info",
+        "type": "sensor_msgs/CameraInfo",
+        "messages": 1426,
+        "frequency_hz": 34.005337626042696,
+        "median_arrival_hz": 34.98110123267335
+      },
+      {
+        "name": "/camera/image_raw",
+        "type": "sensor_msgs/Image",
+        "messages": 1427,
+        "frequency_hz": 34.029184286369514,
+        "median_arrival_hz": 34.97891326375308
+      },
+      {
+        "name": "/livox/imu",
+        "type": "sensor_msgs/Imu",
+        "messages": 8529,
+        "frequency_hz": 203.38816592743208,
+        "median_arrival_hz": 14820.86219081272
+      },
+      {
+        "name": "/livox/lidar",
+        "type": "sensor_msgs/PointCloud2",
+        "messages": 420,
+        "frequency_hz": 10.015597337263626,
+        "median_arrival_hz": 10.004064303773315
+      },
+      {
+        "name": "/velodyne_packets",
+        "type": "velodyne_msgs/VelodyneScan",
+        "messages": 415,
+        "frequency_hz": 9.896364035629537,
+        "median_arrival_hz": 9.913116437587227
+      },
+      {
+        "name": "/velodyne_points",
+        "type": "sensor_msgs/PointCloud2",
+        "messages": 415,
+        "frequency_hz": 9.896364035629537,
+        "median_arrival_hz": 9.908795603969846
+      }
+    ],
+    "suggested_camera_topic": "/camera/image_raw",
+    "suggested_livox_topic": "/livox/lidar",
+    "suggested_phase_group": "red"
+  },
+  "flir": {
+    "frames": 1427,
+    "rpm": -4.999832747331429,
+    "line_rpm": -4.9997206484261545,
+    "clock_source": "camera_header",
+    "calibration": [
+      57.3836669921875,
+      58.42559051513672,
+      28.14609146118164,
+      30.109874725341797,
+      2.381639130195289
+    ],
+    "geometry_anchor_deg": 481.3578704833985,
+    "coherence_sum_0_to_5": 3.8895818825273505,
+    "raw_residual": {
+      "n": 1427,
+      "mae_deg": 0.17885128434096612,
+      "std_deg": 0.21712676361638825,
+      "rmse_deg": 0.21705106891251763,
+      "p95_deg": 0.4038522526762002,
+      "bias_deg": -0.00041497042509159394
+    },
+    "heldout_residual": {
+      "n": 1427,
+      "mae_deg": 0.1869013227287241,
+      "std_deg": 0.2266973044250683,
+      "rmse_deg": 0.22679270911379934,
+      "p95_deg": 0.42791049566199035,
+      "bias_deg": -0.008903867487151019
+    },
+    "chronological_residual": {
+      "n": 570,
+      "mae_deg": 0.19201413619506272,
+      "std_deg": 0.23151368495768868,
+      "rmse_deg": 0.23234644618396222,
+      "p95_deg": 0.43178750490452544,
+      "bias_deg": -0.021916143347144704
+    },
+    "fold_rpm": [
+      -4.99977185248108,
+      -4.999893627270227,
+      -4.99991613796863,
+      -4.999873947109734,
+      -4.999662123561665
+    ],
+    "boundary_hits": 0,
+    "heldout_boundary_hits": 0,
+    "status": "TRACK_RECOVERED",
+    "absolute_accuracy": "Unverified: geometry anchor is approximate; no encoder reference."
+  },
+  "livox": {
+    "frames": 420,
+    "rpm": -5.000105456218887,
+    "line_rpm": -5.00011367545669,
+    "initial_harmonic_rpm": -4.9998732940255834,
+    "coherence": 0.3640838795179882,
+    "median_near_returns": 825.0,
+    "raw_residual": {
+      "n": 420,
+      "mae_deg": 0.2705910787007519,
+      "std_deg": 0.34108343486245635,
+      "rmse_deg": 0.3407038033189382,
+      "p95_deg": 0.6424356899458395,
+      "bias_deg": 0.004262285903915005
+    },
+    "smoothed_residual": {
+      "n": 420,
+      "mae_deg": 0.09372316265100053,
+      "std_deg": 0.12390217168034082,
+      "rmse_deg": 0.12385342266394184,
+      "p95_deg": 0.2303685814792414,
+      "bias_deg": 0.004947114287238393
+    },
+    "heldout_raw_training_motion_residual": {
+      "n": 420,
+      "mae_deg": 0.45332723005642545,
+      "std_deg": 0.5727137661743638,
+      "rmse_deg": 0.5721595885218198,
+      "p95_deg": 1.1572502986570579,
+      "bias_deg": -0.012103374395287858
+    },
+    "heldout_smoothed_training_motion_residual": {
+      "n": 420,
+      "mae_deg": 0.2841742751902118,
+      "std_deg": 0.36774128661477695,
+      "rmse_deg": 0.3674849410358185,
+      "p95_deg": 0.7410814200710103,
+      "bias_deg": -0.011554778111265781
+    },
+    "chronological_residual": {
+      "n": 168,
+      "mae_deg": 0.35555845299593614,
+      "std_deg": 0.404566770763771,
+      "rmse_deg": 0.44450153936081704,
+      "p95_deg": 0.8764955359911143,
+      "bias_deg": -0.18676615889125903
+    },
+    "fold_rpm": [
+      -5.003555340617808,
+      -5.00294144484316,
+      -5.002497127758172,
+      -4.999126779075019,
+      -5.000480469576115
+    ],
+    "boundary_hits": 0,
+    "heldout_boundary_hits": 0,
+    "status": "RELATIVE_TRACK_RECOVERED",
+    "harmonic_phase_anchor_deg": 5.019506911697631,
+    "absolute_phase": "Uncalibrated physical zero; canonical harmonic phase is an empirical convention only.",
+    "filter_frames": 21,
+    "filter_span_s": 2.0000518560409546,
+    "future_lookahead_s": 1.0000578165054321,
+    "camera_used_for_estimation": false,
+    "camera_used_for_localization": true,
+    "phase_period_deg": 120.0,
+    "phase_convention": "legacy_h5_over_3",
+    "motion_harmonic_order": 1,
+    "reference_timing_phase_preserved": true,
+    "localization": {
+      "requested_method": "auto",
+      "method": "camera_guided",
+      "attempts": [
+        {
+          "method": "camera_guided",
+          "status": "selected",
+          "reason": "Compact moving envelope and coherent independent LiDAR rotation verified."
+        }
+      ],
+      "camera_angles_used": false,
+      "sampled_clouds": 96,
+      "total_clouds": 420,
+      "calibration": {
+        "schema_version": 1,
+        "device": "device_1",
+        "label": "Device 1 \u00b7 enclosure off",
+        "camera_model": "fisheye",
+        "image_size_wh": [
+          484,
+          366
+        ],
+        "translation_units": "metres",
+        "K": [
+          [
+            228.059423,
+            0,
+            241.320785
+          ],
+          [
+            0,
+            222.950553,
+            187.613203
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "D": [
+          0.06942399,
+          0,
+          0,
+          0
+        ],
+        "T_lidar_to_camera": [
+          [
+            0.05109709,
+            0.10883883,
+            -0.99274528,
+            0.05855702
+          ],
+          [
+            -0.02244409,
+            0.9939179,
+            0.10781219,
+            0.00743325
+          ],
+          [
+            0.99844146,
+            0.01677238,
+            0.0532291,
+            0.00088174
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "T_camera_to_lidar": [
+          [
+            0.05109709,
+            -0.02244409,
+            0.99844146,
+            -0.00370563
+          ],
+          [
+            0.10883883,
+            0.9939179,
+            0.01677238,
+            -0.0137761
+          ],
+          [
+            -0.99274528,
+            0.10781219,
+            0.0532291,
+            0.05728387
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "source": "User-supplied enclosure-off parameters from 2026_09_29_multi_capture/CALIBRATION_PARAMETERS.md",
+        "reported_calibration_validation": {
+          "heldout_projection_error_px": 0.517,
+          "bootstrap_p95_rotation_deg": 2.11,
+          "bootstrap_p95_translation_mm": 215
+        },
+        "localization_padding_px": 40,
+        "notes": "Search prior only. These calibration validation statistics come from the September calibration run, not from the August rotating-target bags. Confirm sensor pose and enclosure state for new data.",
+        "file": "calibrations/device_1.json",
+        "sha256": "cf0006a5ea6388a916785af56d814f94c13ce22ac881c4bbe3a896a96df41966"
+      },
+      "supplied_calibration": {
+        "schema_version": 1,
+        "device": "device_1",
+        "label": "Device 1 \u00b7 enclosure off",
+        "camera_model": "fisheye",
+        "image_size_wh": [
+          484,
+          366
+        ],
+        "translation_units": "metres",
+        "K": [
+          [
+            228.059423,
+            0,
+            241.320785
+          ],
+          [
+            0,
+            222.950553,
+            187.613203
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ],
+        "D": [
+          0.06942399,
+          0,
+          0,
+          0
+        ],
+        "T_lidar_to_camera": [
+          [
+            0.05109709,
+            0.10883883,
+            -0.99274528,
+            0.05855702
+          ],
+          [
+            -0.02244409,
+            0.9939179,
+            0.10781219,
+            0.00743325
+          ],
+          [
+            0.99844146,
+            0.01677238,
+            0.0532291,
+            0.00088174
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "T_camera_to_lidar": [
+          [
+            0.05109709,
+            -0.02244409,
+            0.99844146,
+            -0.00370563
+          ],
+          [
+            0.10883883,
+            0.9939179,
+            0.01677238,
+            -0.0137761
+          ],
+          [
+            -0.99274528,
+            0.10781219,
+            0.0532291,
+            0.05728387
+          ],
+          [
+            0,
+            0,
+            0,
+            1
+          ]
+        ],
+        "source": "User-supplied enclosure-off parameters from 2026_09_29_multi_capture/CALIBRATION_PARAMETERS.md",
+        "reported_calibration_validation": {
+          "heldout_projection_error_px": 0.517,
+          "bootstrap_p95_rotation_deg": 2.11,
+          "bootstrap_p95_translation_mm": 215
+        },
+        "localization_padding_px": 40,
+        "notes": "Search prior only. These calibration validation statistics come from the September calibration run, not from the August rotating-target bags. Confirm sensor pose and enclosure state for new data.",
+        "file": "calibrations/device_1.json",
+        "sha256": "cf0006a5ea6388a916785af56d814f94c13ce22ac881c4bbe3a896a96df41966"
+      },
+      "camera_geometry_crop": [
+        57.3836669921875,
+        58.42559051513672,
+        28.14609146118164,
+        30.109874725341797,
+        2.381639130195289
+      ],
+      "all_scans_used_for_angle_estimation": true,
+      "preserve_reference_timing_phase": true,
+      "status": "LOCATED",
+      "geometry": {
+        "center_uv": [
+          -0.0070230122830474695,
+          -0.07792410214950352
+        ],
+        "radius_uv": 0.12328788336004226,
+        "depth_bounds_m": [
+          1.5367499828338624,
+          2.4716499924659727
+        ],
+        "foreground_depth_m": 1.6867499828338623,
+        "background_depth_m": 3.2565500020980833,
+        "circularity": 0.8702352861046373,
+        "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+        "score_shape": 0.8702352861046373,
+        "discovery_rpm": -5.000668930247774,
+        "discovery_coherence": 0.390713583955278,
+        "camera_prior_distance_px": 31.570415077693156,
+        "projected_center_px": [
+          278.2873568889188,
+          180.1769595810486
+        ],
+        "selection_score": 0.24901599673147223
+      },
+      "candidates": [
+        {
+          "center_uv": [
+            -0.0070230122830474695,
+            -0.07792410214950352
+          ],
+          "radius_uv": 0.12328788336004226,
+          "depth_bounds_m": [
+            1.5367499828338624,
+            2.4716499924659727
+          ],
+          "foreground_depth_m": 1.6867499828338623,
+          "background_depth_m": 3.2565500020980833,
+          "circularity": 0.8702352861046373,
+          "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+          "score_shape": 0.8702352861046373,
+          "discovery_rpm": -5.000668930247774,
+          "discovery_coherence": 0.390713583955278,
+          "camera_prior_distance_px": 31.570415077693156,
+          "projected_center_px": [
+            278.2873568889188,
+            180.1769595810486
+          ],
+          "selection_score": 0.24901599673147223
+        }
+      ],
+      "timing_convention": "legacy_h5_over_3",
+      "note": "Coarse camera geometry is optional; periodic LiDAR evidence selects the target. Geometry was learned using the full discovery sequence, so downstream validation is conditional on this ROI.",
+      "calibration_alignment_review": "Projected centre differs from the detected image centre by 31.6 px. Calibration is a coarse prior; confirm pose and enclosure state."
+    }
+  },
+  "scans": {
+    "scans": 420,
+    "all_recorded_clouds_processed": true,
+    "input_points_total": 10080000,
+    "angular_coordinates": "target-centred, radius-normalized",
+    "local_rpm_window_s": 2.0,
+    "local_rpm_uses_future_s": 1.0,
+    "livox_local_rpm": {
+      "n": 420,
+      "mean": -4.999678254855176,
+      "std": 0.024057415305676358,
+      "median": -5.000475686405926,
+      "p05": -5.039407854768973,
+      "p95": -4.96032460852899,
+      "min": -5.05079637978176,
+      "max": -4.912922810031984
+    },
+    "flir_local_rpm": {
+      "n": 1427,
+      "mean": -5.000218325568754,
+      "std": 0.011826979459079302,
+      "median": -4.999315588548133,
+      "p05": -5.020876556514914,
+      "p95": -4.982298193241159,
+      "min": -5.054187756411973,
+      "max": -4.965740275027623
+    },
+    "input_point_count": {
+      "n": 420,
+      "mean": 24000.0,
+      "std": 0.0,
+      "median": 24000.0,
+      "p05": 24000.0,
+      "p95": 24000.0,
+      "min": 24000.0,
+      "max": 24000.0
+    },
+    "target_point_count": {
+      "n": 420,
+      "mean": 852.202380952381,
+      "std": 139.18684577673625,
+      "median": 825.0,
+      "p05": 654.9,
+      "p95": 1094.0,
+      "min": 577.0,
+      "max": 1183.0
+    },
+    "target_depth_std_m": {
+      "n": 420,
+      "mean": 0.10358286869692115,
+      "std": 0.010502934794013572,
+      "median": 0.10377103867761123,
+      "p05": 0.0863199883645126,
+      "p95": 0.1199166661724193,
+      "min": 0.07667318960790848,
+      "max": 0.14089802744590313
+    },
+    "explanation": "Local RPM is a centered 2-second phase slope, using up to 1 second of future data. Its scatter includes detection noise and model effects. Point-depth spread describes spatial returns, not rotor-angle error. Every recorded cloud is decoded; motion inference uses the target region, and the full cloud remains in the source bag."
+  },
+  "timing": {
+    "single_bag_lag": {
+      "status": "NOT_IDENTIFIABLE_FROM_THIS_BAG",
+      "candidate_tau_ms": 91.99999999999997,
+      "candidate_phase_deg": -513.0727416857175,
+      "profile_95_low_ms": 72.00000000000006,
+      "profile_95_high_ms": 125.0,
+      "block_bootstrap_95_low_ms": -55.04999999999999,
+      "block_bootstrap_95_high_ms": 177.575,
+      "search_limit_ms": 500.0,
+      "effective_samples": 271.70873414029904,
+      "matched_samples": 398,
+      "camera_nonconstant_motion_std_deg": 0.15584885268528573,
+      "camera_noise_floor_deg": 0.2266973044250683,
+      "rmse_at_candidate_deg": 0.3439618789523643,
+      "rmse_at_zero_deg": 0.3521972315840604,
+      "profile_rmse_range_deg": 0.04839026138527447,
+      "sign_convention": "theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.",
+      "physical_offset_calibrated": false,
+      "reason": "Constant-rate motion and an unknown sensor phase are confounded. The fitted minimum is a conditional candidate, not a measured physical offset.",
+      "bootstrap_samples": 300,
+      "bootstrap_seed": 42
+    },
+    "clocks": {
+      "flir": {
+        "sensor": "FLIR",
+        "domain": "unix_epoch",
+        "samples": 1427,
+        "record_minus_header_mean_ms": 0.8074191373465524,
+        "record_minus_header_std_ms": 0.41201145409106804,
+        "record_minus_header_p95_ms": 1.6132593154907227,
+        "affine_rate_ppm": -2.0812945944470584,
+        "affine_residual_std_ms": 0.4112815916049277,
+        "mapping_header_origin_s": 1787909394.4765677,
+        "mapping_bag_origin_s": 1787909394.4774175,
+        "mapping_slope": 0.9999979187054056,
+        "interpretation": "Observed recording/header difference; not exposure-to-ray synchronization."
+      },
+      "livox": {
+        "sensor": "Livox",
+        "domain": "device_or_other_epoch",
+        "samples": 420,
+        "record_minus_header_mean_ms": null,
+        "record_minus_header_std_ms": null,
+        "record_minus_header_p95_ms": null,
+        "affine_rate_ppm": 52.55750074772969,
+        "affine_residual_std_ms": 2.050086664045726,
+        "mapping_header_origin_s": 7053.19982131,
+        "mapping_bag_origin_s": 1787909393.3294263,
+        "mapping_slope": 1.0000525575007477,
+        "interpretation": "Different clock epoch. Absolute sensor offset cannot be obtained by header subtraction."
+      }
+    },
+    "agreement": {
+      "raw": {
+        "n": 398,
+        "mae_deg": 0.2850620089651859,
+        "std_deg": 0.358713799216836,
+        "rmse_deg": 0.358280581523029,
+        "p95_deg": 0.7001930432740606,
+        "bias_deg": 0.0035624218986743533
+      },
+      "offline_smoothed": {
+        "n": 398,
+        "mae_deg": 0.15702290388584209,
+        "std_deg": 0.19719870589900293,
+        "rmse_deg": 0.19742394977745767,
+        "p95_deg": 0.35839585339246016,
+        "bias_deg": -0.013659911998356174
+      },
+      "heldout_raw": {
+        "n": 398,
+        "mae_deg": 0.4468333726287928,
+        "std_deg": 0.5622771052061318,
+        "rmse_deg": 0.5657143417591608,
+        "p95_deg": 1.129217598368018,
+        "bias_deg": 0.06834862174115151
+      },
+      "heldout_offline_smoothed": {
+        "n": 398,
+        "mae_deg": 0.29898231199817404,
+        "std_deg": 0.3650804300991409,
+        "rmse_deg": 0.3646899487348935,
+        "p95_deg": 0.7018228698189146,
+        "bias_deg": 0.007065549277129221
+      },
+      "second_half_heldout_raw": {
+        "n": 199,
+        "mae_deg": 0.4244283178211253,
+        "std_deg": 0.5163974604477102,
+        "rmse_deg": 0.5252615335743567,
+        "p95_deg": 1.0441997219720065,
+        "bias_deg": 0.10282690961538211
+      },
+      "second_half_heldout_offline_smoothed": {
+        "n": 199,
+        "mae_deg": 0.2514946766057096,
+        "std_deg": 0.3015093821184823,
+        "rmse_deg": 0.3045310733095537,
+        "p95_deg": 0.5733648712162107,
+        "bias_deg": 0.04783399169425604
+      },
+      "alignment_phase_deg": -515.8717741313328,
+      "alignment_calibration_samples": 199,
+      "comparison_samples": 398,
+      "rate_difference_rpm": -0.00027270888745789534,
+      "reference": "New per-image FLIR observations, not encoder truth; constant phase calibrated on first half."
+    },
+    "cross_speed_phase_observation": {
+      "group": "red",
+      "omega_deg_s": -29.998996483988577,
+      "phase_delta_deg": -30.848709593279246,
+      "phase_period_deg": 120.0,
+      "phase_convention": "legacy_h5_over_3",
+      "phase_residual_std_deg": 0.3587137992168383,
+      "physical_zero_calibrated": false,
+      "convention": "Common H5 / 3, modulo 120 degrees; empirical sensor phase.",
+      "phase_delta_mod120_deg": -30.848709593279246
+    },
+    "absolute_header_offset_status": "NOT_COMPARABLE_CLOCK_EPOCHS",
+    "absolute_sensor_offset_ms": null
+  },
+  "localization": {
+    "requested_method": "auto",
+    "method": "camera_guided",
+    "attempts": [
+      {
+        "method": "camera_guided",
+        "status": "selected",
+        "reason": "Compact moving envelope and coherent independent LiDAR rotation verified."
+      }
+    ],
+    "camera_angles_used": false,
+    "sampled_clouds": 96,
+    "total_clouds": 420,
+    "calibration": {
+      "schema_version": 1,
+      "device": "device_1",
+      "label": "Device 1 \u00b7 enclosure off",
+      "camera_model": "fisheye",
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "translation_units": "metres",
+      "K": [
+        [
+          228.059423,
+          0,
+          241.320785
+        ],
+        [
+          0,
+          222.950553,
+          187.613203
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "D": [
+        0.06942399,
+        0,
+        0,
+        0
+      ],
+      "T_lidar_to_camera": [
+        [
+          0.05109709,
+          0.10883883,
+          -0.99274528,
+          0.05855702
+        ],
+        [
+          -0.02244409,
+          0.9939179,
+          0.10781219,
+          0.00743325
+        ],
+        [
+          0.99844146,
+          0.01677238,
+          0.0532291,
+          0.00088174
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "T_camera_to_lidar": [
+        [
+          0.05109709,
+          -0.02244409,
+          0.99844146,
+          -0.00370563
+        ],
+        [
+          0.10883883,
+          0.9939179,
+          0.01677238,
+          -0.0137761
+        ],
+        [
+          -0.99274528,
+          0.10781219,
+          0.0532291,
+          0.05728387
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "source": "User-supplied enclosure-off parameters from 2026_09_29_multi_capture/CALIBRATION_PARAMETERS.md",
+      "reported_calibration_validation": {
+        "heldout_projection_error_px": 0.517,
+        "bootstrap_p95_rotation_deg": 2.11,
+        "bootstrap_p95_translation_mm": 215
+      },
+      "localization_padding_px": 40,
+      "notes": "Search prior only. These calibration validation statistics come from the September calibration run, not from the August rotating-target bags. Confirm sensor pose and enclosure state for new data.",
+      "file": "calibrations/device_1.json",
+      "sha256": "cf0006a5ea6388a916785af56d814f94c13ce22ac881c4bbe3a896a96df41966"
+    },
+    "supplied_calibration": {
+      "schema_version": 1,
+      "device": "device_1",
+      "label": "Device 1 \u00b7 enclosure off",
+      "camera_model": "fisheye",
+      "image_size_wh": [
+        484,
+        366
+      ],
+      "translation_units": "metres",
+      "K": [
+        [
+          228.059423,
+          0,
+          241.320785
+        ],
+        [
+          0,
+          222.950553,
+          187.613203
+        ],
+        [
+          0,
+          0,
+          1
+        ]
+      ],
+      "D": [
+        0.06942399,
+        0,
+        0,
+        0
+      ],
+      "T_lidar_to_camera": [
+        [
+          0.05109709,
+          0.10883883,
+          -0.99274528,
+          0.05855702
+        ],
+        [
+          -0.02244409,
+          0.9939179,
+          0.10781219,
+          0.00743325
+        ],
+        [
+          0.99844146,
+          0.01677238,
+          0.0532291,
+          0.00088174
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "T_camera_to_lidar": [
+        [
+          0.05109709,
+          -0.02244409,
+          0.99844146,
+          -0.00370563
+        ],
+        [
+          0.10883883,
+          0.9939179,
+          0.01677238,
+          -0.0137761
+        ],
+        [
+          -0.99274528,
+          0.10781219,
+          0.0532291,
+          0.05728387
+        ],
+        [
+          0,
+          0,
+          0,
+          1
+        ]
+      ],
+      "source": "User-supplied enclosure-off parameters from 2026_09_29_multi_capture/CALIBRATION_PARAMETERS.md",
+      "reported_calibration_validation": {
+        "heldout_projection_error_px": 0.517,
+        "bootstrap_p95_rotation_deg": 2.11,
+        "bootstrap_p95_translation_mm": 215
+      },
+      "localization_padding_px": 40,
+      "notes": "Search prior only. These calibration validation statistics come from the September calibration run, not from the August rotating-target bags. Confirm sensor pose and enclosure state for new data.",
+      "file": "calibrations/device_1.json",
+      "sha256": "cf0006a5ea6388a916785af56d814f94c13ce22ac881c4bbe3a896a96df41966"
+    },
+    "camera_geometry_crop": [
+      57.3836669921875,
+      58.42559051513672,
+      28.14609146118164,
+      30.109874725341797,
+      2.381639130195289
+    ],
+    "all_scans_used_for_angle_estimation": true,
+    "preserve_reference_timing_phase": true,
+    "status": "LOCATED",
+    "geometry": {
+      "center_uv": [
+        -0.0070230122830474695,
+        -0.07792410214950352
+      ],
+      "radius_uv": 0.12328788336004226,
+      "depth_bounds_m": [
+        1.5367499828338624,
+        2.4716499924659727
+      ],
+      "foreground_depth_m": 1.6867499828338623,
+      "background_depth_m": 3.2565500020980833,
+      "circularity": 0.8702352861046373,
+      "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+      "score_shape": 0.8702352861046373,
+      "discovery_rpm": -5.000668930247774,
+      "discovery_coherence": 0.390713583955278,
+      "camera_prior_distance_px": 31.570415077693156,
+      "projected_center_px": [
+        278.2873568889188,
+        180.1769595810486
+      ],
+      "selection_score": 0.24901599673147223
+    },
+    "candidates": [
+      {
+        "center_uv": [
+          -0.0070230122830474695,
+          -0.07792410214950352
+        ],
+        "radius_uv": 0.12328788336004226,
+        "depth_bounds_m": [
+          1.5367499828338624,
+          2.4716499924659727
+        ],
+        "foreground_depth_m": 1.6867499828338623,
+        "background_depth_m": 3.2565500020980833,
+        "circularity": 0.8702352861046373,
+        "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+        "score_shape": 0.8702352861046373,
+        "discovery_rpm": -5.000668930247774,
+        "discovery_coherence": 0.390713583955278,
+        "camera_prior_distance_px": 31.570415077693156,
+        "projected_center_px": [
+          278.2873568889188,
+          180.1769595810486
+        ],
+        "selection_score": 0.24901599673147223
+      }
+    ],
+    "timing_convention": "legacy_h5_over_3",
+    "note": "Coarse camera geometry is optional; periodic LiDAR evidence selects the target. Geometry was learned using the full discovery sequence, so downstream validation is conditional on this ROI.",
+    "calibration_alignment_review": "Projected centre differs from the detected image centre by 31.6 px. Calibration is a coarse prior; confirm pose and enclosure state."
+  },
+  "provenance": {
+    "bag_size": 600996023,
+    "bag_mtime_ns": 1787909435000000000,
+    "bag_sha256": "e940d2b9c93814cf339f4ea03a121360ba53a7af447312c49c4be171ccc15012",
+    "algorithm_sha256": {
+      "timing.py": "fe72922c18f3cc127fbb06344c30663a56b81e8142e8a8da0a7bd9166ad94556",
+      "job_registry.py": "4ddbc1b9af09c7e39bd34ef711955fb52e011db97e1c5f4dcb23a354d29dbd07",
+      "app.py": "5039b3b003a34e7eecb8e64715968d50bbf07119127c5bb864051cf46ed7c0a5",
+      "scan_variability.py": "cc4dcab6973dc32358ef3e846a25a328c414bcc541f1f4358ac1d0296832a754",
+      "calibration.py": "59506a653edde29918ce2ba69b7ad54ed51df042b1040968457bef568fa7aef1",
+      "pipeline.py": "5962b455bea70bd90ac0dc69ad5cf7b85aa46836f6fb9c2314eb81c774ac130e",
+      "batch_worker.py": "d5da450da230e372846fef1e14fea08081179089f2ada0c180aef426eaa1ea4b",
+      "common.py": "49b1e4444e463d41d12368b6c07fb006049a17676bd8eecd8a9c4fa489f55a2f",
+      "visuals.py": "b88686a263b662ee97eebc9739e06bfa64f6079e9626cfcccc493d4a5125f9a6",
+      "timing_visualization.py": "cb7f183f4562bdf8758c42e6a7ec686ec45c4ba2ac36b9b0c6c4d45526924424",
+      "batch_analysis.py": "d5b176e03430a904de28d87fe918c8689c5a3eff224d60e112b33ff32d4f6b5c",
+      "process_bag.py": "1532912a5f6d95da1238e49aa3a95734dfdd8511bbdb01bdec9be71de38a9ac7",
+      "localization.py": "c90157533291c549f0c37c4eb1252010138ebaec9014570083bdbf7d761fd572",
+      "bag_io.py": "50b3301fc7a2a80f0317f80548f9a79fca2c652328dbfb2e0519b57629766314",
+      "sensors.py": "d9d19309c1d3c207960bb6a437dd3d09eb1ea4c4766a2676cdd65df80a714577",
+      "algorithms/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/flir/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/flir/photometry.py": "526cb051c252c07ea5b1d216b0707a27f924d3fa52db1a527f62e42637d2d5aa",
+      "algorithms/flir/periodic.py": "1606530186ec75ecc3fe4c87d6e8f1b202e589a7feda2ef50183a67060b2257b",
+      "algorithms/livox/extract_cloud.py": "5aee5a0aa593737fc8d34d9aa9ff7479f385a80b7fd015dd1231c0eeb642af5e",
+      "algorithms/livox/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "algorithms/livox/periodic.py": "efde7affac18b5e9e51a2e622c9ce0e7dc0f5d0f8550d4c34a93426df08ac037",
+      "algorithms/livox/return_features.py": "2b611a8398be678addeca8d5dd38498cd047e3c7c8d853b785e7ac426bde7d5e"
+    },
+    "python": "3.8.10 (default, Mar 18 2025, 20:04:55) \n[GCC 9.4.0]",
+    "only_selected_topics_processed": true
+  },
+  "elapsed_s": 17.12004230299499
+}

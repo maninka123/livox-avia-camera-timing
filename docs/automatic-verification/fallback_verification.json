@@ -1,0 +1,107 @@
+[
+  {
+    "case": "no_calibration",
+    "method": "lidar_only",
+    "attempts": [
+      {
+        "method": "camera_guided",
+        "status": "unavailable",
+        "reason": "No device calibration supplied."
+      },
+      {
+        "method": "lidar_only",
+        "status": "selected",
+        "reason": "Compact moving envelope and coherent independent LiDAR rotation verified."
+      }
+    ],
+    "geometry": {
+      "center_uv": [
+        -0.0059881381160096225,
+        -0.07464619746148338
+      ],
+      "radius_uv": 0.1091782061852986,
+      "depth_bounds_m": [
+        1.7460219514369966,
+        2.762275031208992
+      ],
+      "foreground_depth_m": 1.8978499472141266,
+      "background_depth_m": 3.6267001152038576,
+      "circularity": 0.8951609129220325,
+      "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+      "score_shape": 0.8951609129220325,
+      "discovery_rpm": 10.003166865912542,
+      "discovery_coherence": 0.5580142555608824,
+      "selection_score": 0.4995125504313878
+    }
+  },
+  {
+    "case": "wrong_camera_prior",
+    "method": "lidar_only",
+    "attempts": [
+      {
+        "method": "camera_guided",
+        "status": "rejected",
+        "reason": "No compact, coherently rotating LiDAR region found. Check coverage, duration, camera crop and device calibration; inspect the saved localization map."
+      },
+      {
+        "method": "lidar_only",
+        "status": "selected",
+        "reason": "Full-scene LiDAR rotation verified without the rejected calibration prior."
+      }
+    ],
+    "geometry": {
+      "center_uv": [
+        -0.0059881381160096225,
+        -0.07464619746148338
+      ],
+      "radius_uv": 0.1091782061852986,
+      "depth_bounds_m": [
+        1.7460219514369966,
+        2.762275031208992
+      ],
+      "foreground_depth_m": 1.8978499472141266,
+      "background_depth_m": 3.6267001152038576,
+      "circularity": 0.8951609129220325,
+      "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+      "score_shape": 0.8951609129220325,
+      "discovery_rpm": 10.003166865912542,
+      "discovery_coherence": 0.5580142555608824,
+      "selection_score": 0.4995125504313878
+    }
+  },
+  {
+    "case": "wrong_resolution",
+    "method": "lidar_only",
+    "attempts": [
+      {
+        "method": "camera_guided",
+        "status": "unavailable",
+        "reason": "Image size differs from device calibration. Supply intrinsics for this resolution/crop; automatic scaling is unsafe."
+      },
+      {
+        "method": "lidar_only",
+        "status": "selected",
+        "reason": "Compact moving envelope and coherent independent LiDAR rotation verified."
+      }
+    ],
+    "geometry": {
+      "center_uv": [
+        -0.0059881381160096225,
+        -0.07464619746148338
+      ],
+      "radius_uv": 0.1091782061852986,
+      "depth_bounds_m": [
+        1.7460219514369966,
+        2.762275031208992
+      ],
+      "foreground_depth_m": 1.8978499472141266,
+      "background_depth_m": 3.6267001152038576,
+      "circularity": 0.8951609129220325,
+      "angular_coordinate_system": "target-centred y/x, z/x; radius scaled to 0.10",
+      "score_shape": 0.8951609129220325,
+      "discovery_rpm": 10.003166865912542,
+      "discovery_coherence": 0.5580142555608824,
+      "selection_score": 0.4995125504313878
+    }
+  }
+]

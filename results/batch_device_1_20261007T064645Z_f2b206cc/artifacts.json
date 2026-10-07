@@ -1,0 +1,2862 @@
+[
+  {
+    "path": "AUTOMATIC_COMPARISON.md",
+    "size_bytes": 2614
+  },
+  {
+    "path": "REPORT.md",
+    "size_bytes": 4172
+  },
+  {
+    "path": "all_camera_local_rpm.csv",
+    "size_bytes": 2721439
+  },
+  {
+    "path": "all_flir_angles.csv",
+    "size_bytes": 5295707
+  },
+  {
+    "path": "all_livox_angles.csv",
+    "size_bytes": 1493539
+  },
+  {
+    "path": "all_scan_metrics.csv",
+    "size_bytes": 2019963
+  },
+  {
+    "path": "automatic_validation.json",
+    "size_bytes": 5986
+  },
+  {
+    "path": "automatic_vs_previous.csv",
+    "size_bytes": 1762
+  },
+  {
+    "path": "capture_metrics.csv",
+    "size_bytes": 6795
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/REPORT.md",
+    "size_bytes": 9185
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/clock_diagnostics.png",
+    "size_bytes": 95626
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/error_matrix.png",
+    "size_bytes": 67112
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/flir_detection_stages.png",
+    "size_bytes": 174591
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/flir_quality.png",
+    "size_bytes": 234235
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/livox_detection_stages.png",
+    "size_bytes": 1196209
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/livox_quality.png",
+    "size_bytes": 244251
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/overview.png",
+    "size_bytes": 247048
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/scan_variability.png",
+    "size_bytes": 555961
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/figures/timing_profile.png",
+    "size_bytes": 104032
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/angles.csv",
+    "size_bytes": 327966
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/chronological_model.npz",
+    "size_bytes": 68437
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/features.npz",
+    "size_bytes": 11424461
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/model.npz",
+    "size_bytes": 68656
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/summary.json",
+    "size_bytes": 1343
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/validation_model_0.npz",
+    "size_bytes": 68427
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/validation_model_1.npz",
+    "size_bytes": 68402
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/validation_model_2.npz",
+    "size_bytes": 68443
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/validation_model_3.npz",
+    "size_bytes": 68434
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/flir/validation_model_4.npz",
+    "size_bytes": 68442
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_extracted.npz",
+    "size_bytes": 12038859
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82301
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82009
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 81823
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82018
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 81843
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/flir_detection_00000.png",
+    "size_bytes": 109332
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/flir_detection_00314.png",
+    "size_bytes": 109396
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/flir_detection_00523.png",
+    "size_bytes": 109607
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/flir_detection_00628.png",
+    "size_bytes": 108756
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00000.npz",
+    "size_bytes": 55421
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00000.png",
+    "size_bytes": 34768
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00030.npz",
+    "size_bytes": 53196
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00030.png",
+    "size_bytes": 34690
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00180.npz",
+    "size_bytes": 55828
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00180.png",
+    "size_bytes": 35595
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00330.npz",
+    "size_bytes": 52086
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_detection_00330.png",
+    "size_bytes": 34452
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/intermediates/livox_extracted.npz",
+    "size_bytes": 22084092
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/angles.csv",
+    "size_bytes": 90459
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/chronological_model.npz",
+    "size_bytes": 137508
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/features.npz",
+    "size_bytes": 1104769
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/model.npz",
+    "size_bytes": 137665
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/summary.json",
+    "size_bytes": 9024
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/validation_model_0.npz",
+    "size_bytes": 137484
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/validation_model_1.npz",
+    "size_bytes": 137538
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/validation_model_2.npz",
+    "size_bytes": 137520
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/validation_model_3.npz",
+    "size_bytes": 137517
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/livox/validation_model_4.npz",
+    "size_bytes": 137486
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/localization/discovery_samples.npz",
+    "size_bytes": 15861740
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/localization/spatial_evidence.npz",
+    "size_bytes": 3046243
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/localization/summary.json",
+    "size_bytes": 6393
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/localization/target_localization.png",
+    "size_bytes": 252806
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/metadata.json",
+    "size_bytes": 1483
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/metrics.csv",
+    "size_bytes": 987
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/report.html",
+    "size_bytes": 10317
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/scans/camera_local_rpm.csv",
+    "size_bytes": 69389
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/scans/scan_metrics.csv",
+    "size_bytes": 142540
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/scans/summary.json",
+    "size_bytes": 1759
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/status.json",
+    "size_bytes": 34796
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/summary.json",
+    "size_bytes": 29689
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/bootstrap_lags.csv",
+    "size_bytes": 5687
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/clock_metrics.csv",
+    "size_bytes": 680
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/error_correlation.csv",
+    "size_bytes": 329
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/error_covariance_deg2.csv",
+    "size_bytes": 353
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/lag_profile.csv",
+    "size_bytes": 53038
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/paired_detections.csv",
+    "size_bytes": 53143
+  },
+  {
+    "path": "captures/rig_20260828_191635_0_8920ab86/timing/summary.json",
+    "size_bytes": 4619
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/REPORT.md",
+    "size_bytes": 9188
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/clock_diagnostics.png",
+    "size_bytes": 102650
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/error_matrix.png",
+    "size_bytes": 67406
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/flir_detection_stages.png",
+    "size_bytes": 174875
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/flir_quality.png",
+    "size_bytes": 219127
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/livox_detection_stages.png",
+    "size_bytes": 1209820
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/livox_quality.png",
+    "size_bytes": 255803
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/overview.png",
+    "size_bytes": 276509
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/scan_variability.png",
+    "size_bytes": 575731
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/figures/timing_profile.png",
+    "size_bytes": 118161
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/angles.csv",
+    "size_bytes": 324069
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/chronological_model.npz",
+    "size_bytes": 68443
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/features.npz",
+    "size_bytes": 11480075
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/model.npz",
+    "size_bytes": 68645
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/summary.json",
+    "size_bytes": 1334
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/validation_model_0.npz",
+    "size_bytes": 68431
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/validation_model_1.npz",
+    "size_bytes": 68420
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/validation_model_2.npz",
+    "size_bytes": 68416
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/validation_model_3.npz",
+    "size_bytes": 68458
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/flir/validation_model_4.npz",
+    "size_bytes": 68402
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_extracted.npz",
+    "size_bytes": 11977187
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82314
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82413
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82361
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82204
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82350
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/flir_detection_00000.png",
+    "size_bytes": 109292
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/flir_detection_00524.png",
+    "size_bytes": 108755
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/flir_detection_01308.png",
+    "size_bytes": 110674
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/flir_detection_01413.png",
+    "size_bytes": 110920
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00000.npz",
+    "size_bytes": 55248
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00000.png",
+    "size_bytes": 35323
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00195.npz",
+    "size_bytes": 57287
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00195.png",
+    "size_bytes": 35879
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00270.npz",
+    "size_bytes": 56303
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00270.png",
+    "size_bytes": 35631
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00285.npz",
+    "size_bytes": 55737
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_detection_00285.png",
+    "size_bytes": 35223
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/intermediates/livox_extracted.npz",
+    "size_bytes": 22453705
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/angles.csv",
+    "size_bytes": 88464
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/chronological_model.npz",
+    "size_bytes": 137491
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/features.npz",
+    "size_bytes": 1104946
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/model.npz",
+    "size_bytes": 137711
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/summary.json",
+    "size_bytes": 9039
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/validation_model_0.npz",
+    "size_bytes": 137528
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/validation_model_1.npz",
+    "size_bytes": 137512
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/validation_model_2.npz",
+    "size_bytes": 137440
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/validation_model_3.npz",
+    "size_bytes": 137454
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/livox/validation_model_4.npz",
+    "size_bytes": 137487
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/localization/discovery_samples.npz",
+    "size_bytes": 15914373
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/localization/spatial_evidence.npz",
+    "size_bytes": 3054265
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/localization/summary.json",
+    "size_bytes": 6400
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/localization/target_localization.png",
+    "size_bytes": 252442
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/metadata.json",
+    "size_bytes": 1485
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/metrics.csv",
+    "size_bytes": 989
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/report.html",
+    "size_bytes": 10320
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/scans/camera_local_rpm.csv",
+    "size_bytes": 68433
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/scans/scan_metrics.csv",
+    "size_bytes": 141504
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/scans/summary.json",
+    "size_bytes": 1755
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/status.json",
+    "size_bytes": 34747
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/summary.json",
+    "size_bytes": 29696
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/bootstrap_lags.csv",
+    "size_bytes": 6045
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/clock_metrics.csv",
+    "size_bytes": 677
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/error_correlation.csv",
+    "size_bytes": 300
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/error_covariance_deg2.csv",
+    "size_bytes": 350
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/lag_profile.csv",
+    "size_bytes": 53358
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/paired_detections.csv",
+    "size_bytes": 52695
+  },
+  {
+    "path": "captures/rig_20260828_191845_0_fdf142b5/timing/summary.json",
+    "size_bytes": 4616
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/REPORT.md",
+    "size_bytes": 9188
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/clock_diagnostics.png",
+    "size_bytes": 98319
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/error_matrix.png",
+    "size_bytes": 67443
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/flir_detection_stages.png",
+    "size_bytes": 176664
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/flir_quality.png",
+    "size_bytes": 222118
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/livox_detection_stages.png",
+    "size_bytes": 1205532
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/livox_quality.png",
+    "size_bytes": 255987
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/overview.png",
+    "size_bytes": 276354
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/scan_variability.png",
+    "size_bytes": 555919
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/figures/timing_profile.png",
+    "size_bytes": 118393
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/angles.csv",
+    "size_bytes": 323863
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/chronological_model.npz",
+    "size_bytes": 68433
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/features.npz",
+    "size_bytes": 11725702
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/model.npz",
+    "size_bytes": 68661
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/summary.json",
+    "size_bytes": 1326
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/validation_model_0.npz",
+    "size_bytes": 68411
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/validation_model_1.npz",
+    "size_bytes": 68406
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/validation_model_2.npz",
+    "size_bytes": 68441
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/validation_model_3.npz",
+    "size_bytes": 68436
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/flir/validation_model_4.npz",
+    "size_bytes": 68415
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_extracted.npz",
+    "size_bytes": 12231707
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 83168
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82465
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82395
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82439
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82490
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/flir_detection_00000.png",
+    "size_bytes": 108120
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/flir_detection_00053.png",
+    "size_bytes": 110280
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/flir_detection_00158.png",
+    "size_bytes": 110462
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/flir_detection_00734.png",
+    "size_bytes": 109146
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00000.npz",
+    "size_bytes": 52261
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00000.png",
+    "size_bytes": 34156
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00075.npz",
+    "size_bytes": 58221
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00075.png",
+    "size_bytes": 35406
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00150.npz",
+    "size_bytes": 53173
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00150.png",
+    "size_bytes": 35046
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00405.npz",
+    "size_bytes": 54058
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_detection_00405.png",
+    "size_bytes": 35205
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/intermediates/livox_extracted.npz",
+    "size_bytes": 22120886
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/angles.csv",
+    "size_bytes": 88433
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/chronological_model.npz",
+    "size_bytes": 137537
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/features.npz",
+    "size_bytes": 1104834
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/model.npz",
+    "size_bytes": 137694
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/summary.json",
+    "size_bytes": 9034
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/validation_model_0.npz",
+    "size_bytes": 137514
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/validation_model_1.npz",
+    "size_bytes": 137480
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/validation_model_2.npz",
+    "size_bytes": 137481
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/validation_model_3.npz",
+    "size_bytes": 137505
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/livox/validation_model_4.npz",
+    "size_bytes": 137480
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/localization/discovery_samples.npz",
+    "size_bytes": 15907751
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/localization/spatial_evidence.npz",
+    "size_bytes": 3050642
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/localization/summary.json",
+    "size_bytes": 6398
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/localization/target_localization.png",
+    "size_bytes": 254474
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/metadata.json",
+    "size_bytes": 1487
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/metrics.csv",
+    "size_bytes": 989
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/report.html",
+    "size_bytes": 10320
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/scans/camera_local_rpm.csv",
+    "size_bytes": 68527
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/scans/scan_metrics.csv",
+    "size_bytes": 141523
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/scans/summary.json",
+    "size_bytes": 1746
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/status.json",
+    "size_bytes": 34884
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/summary.json",
+    "size_bytes": 29657
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/bootstrap_lags.csv",
+    "size_bytes": 5846
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/clock_metrics.csv",
+    "size_bytes": 678
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/error_correlation.csv",
+    "size_bytes": 298
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/error_covariance_deg2.csv",
+    "size_bytes": 351
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/lag_profile.csv",
+    "size_bytes": 53282
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/paired_detections.csv",
+    "size_bytes": 52743
+  },
+  {
+    "path": "captures/rig_20260828_192028_0_cb211663/timing/summary.json",
+    "size_bytes": 4599
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/REPORT.md",
+    "size_bytes": 9190
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/clock_diagnostics.png",
+    "size_bytes": 89113
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/error_matrix.png",
+    "size_bytes": 66896
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/flir_detection_stages.png",
+    "size_bytes": 177092
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/flir_quality.png",
+    "size_bytes": 199899
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/livox_detection_stages.png",
+    "size_bytes": 1212328
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/livox_quality.png",
+    "size_bytes": 266114
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/overview.png",
+    "size_bytes": 265049
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/scan_variability.png",
+    "size_bytes": 578048
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/figures/timing_profile.png",
+    "size_bytes": 115663
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/angles.csv",
+    "size_bytes": 332652
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/chronological_model.npz",
+    "size_bytes": 68416
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/features.npz",
+    "size_bytes": 11775831
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/model.npz",
+    "size_bytes": 68634
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/summary.json",
+    "size_bytes": 1347
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/validation_model_0.npz",
+    "size_bytes": 68395
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/validation_model_1.npz",
+    "size_bytes": 68451
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/validation_model_2.npz",
+    "size_bytes": 68427
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/validation_model_3.npz",
+    "size_bytes": 68422
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/flir/validation_model_4.npz",
+    "size_bytes": 68445
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_extracted.npz",
+    "size_bytes": 12385258
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82305
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82377
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82529
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82401
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82411
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/flir_detection_00000.png",
+    "size_bytes": 111632
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/flir_detection_00035.png",
+    "size_bytes": 110204
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/flir_detection_00105.png",
+    "size_bytes": 110382
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/flir_detection_00629.png",
+    "size_bytes": 111680
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00000.npz",
+    "size_bytes": 53235
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00000.png",
+    "size_bytes": 34632
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00020.npz",
+    "size_bytes": 54325
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00020.png",
+    "size_bytes": 35420
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00190.npz",
+    "size_bytes": 54169
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00190.png",
+    "size_bytes": 35245
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00410.npz",
+    "size_bytes": 56647
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_detection_00410.png",
+    "size_bytes": 35009
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/intermediates/livox_extracted.npz",
+    "size_bytes": 22574538
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/angles.csv",
+    "size_bytes": 92248
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/chronological_model.npz",
+    "size_bytes": 137475
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/features.npz",
+    "size_bytes": 1120679
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/model.npz",
+    "size_bytes": 137653
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/summary.json",
+    "size_bytes": 9039
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/validation_model_0.npz",
+    "size_bytes": 137504
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/validation_model_1.npz",
+    "size_bytes": 137475
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/validation_model_2.npz",
+    "size_bytes": 137545
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/validation_model_3.npz",
+    "size_bytes": 137514
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/livox/validation_model_4.npz",
+    "size_bytes": 137530
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/localization/discovery_samples.npz",
+    "size_bytes": 15925138
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/localization/spatial_evidence.npz",
+    "size_bytes": 3051807
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/localization/summary.json",
+    "size_bytes": 6399
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/localization/target_localization.png",
+    "size_bytes": 251908
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/metadata.json",
+    "size_bytes": 1485
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/metrics.csv",
+    "size_bytes": 993
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/report.html",
+    "size_bytes": 10322
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/scans/camera_local_rpm.csv",
+    "size_bytes": 71305
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/scans/scan_metrics.csv",
+    "size_bytes": 144929
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/scans/summary.json",
+    "size_bytes": 1770
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/status.json",
+    "size_bytes": 35198
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/summary.json",
+    "size_bytes": 29729
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/bootstrap_lags.csv",
+    "size_bytes": 6074
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/clock_metrics.csv",
+    "size_bytes": 678
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/error_correlation.csv",
+    "size_bytes": 331
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/error_covariance_deg2.csv",
+    "size_bytes": 353
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/lag_profile.csv",
+    "size_bytes": 53083
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/paired_detections.csv",
+    "size_bytes": 54096
+  },
+  {
+    "path": "captures/rig_20260828_192202_0_75bd0dfa/timing/summary.json",
+    "size_bytes": 4621
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/REPORT.md",
+    "size_bytes": 9191
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/clock_diagnostics.png",
+    "size_bytes": 94138
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/error_matrix.png",
+    "size_bytes": 66151
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/flir_detection_stages.png",
+    "size_bytes": 175859
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/flir_quality.png",
+    "size_bytes": 234303
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/livox_detection_stages.png",
+    "size_bytes": 1214022
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/livox_quality.png",
+    "size_bytes": 242607
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/overview.png",
+    "size_bytes": 241503
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/scan_variability.png",
+    "size_bytes": 552069
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/figures/timing_profile.png",
+    "size_bytes": 124462
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/angles.csv",
+    "size_bytes": 323064
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/chronological_model.npz",
+    "size_bytes": 68444
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/features.npz",
+    "size_bytes": 11335738
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/model.npz",
+    "size_bytes": 68623
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/summary.json",
+    "size_bytes": 1330
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/validation_model_0.npz",
+    "size_bytes": 68416
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/validation_model_1.npz",
+    "size_bytes": 68406
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/validation_model_2.npz",
+    "size_bytes": 68408
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/validation_model_3.npz",
+    "size_bytes": 68453
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/flir/validation_model_4.npz",
+    "size_bytes": 68422
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_extracted.npz",
+    "size_bytes": 12673250
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 81967
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82496
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82573
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82763
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82438
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/flir_detection_00000.png",
+    "size_bytes": 112849
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/flir_detection_00210.png",
+    "size_bytes": 112979
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/flir_detection_00315.png",
+    "size_bytes": 111857
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/flir_detection_00943.png",
+    "size_bytes": 111613
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00000.npz",
+    "size_bytes": 56789
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00000.png",
+    "size_bytes": 34985
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00060.npz",
+    "size_bytes": 53680
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00060.png",
+    "size_bytes": 34861
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00210.npz",
+    "size_bytes": 52604
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00210.png",
+    "size_bytes": 34985
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00390.npz",
+    "size_bytes": 55263
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_detection_00390.png",
+    "size_bytes": 35589
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/intermediates/livox_extracted.npz",
+    "size_bytes": 22273243
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/angles.csv",
+    "size_bytes": 88435
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/chronological_model.npz",
+    "size_bytes": 137720
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/features.npz",
+    "size_bytes": 1109468
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/model.npz",
+    "size_bytes": 137910
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/summary.json",
+    "size_bytes": 9029
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/validation_model_0.npz",
+    "size_bytes": 137730
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/validation_model_1.npz",
+    "size_bytes": 137733
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/validation_model_2.npz",
+    "size_bytes": 137745
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/validation_model_3.npz",
+    "size_bytes": 137729
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/livox/validation_model_4.npz",
+    "size_bytes": 137747
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/localization/discovery_samples.npz",
+    "size_bytes": 15917934
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/localization/spatial_evidence.npz",
+    "size_bytes": 3051585
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/localization/summary.json",
+    "size_bytes": 6401
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/localization/target_localization.png",
+    "size_bytes": 252156
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/metadata.json",
+    "size_bytes": 1479
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/metrics.csv",
+    "size_bytes": 986
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/report.html",
+    "size_bytes": 10323
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/scans/camera_local_rpm.csv",
+    "size_bytes": 68063
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/scans/scan_metrics.csv",
+    "size_bytes": 142075
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/scans/summary.json",
+    "size_bytes": 1737
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/status.json",
+    "size_bytes": 34967
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/summary.json",
+    "size_bytes": 29639
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/bootstrap_lags.csv",
+    "size_bytes": 5475
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/clock_metrics.csv",
+    "size_bytes": 680
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/error_correlation.csv",
+    "size_bytes": 315
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/error_covariance_deg2.csv",
+    "size_bytes": 352
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/lag_profile.csv",
+    "size_bytes": 52422
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/paired_detections.csv",
+    "size_bytes": 52797
+  },
+  {
+    "path": "captures/rig_20260828_192433_0_19450865/timing/summary.json",
+    "size_bytes": 4595
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/REPORT.md",
+    "size_bytes": 9190
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/clock_diagnostics.png",
+    "size_bytes": 96529
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/error_matrix.png",
+    "size_bytes": 67497
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/flir_detection_stages.png",
+    "size_bytes": 176579
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/flir_quality.png",
+    "size_bytes": 219373
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/livox_detection_stages.png",
+    "size_bytes": 1227592
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/livox_quality.png",
+    "size_bytes": 251505
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/overview.png",
+    "size_bytes": 281800
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/scan_variability.png",
+    "size_bytes": 543981
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/figures/timing_profile.png",
+    "size_bytes": 109194
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/angles.csv",
+    "size_bytes": 328972
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/chronological_model.npz",
+    "size_bytes": 68440
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/features.npz",
+    "size_bytes": 11392992
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/model.npz",
+    "size_bytes": 68647
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/summary.json",
+    "size_bytes": 1334
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/validation_model_0.npz",
+    "size_bytes": 68451
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/validation_model_1.npz",
+    "size_bytes": 68426
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/validation_model_2.npz",
+    "size_bytes": 68442
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/validation_model_3.npz",
+    "size_bytes": 68413
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/flir/validation_model_4.npz",
+    "size_bytes": 68428
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_extracted.npz",
+    "size_bytes": 12606466
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82721
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82662
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82825
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82591
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82654
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/flir_detection_00000.png",
+    "size_bytes": 111969
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/flir_detection_00052.png",
+    "size_bytes": 111282
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/flir_detection_00995.png",
+    "size_bytes": 112732
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/flir_detection_01361.png",
+    "size_bytes": 112966
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00000.npz",
+    "size_bytes": 53067
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00000.png",
+    "size_bytes": 34814
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00225.npz",
+    "size_bytes": 56464
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00225.png",
+    "size_bytes": 35678
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00270.npz",
+    "size_bytes": 55704
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00270.png",
+    "size_bytes": 35749
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00375.npz",
+    "size_bytes": 56536
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_detection_00375.png",
+    "size_bytes": 35406
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/intermediates/livox_extracted.npz",
+    "size_bytes": 22217584
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/angles.csv",
+    "size_bytes": 90910
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/chronological_model.npz",
+    "size_bytes": 137714
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/features.npz",
+    "size_bytes": 1104129
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/model.npz",
+    "size_bytes": 137913
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/summary.json",
+    "size_bytes": 9047
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/validation_model_0.npz",
+    "size_bytes": 137701
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/validation_model_1.npz",
+    "size_bytes": 137758
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/validation_model_2.npz",
+    "size_bytes": 137700
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/validation_model_3.npz",
+    "size_bytes": 137685
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/livox/validation_model_4.npz",
+    "size_bytes": 137699
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/localization/discovery_samples.npz",
+    "size_bytes": 15930381
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/localization/spatial_evidence.npz",
+    "size_bytes": 3050835
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/localization/summary.json",
+    "size_bytes": 6404
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/localization/target_localization.png",
+    "size_bytes": 253788
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/metadata.json",
+    "size_bytes": 1485
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/metrics.csv",
+    "size_bytes": 990
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/report.html",
+    "size_bytes": 10322
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/scans/camera_local_rpm.csv",
+    "size_bytes": 69698
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/scans/scan_metrics.csv",
+    "size_bytes": 142842
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/scans/summary.json",
+    "size_bytes": 1764
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/status.json",
+    "size_bytes": 34772
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/summary.json",
+    "size_bytes": 29711
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/bootstrap_lags.csv",
+    "size_bytes": 6625
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/clock_metrics.csv",
+    "size_bytes": 680
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/error_correlation.csv",
+    "size_bytes": 297
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/error_covariance_deg2.csv",
+    "size_bytes": 351
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/lag_profile.csv",
+    "size_bytes": 53391
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/paired_detections.csv",
+    "size_bytes": 53579
+  },
+  {
+    "path": "captures/rig_20260828_192618_0_9f231045/timing/summary.json",
+    "size_bytes": 4609
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/REPORT.md",
+    "size_bytes": 9187
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/clock_diagnostics.png",
+    "size_bytes": 95166
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/error_matrix.png",
+    "size_bytes": 65399
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/flir_detection_stages.png",
+    "size_bytes": 177131
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/flir_quality.png",
+    "size_bytes": 201210
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/livox_detection_stages.png",
+    "size_bytes": 1227945
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/livox_quality.png",
+    "size_bytes": 271294
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/overview.png",
+    "size_bytes": 275805
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/scan_variability.png",
+    "size_bytes": 586354
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/figures/timing_profile.png",
+    "size_bytes": 118516
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/angles.csv",
+    "size_bytes": 323822
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/chronological_model.npz",
+    "size_bytes": 68431
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/features.npz",
+    "size_bytes": 11487538
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/model.npz",
+    "size_bytes": 68655
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/summary.json",
+    "size_bytes": 1342
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/validation_model_0.npz",
+    "size_bytes": 68446
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/validation_model_1.npz",
+    "size_bytes": 68455
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/validation_model_2.npz",
+    "size_bytes": 68432
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/validation_model_3.npz",
+    "size_bytes": 68443
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/flir/validation_model_4.npz",
+    "size_bytes": 68418
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_extracted.npz",
+    "size_bytes": 12628845
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82633
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82709
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82652
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82741
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82688
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/flir_detection_00000.png",
+    "size_bytes": 111994
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/flir_detection_00070.png",
+    "size_bytes": 113240
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/flir_detection_00384.png",
+    "size_bytes": 113535
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/flir_detection_01012.png",
+    "size_bytes": 114099
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00000.npz",
+    "size_bytes": 56689
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00000.png",
+    "size_bytes": 35731
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00050.npz",
+    "size_bytes": 55346
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00050.png",
+    "size_bytes": 35223
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00260.npz",
+    "size_bytes": 52209
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00260.png",
+    "size_bytes": 34773
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00350.npz",
+    "size_bytes": 55158
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_detection_00350.png",
+    "size_bytes": 35563
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/intermediates/livox_extracted.npz",
+    "size_bytes": 21825040
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/angles.csv",
+    "size_bytes": 88718
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/chronological_model.npz",
+    "size_bytes": 137702
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/features.npz",
+    "size_bytes": 1106915
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/model.npz",
+    "size_bytes": 137917
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/summary.json",
+    "size_bytes": 9034
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/validation_model_0.npz",
+    "size_bytes": 137698
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/validation_model_1.npz",
+    "size_bytes": 137709
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/validation_model_2.npz",
+    "size_bytes": 137690
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/validation_model_3.npz",
+    "size_bytes": 137709
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/livox/validation_model_4.npz",
+    "size_bytes": 137662
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/localization/discovery_samples.npz",
+    "size_bytes": 15944519
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/localization/spatial_evidence.npz",
+    "size_bytes": 3053409
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/localization/summary.json",
+    "size_bytes": 6397
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/localization/target_localization.png",
+    "size_bytes": 253052
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/metadata.json",
+    "size_bytes": 1488
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/metrics.csv",
+    "size_bytes": 987
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/report.html",
+    "size_bytes": 10319
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/request.json",
+    "size_bytes": 570
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/scans/camera_local_rpm.csv",
+    "size_bytes": 69116
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/scans/scan_metrics.csv",
+    "size_bytes": 142112
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/scans/summary.json",
+    "size_bytes": 1750
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/status.json",
+    "size_bytes": 34773
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/summary.json",
+    "size_bytes": 29683
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/bootstrap_lags.csv",
+    "size_bytes": 6258
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/clock_metrics.csv",
+    "size_bytes": 679
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/error_correlation.csv",
+    "size_bytes": 300
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/error_covariance_deg2.csv",
+    "size_bytes": 353
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/lag_profile.csv",
+    "size_bytes": 52899
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/paired_detections.csv",
+    "size_bytes": 52784
+  },
+  {
+    "path": "captures/rig_20260828_192752_0_08993cb8/timing/summary.json",
+    "size_bytes": 4604
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/REPORT.md",
+    "size_bytes": 9186
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/clock_diagnostics.png",
+    "size_bytes": 103685
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/error_matrix.png",
+    "size_bytes": 66461
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/flir_detection_stages.png",
+    "size_bytes": 183499
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/flir_quality.png",
+    "size_bytes": 245435
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/livox_detection_stages.png",
+    "size_bytes": 1146481
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/livox_quality.png",
+    "size_bytes": 233384
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/overview.png",
+    "size_bytes": 257208
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/scan_variability.png",
+    "size_bytes": 553730
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/figures/timing_profile.png",
+    "size_bytes": 98945
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/angles.csv",
+    "size_bytes": 327542
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/chronological_model.npz",
+    "size_bytes": 68445
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/features.npz",
+    "size_bytes": 11722262
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/model.npz",
+    "size_bytes": 68664
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/summary.json",
+    "size_bytes": 1342
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/validation_model_0.npz",
+    "size_bytes": 68447
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/validation_model_1.npz",
+    "size_bytes": 68444
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/validation_model_2.npz",
+    "size_bytes": 68444
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/validation_model_3.npz",
+    "size_bytes": 68417
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/flir/validation_model_4.npz",
+    "size_bytes": 68419
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_extracted.npz",
+    "size_bytes": 12849407
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82621
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82604
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82524
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82444
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82554
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/flir_detection_00000.png",
+    "size_bytes": 113158
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/flir_detection_00314.png",
+    "size_bytes": 113280
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/flir_detection_01049.png",
+    "size_bytes": 114187
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/flir_detection_01364.png",
+    "size_bytes": 113469
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00000.npz",
+    "size_bytes": 56400
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00000.png",
+    "size_bytes": 35218
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00180.npz",
+    "size_bytes": 57094
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00180.png",
+    "size_bytes": 34884
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00210.npz",
+    "size_bytes": 54279
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00210.png",
+    "size_bytes": 35013
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00390.npz",
+    "size_bytes": 58992
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_detection_00390.png",
+    "size_bytes": 35933
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/intermediates/livox_extracted.npz",
+    "size_bytes": 23066932
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/angles.csv",
+    "size_bytes": 90680
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/chronological_model.npz",
+    "size_bytes": 137427
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/features.npz",
+    "size_bytes": 1107925
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/model.npz",
+    "size_bytes": 137700
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/summary.json",
+    "size_bytes": 9031
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/validation_model_0.npz",
+    "size_bytes": 137462
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/validation_model_1.npz",
+    "size_bytes": 137499
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/validation_model_2.npz",
+    "size_bytes": 137474
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/validation_model_3.npz",
+    "size_bytes": 137492
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/livox/validation_model_4.npz",
+    "size_bytes": 137458
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/localization/discovery_samples.npz",
+    "size_bytes": 15348809
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/localization/spatial_evidence.npz",
+    "size_bytes": 3012619
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/localization/summary.json",
+    "size_bytes": 6398
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/localization/target_localization.png",
+    "size_bytes": 255069
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/metadata.json",
+    "size_bytes": 1486
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/metrics.csv",
+    "size_bytes": 987
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/report.html",
+    "size_bytes": 10318
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/request.json",
+    "size_bytes": 567
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/scans/camera_local_rpm.csv",
+    "size_bytes": 69526
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/scans/scan_metrics.csv",
+    "size_bytes": 142885
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/scans/summary.json",
+    "size_bytes": 1747
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/status.json",
+    "size_bytes": 34838
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/summary.json",
+    "size_bytes": 29669
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/bootstrap_lags.csv",
+    "size_bytes": 6592
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/clock_metrics.csv",
+    "size_bytes": 681
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/error_correlation.csv",
+    "size_bytes": 299
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/error_covariance_deg2.csv",
+    "size_bytes": 353
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/lag_profile.csv",
+    "size_bytes": 52746
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/paired_detections.csv",
+    "size_bytes": 53100
+  },
+  {
+    "path": "captures/rig_20260828_192952_0_167849ac/timing/summary.json",
+    "size_bytes": 4601
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/REPORT.md",
+    "size_bytes": 9181
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/clock_diagnostics.png",
+    "size_bytes": 96392
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/error_matrix.png",
+    "size_bytes": 66600
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/flir_detection_stages.png",
+    "size_bytes": 185367
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/flir_quality.png",
+    "size_bytes": 218344
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/livox_detection_stages.png",
+    "size_bytes": 1146730
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/livox_quality.png",
+    "size_bytes": 251376
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/overview.png",
+    "size_bytes": 270660
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/scan_variability.png",
+    "size_bytes": 585797
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/figures/timing_profile.png",
+    "size_bytes": 107183
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/angles.csv",
+    "size_bytes": 324315
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/chronological_model.npz",
+    "size_bytes": 68461
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/features.npz",
+    "size_bytes": 11740345
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/model.npz",
+    "size_bytes": 68660
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/summary.json",
+    "size_bytes": 1335
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/validation_model_0.npz",
+    "size_bytes": 68434
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/validation_model_1.npz",
+    "size_bytes": 68437
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/validation_model_2.npz",
+    "size_bytes": 68458
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/validation_model_3.npz",
+    "size_bytes": 68417
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/flir/validation_model_4.npz",
+    "size_bytes": 68469
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_extracted.npz",
+    "size_bytes": 12723842
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82875
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82587
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82573
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82512
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82412
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/flir_detection_00000.png",
+    "size_bytes": 113397
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/flir_detection_00524.png",
+    "size_bytes": 112881
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/flir_detection_01206.png",
+    "size_bytes": 114345
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/flir_detection_01311.png",
+    "size_bytes": 114438
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00000.npz",
+    "size_bytes": 58915
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00000.png",
+    "size_bytes": 35418
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00105.npz",
+    "size_bytes": 57651
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00105.png",
+    "size_bytes": 35593
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00150.npz",
+    "size_bytes": 56851
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00150.png",
+    "size_bytes": 35418
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00315.npz",
+    "size_bytes": 54831
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_detection_00315.png",
+    "size_bytes": 34908
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/intermediates/livox_extracted.npz",
+    "size_bytes": 23192021
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/angles.csv",
+    "size_bytes": 88627
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/chronological_model.npz",
+    "size_bytes": 137463
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/features.npz",
+    "size_bytes": 1107943
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/model.npz",
+    "size_bytes": 137678
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/summary.json",
+    "size_bytes": 9022
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/validation_model_0.npz",
+    "size_bytes": 137502
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/validation_model_1.npz",
+    "size_bytes": 137485
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/validation_model_2.npz",
+    "size_bytes": 137432
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/validation_model_3.npz",
+    "size_bytes": 137422
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/livox/validation_model_4.npz",
+    "size_bytes": 137468
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/localization/discovery_samples.npz",
+    "size_bytes": 15350945
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/localization/spatial_evidence.npz",
+    "size_bytes": 3014347
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/localization/summary.json",
+    "size_bytes": 6391
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/localization/target_localization.png",
+    "size_bytes": 256005
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/metadata.json",
+    "size_bytes": 1483
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/metrics.csv",
+    "size_bytes": 991
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/report.html",
+    "size_bytes": 10313
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/request.json",
+    "size_bytes": 567
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/scans/camera_local_rpm.csv",
+    "size_bytes": 68496
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/scans/scan_metrics.csv",
+    "size_bytes": 141706
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/scans/summary.json",
+    "size_bytes": 1753
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/status.json",
+    "size_bytes": 34843
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/summary.json",
+    "size_bytes": 29671
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/bootstrap_lags.csv",
+    "size_bytes": 5118
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/clock_metrics.csv",
+    "size_bytes": 680
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/error_correlation.csv",
+    "size_bytes": 311
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/error_covariance_deg2.csv",
+    "size_bytes": 348
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/lag_profile.csv",
+    "size_bytes": 53077
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/paired_detections.csv",
+    "size_bytes": 52884
+  },
+  {
+    "path": "captures/rig_20260828_193136_0_c404477e/timing/summary.json",
+    "size_bytes": 4623
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/REPORT.md",
+    "size_bytes": 9188
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/clock_diagnostics.png",
+    "size_bytes": 95862
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/error_matrix.png",
+    "size_bytes": 66450
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/flir_detection_stages.png",
+    "size_bytes": 183899
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/flir_quality.png",
+    "size_bytes": 198117
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/livox_detection_stages.png",
+    "size_bytes": 1152223
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/livox_quality.png",
+    "size_bytes": 271805
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/overview.png",
+    "size_bytes": 253634
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/scan_variability.png",
+    "size_bytes": 557896
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/figures/timing_profile.png",
+    "size_bytes": 121162
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/angles.csv",
+    "size_bytes": 333608
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/chronological_model.npz",
+    "size_bytes": 68417
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/features.npz",
+    "size_bytes": 11920384
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/model.npz",
+    "size_bytes": 68657
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/summary.json",
+    "size_bytes": 1340
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/validation_model_0.npz",
+    "size_bytes": 68417
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/validation_model_1.npz",
+    "size_bytes": 68459
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/validation_model_2.npz",
+    "size_bytes": 68479
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/validation_model_3.npz",
+    "size_bytes": 68411
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/flir/validation_model_4.npz",
+    "size_bytes": 68420
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_extracted.npz",
+    "size_bytes": 12885463
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_full_frame_00000.png",
+    "size_bytes": 82770
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_full_frame_00349.png",
+    "size_bytes": 82671
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_full_frame_00699.png",
+    "size_bytes": 82568
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_full_frame_01049.png",
+    "size_bytes": 82494
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/camera_full_frame_01399.png",
+    "size_bytes": 82582
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/flir_detection_00000.png",
+    "size_bytes": 115312
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/flir_detection_00035.png",
+    "size_bytes": 112705
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/flir_detection_00210.png",
+    "size_bytes": 113987
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/flir_detection_00384.png",
+    "size_bytes": 112006
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00000.npz",
+    "size_bytes": 54689
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00000.png",
+    "size_bytes": 34673
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00190.npz",
+    "size_bytes": 57254
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00190.png",
+    "size_bytes": 35836
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00220.npz",
+    "size_bytes": 59546
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00220.png",
+    "size_bytes": 35870
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00290.npz",
+    "size_bytes": 58669
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_detection_00290.png",
+    "size_bytes": 35699
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/intermediates/livox_extracted.npz",
+    "size_bytes": 23266030
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/angles.csv",
+    "size_bytes": 91856
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/chronological_model.npz",
+    "size_bytes": 137541
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/features.npz",
+    "size_bytes": 1115906
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/model.npz",
+    "size_bytes": 137665
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/summary.json",
+    "size_bytes": 9038
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/validation_model_0.npz",
+    "size_bytes": 137534
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/validation_model_1.npz",
+    "size_bytes": 137515
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/validation_model_2.npz",
+    "size_bytes": 137482
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/validation_model_3.npz",
+    "size_bytes": 137492
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/livox/validation_model_4.npz",
+    "size_bytes": 137528
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/localization/discovery_samples.npz",
+    "size_bytes": 15363281
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/localization/spatial_evidence.npz",
+    "size_bytes": 3015646
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/localization/summary.json",
+    "size_bytes": 6401
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/localization/target_localization.png",
+    "size_bytes": 255387
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/metadata.json",
+    "size_bytes": 1482
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/metrics.csv",
+    "size_bytes": 991
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/report.html",
+    "size_bytes": 10320
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/request.json",
+    "size_bytes": 567
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/scans/camera_local_rpm.csv",
+    "size_bytes": 71459
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/scans/scan_metrics.csv",
+    "size_bytes": 144308
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/scans/summary.json",
+    "size_bytes": 1759
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/status.json",
+    "size_bytes": 35204
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/summary.json",
+    "size_bytes": 29685
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/bootstrap_lags.csv",
+    "size_bytes": 6304
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/clock_metrics.csv",
+    "size_bytes": 683
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/error_correlation.csv",
+    "size_bytes": 331
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/error_covariance_deg2.csv",
+    "size_bytes": 353
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/lag_profile.csv",
+    "size_bytes": 52987
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/paired_detections.csv",
+    "size_bytes": 53887
+  },
+  {
+    "path": "captures/rig_20260828_193309_0_64ef9a6f/timing/summary.json",
+    "size_bytes": 4600
+  },
+  {
+    "path": "figures/automatic_comparison.png",
+    "size_bytes": 156951
+  },
+  {
+    "path": "figures/batch_overview.png",
+    "size_bytes": 180449
+  },
+  {
+    "path": "figures/batch_return_distributions.png",
+    "size_bytes": 53897
+  },
+  {
+    "path": "figures/batch_scan_traces.png",
+    "size_bytes": 1310040
+  },
+  {
+    "path": "figures/batch_variability_matrix.png",
+    "size_bytes": 72378
+  },
+  {
+    "path": "figures/overall_timing.png",
+    "size_bytes": 278273
+  },
+  {
+    "path": "processing_manifest.csv",
+    "size_bytes": 12834
+  },
+  {
+    "path": "report.html",
+    "size_bytes": 5980
+  },
+  {
+    "path": "request.json",
+    "size_bytes": 685
+  },
+  {
+    "path": "status.json",
+    "size_bytes": 17297
+  },
+  {
+    "path": "summary.json",
+    "size_bytes": 33782
+  },
+  {
+    "path": "timing/overall_offset.json",
+    "size_bytes": 1041
+  },
+  {
+    "path": "timing/parameter_covariance.npz",
+    "size_bytes": 296
+  },
+  {
+    "path": "timing/phase_fit.csv",
+    "size_bytes": 3972
+  },
+  {
+    "path": "timing/phase_observations.csv",
+    "size_bytes": 3326
+  },
+  {
+    "path": "variability_bins.csv",
+    "size_bytes": 10336
+  }
+]

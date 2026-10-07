@@ -1,0 +1,101 @@
+{
+  "checks": [
+    "Published app enumerates exactly the two distributed raw bags and valid Device 1 calibration",
+    "Browser Start processes 1,425 frames and all 419 clouds, showing live localization and stage/count progress",
+    "Fresh pinned dependencies reproduce automatic held-out agreement within 0.001 degree and preserve reference timing phase",
+    "Published ten-capture result shows each selected automatic method",
+    "Previous and automatic saved results remain separately browsable"
+  ],
+  "browser_errors": [],
+  "run_id": "rig_20260828_192028_0_20261007T070321Z_e4d3608d",
+  "live_localization_preview_verified": true,
+  "observed_stages": [
+    {
+      "status": "queued",
+      "stage": "queued",
+      "percent": 0,
+      "counts": null
+    },
+    {
+      "status": "running",
+      "stage": "localization",
+      "percent": 0,
+      "counts": null
+    },
+    {
+      "status": "running",
+      "stage": "extract",
+      "percent": 10.0,
+      "counts": {
+        "camera": 380,
+        "livox": 120
+      }
+    },
+    {
+      "status": "running",
+      "stage": "flir_calibration",
+      "percent": 18.0,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "running",
+      "stage": "flir_detection",
+      "percent": 30.1,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "running",
+      "stage": "flir_validation",
+      "percent": 40.0,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "running",
+      "stage": "livox_features",
+      "percent": 56.0,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "running",
+      "stage": "livox_validation",
+      "percent": 82.7,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "running",
+      "stage": "export",
+      "percent": 94.0,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    },
+    {
+      "status": "complete",
+      "stage": "complete",
+      "percent": 100,
+      "counts": {
+        "camera": 1425,
+        "livox": 419
+      }
+    }
+  ],
+  "heldout_livox_std_deg": 0.4886775935072314,
+  "camera_frames": 1425,
+  "clouds": 419
+}

@@ -94,28 +94,29 @@ def flir(raw,config,out,progress,preview):
             'relative':angles-angles[0],'smooth':smooth,'batch':fitted+phase,'residual':angles-fitted,
             'cv':cv,'calibration':cal,'polar':polar,'features':f,'model':model,'boundary':boundary}
 
-def harmonic_phase(time,h5):
+def harmonic_phase(time,h5,winding=3):
     # Restore the SAME empirical harmonic phase convention in each bag, rather
     # than using the unrelated time-zero phase of each learned motion template.
     from scipy.ndimage import gaussian_filter1d
     h=gaussian_filter1d(h5.real,1)+1j*gaussian_filter1d(h5.imag,1)
     xy=np.column_stack([h.real,h.imag]);xy-=np.median(xy,axis=0)
     val,vec=np.linalg.eigh(np.cov(xy.T));xy=xy@(vec@np.diag(1/np.sqrt(np.maximum(val,1e-10)))@vec.T)
-    return np.degrees(np.unwrap(np.angle(xy[:,0]+1j*xy[:,1])))/3
+    return np.degrees(np.unwrap(np.angle(xy[:,0]+1j*xy[:,1])))/winding
 
 def livox(raw,config,out,progress,preview):
     out.mkdir(exist_ok=True);time=raw['stamps']-raw['stamps'][0];n=len(time)
     if not np.all(np.isfinite(time)) or not np.all(np.diff(time)>0):raise ValueError('Livox recording clock must be finite and strictly increasing.')
     fold=validation_blocks(time,2,config['validation_folds'],config['livox_order'],'Livox')
+    geometry=raw.get('geometry');winding=1 if geometry else 3
     fs=[];hs=[];cs=[]
     for start in range(0,n,40):
         stop=min(start+40,n);lo,hi=raw['offsets'][start],raw['offsets'][stop]
-        f,h,c=returns.features(raw['points'][lo:hi],raw['offsets'][start:stop+1]-lo)
+        f,h,c=returns.features(raw['points'][lo:hi],raw['offsets'][start:stop+1]-lo,geometry)
         fs.append(f);hs.append(h);cs.append(c)
         progress('livox_features',stop,n,'Measuring depth, radial and angular return features')
     f=np.concatenate(fs);h5=np.concatenate(hs);counts=np.concatenate(cs)
-    initial,coherence=returns.initial_rate(time,h5)
-    if np.median(counts)<100 or coherence<.6:raise ValueError('Too few coherent rotating-surface returns. Check the Livox topic and rig geometry.')
+    initial,coherence=returns.localized_rate(time,f) if geometry else returns.initial_rate(time,h5,winding)
+    if np.median(counts)<100 or coherence<(.15 if geometry else .6):raise ValueError('Too few coherent rotating-surface returns. Check the Livox topic and rig geometry.')
     model=lp.learn(time,f,np.ones(n,bool),initial,config['livox_order'],search_rate=False)
     progress('livox_detection',0,n,'Livox appearance template calibrated',metrics={'livox_rpm':model['rpm']})
     angles=np.empty(n);sigma=np.empty(n);noise=np.empty(n);boundary=np.empty(n,bool);first_phase=None
@@ -124,7 +125,7 @@ def livox(raw,config,out,progress,preview):
         angles[start:stop]=a;sigma[start:stop]=s;noise[start:stop]=r;boundary[start:stop]=b
         if first_phase is None:first_phase=a[0]
         i=stop-1;p=raw['points'][raw['offsets'][i]:raw['offsets'][i+1]]
-        preview('livox',p,None,i,raw['stamps'][i],angles[i]-first_phase)
+        preview('livox',p,geometry,i,raw['stamps'][i],angles[i]-first_phase)
         progress('livox_detection',stop,n,'Registering independent Livox cloud observations',
                  detections={'sensor':'Livox','frame':i,'angle_deg':float((angles[i]-first_phase)%360),'stamp_s':raw['stamps'][i],
                              'trace':[{'t':float(t),'angle':float((v-first_phase)%360)} for t,v in zip(time[start:stop:2],a[::2])]})
@@ -134,16 +135,20 @@ def livox(raw,config,out,progress,preview):
         test=fold==k;train=~maximum_filter1d(test.astype(int),size=window,mode='nearest').astype(bool)
         if train.sum()<2*config['livox_order']+3:raise ValueError('Too few Livox training clouds remain after purging a validation fold. Capture a longer sequence.')
         progress('livox_validation',k,config['validation_folds']+1,f'Livox purged validation fold {k+1}/{config["validation_folds"]}')
-        rate,_=returns.initial_rate(time[train],h5[train]);m=lp.learn(time,f,train,rate,config['livox_order'],search_rate=False)
+        rate,_=returns.localized_rate(time[train],f[train]) if geometry else returns.initial_rate(time[train],h5[train],winding);m=lp.learn(time,f,train,rate,config['livox_order'],search_rate=False)
         a,_,_,b=lp.register(time,f,m,20);s=savgol_filter(a,window,2)
         cv[test]=a[test];cvs[test]=s[test];cve[test]=a[test]-time[test]*m['rpm']*6;cvse[test]=s[test]-time[test]*m['rpm']*6;cvb[test]=b[test];rates.append(m['rpm'])
         np.savez_compressed(out/f'validation_model_{k}.npz',**m)
-    train=time<time.max()*.6;rate,_=returns.initial_rate(time[train],h5[train]);m=lp.learn(time,f,train,rate,config['livox_order'],search_rate=False)
+    train=time<time.max()*.6;rate,_=returns.localized_rate(time[train],f[train]) if geometry else returns.initial_rate(time[train],h5[train],winding);m=lp.learn(time,f,train,rate,config['livox_order'],search_rate=False)
     a,_,_,b=lp.register(time[~train],f[~train],m,20);chronological=a-time[~train]*m['rpm']*6
     np.savez_compressed(out/'chronological_model.npz',**m)
     progress('livox_validation',config['validation_folds']+1,config['validation_folds']+1,'Livox validation complete')
-    hp=harmonic_phase(time,h5)
-    difference=hp-angles;anchor=np.angle(np.mean(np.exp(1j*np.radians(difference)*3)))/3*180/np.pi
+    # Position normalization improves relative angles, but must not redefine the
+    # historical cross-speed zero of exact known-rig source recordings.
+    timing_signature=raw.get('reference_timing_h5',h5)
+    phase_winding=3 if 'reference_timing_h5' in raw else winding
+    hp=harmonic_phase(time,timing_signature,phase_winding)
+    difference=hp-angles;anchor=np.angle(np.mean(np.exp(1j*np.radians(difference)*phase_winding)))/phase_winding*180/np.pi
     canonical=angles+anchor
     summary={'frames':n,'rpm':model['rpm'],'line_rpm':beta[1]/6,'initial_harmonic_rpm':initial,'coherence':coherence,
              'median_near_returns':float(np.median(counts)),'raw_residual':lp.metrics(angles-fitted),'smoothed_residual':lp.metrics(smooth-fitted),
@@ -151,10 +156,13 @@ def livox(raw,config,out,progress,preview):
              'chronological_residual':lp.metrics(chronological),'fold_rpm':rates,
              'boundary_hits':int(boundary.sum()),'heldout_boundary_hits':int(cvb.sum()),
              'status':'RELATIVE_TRACK_RECOVERED' if not cvb.any() and lp.metrics(cve)['p95_deg']<5 else 'REVIEW',
-             'harmonic_phase_anchor_mod120_deg':anchor,'absolute_phase':'Uncalibrated physical zero; canonical harmonic phase is an empirical convention only.',
+             'harmonic_phase_anchor_deg':anchor,'absolute_phase':'Uncalibrated physical zero; canonical harmonic phase is an empirical convention only.',
              'filter_frames':window,'filter_span_s':float(np.median(raw['stamps'][window-1:]-raw['stamps'][:1-window])),
              'future_lookahead_s':float(np.median(raw['stamps'][window//2:]-raw['stamps'][:-(window//2)])),
-             'camera_used_for_estimation':False}
+             'camera_used_for_estimation':False,'camera_used_for_localization':bool(raw.get('localization') and raw['localization']['method']=='camera_guided'),
+             'phase_period_deg':360/phase_winding,'phase_convention':'legacy_h5_over_3' if phase_winding==3 else 'target_centred_h1_v1',
+             'motion_harmonic_order':1 if geometry else 5,'reference_timing_phase_preserved':'reference_timing_h5' in raw,
+             'localization':raw.get('localization')}
     rows=[{'frame':i,'bag_stamp_s':raw['stamps'][i],'header_device_stamp_s':raw['headers'][i],
            'relative_angle_deg':angles[i]-angles[0],'relative_wrapped_angle_deg':(angles[i]-angles[0])%360,
            'offline_smoothed_relative_angle_deg':smooth[i]-smooth[0],'batch_relative_angle_deg':fitted[i]-fitted[0],
@@ -164,7 +172,8 @@ def livox(raw,config,out,progress,preview):
     write_csv(out/'angles.csv',rows);save_json(out/'summary.json',summary)
     np.savez_compressed(out/'model.npz',**model,harmonic_anchor_deg=anchor)
     np.savez_compressed(out/'features.npz',features=f,h5=h5,counts=counts,time_s=time,phase_deg=angles,
-                        canonical_phase_deg=canonical,heldout_phase_deg=cv,heldout_smoothed_phase_deg=cvs,boundary=boundary)
+                        canonical_phase_deg=canonical,heldout_phase_deg=cv,heldout_smoothed_phase_deg=cvs,boundary=boundary,
+                        timing_harmonic_signature=timing_signature,timing_phase_winding=phase_winding,motion_harmonic_order=1 if geometry else 5)
     return {'summary':summary,'stamps':raw['stamps'],'headers':raw['headers'],'time':time,'angle':angles,
             'relative':angles-angles[0],'smooth':smooth,'batch':fitted,'residual':angles-fitted,
             'cv':cv,'cvs':cvs,'cv_error':cve,'cv_smoothed_error':cvse,'counts':counts,'h5':h5,

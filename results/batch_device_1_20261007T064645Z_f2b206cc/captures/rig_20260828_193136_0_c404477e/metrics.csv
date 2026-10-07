@@ -1,0 +1,19 @@
+sensor,metric,value,units
+FLIR,n,1426,count
+FLIR,mae_deg,0.1887095980287839,degrees
+FLIR,std_deg,0.2362974112892714,degrees
+FLIR,rmse_deg,0.2364126682018685,degrees
+FLIR,p95_deg,0.44576768781137766,degrees
+FLIR,bias_deg,-0.009676730425947128,degrees
+Livox vs FLIR heldout raw,n,398,count
+Livox vs FLIR heldout raw,mae_deg,0.42581817673339956,degrees
+Livox vs FLIR heldout raw,std_deg,0.5164070890838152,degrees
+Livox vs FLIR heldout raw,rmse_deg,0.5219487636981358,degrees
+Livox vs FLIR heldout raw,p95_deg,1.0170490703106396,degrees
+Livox vs FLIR heldout raw,bias_deg,-0.0801515513179651,degrees
+Livox vs FLIR heldout offline,n,398,count
+Livox vs FLIR heldout offline,mae_deg,0.19810939093337634,degrees
+Livox vs FLIR heldout offline,std_deg,0.24113724485344515,degrees
+Livox vs FLIR heldout offline,rmse_deg,0.24893381781311344,degrees
+Livox vs FLIR heldout offline,p95_deg,0.49431112348621575,degrees
+Livox vs FLIR heldout offline,bias_deg,-0.06298391234860627,degrees
