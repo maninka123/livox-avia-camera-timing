@@ -49,7 +49,7 @@ def initial_rate(time,h5,winding=3,minimum_observations=100):
 
 def localized_rate(time,features):
     """Use several spatial orders to avoid a distorted H1 ellipse biasing speed."""
-    from localization import rotation_rate
+    from algorithms.support.localization import rotation_rate
     array=np.asarray(features).reshape(len(time),16,21)
     signatures=(array[:,:12,1:7]+1j*array[:,:12,11:17]).sum(axis=1)
     return rotation_rate(time,signatures)

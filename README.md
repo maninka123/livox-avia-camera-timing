@@ -74,3 +74,5 @@ Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetc
 - **Preprint:** [A Rotating Aperture Target with a Common Geometric Estimator for Temporal Calibration of Heterogeneous Sensors](https://doi.org/10.2139/ssrn.7513129).
 
 The papers provide the research background; this app’s independent estimators and results are described above.
+
+[Code layout](algorithms/README.md): sensor methods and shared support live under `algorithms/`; launch scripts stay at the root.

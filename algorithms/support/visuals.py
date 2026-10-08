@@ -104,7 +104,7 @@ def diagnostics(camera,lidar,cr,lr,timing,profile,paired,out,progress):
     aligned_camera=paired['reference'][keep];aligned_lidar=lidar['angle'][keep]-paired['offset']
     error=np.column_stack([camera['residual'][np.searchsorted(camera['stamps'],lidar['stamps'][keep]).clip(0,len(camera['stamps'])-1)],paired['cv'][keep],paired['cvs'][keep]])
     matrix=np.corrcoef(error.T);cov=np.cov(error.T);names=['FLIR own-fit residual','Livox held-out disagreement','Livox filtered disagreement']
-    from common import write_csv
+    from algorithms.support.common import write_csv
     write_csv(out/'timing'/'error_correlation.csv',[{'metric':names[i],**{name:matrix[i,j] for j,name in enumerate(names)}} for i in range(3)])
     write_csv(out/'timing'/'error_covariance_deg2.csv',[{'metric':names[i],**{name:cov[i,j] for j,name in enumerate(names)}} for i in range(3)])
     fig,ax=plt.subplots(figsize=(7,5));im=ax.imshow(matrix,vmin=-1,vmax=1,cmap='RdBu_r');ax.set_xticks(range(3));ax.set_yticks(range(3));ax.set_xticklabels(['FLIR residual','Livox error','Filtered error'],rotation=20);ax.set_yticklabels(['FLIR residual','Livox error','Filtered error'])

@@ -2,9 +2,9 @@ import tempfile
 import unittest
 from pathlib import Path
 import numpy as np
-from scan_variability import local_rpm,describe
-from batch_analysis import aggregate
-from common import bag_path,result_path
+from algorithms.support.scan_variability import local_rpm,describe
+from algorithms.support.batch_analysis import aggregate
+from algorithms.support.common import bag_path,result_path
 
 
 class ScanTests(unittest.TestCase):

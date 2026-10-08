@@ -2,7 +2,7 @@
 import numpy as np
 from scipy import stats
 from algorithms.flir.periodic import metrics, line
-from common import write_csv, save_json
+from algorithms.support.common import write_csv, save_json
 
 SIGN='theta_livox(t_bag) = phase + theta_flir(t_bag + tau); positive tau means Livox content leads FLIR on bag time.'
 

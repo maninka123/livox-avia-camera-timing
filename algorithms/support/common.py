@@ -9,7 +9,7 @@ import fcntl
 from pathlib import Path
 import numpy as np
 
-ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 BAGS = ROOT / 'bagfiles'
 RESULTS = ROOT / 'results'
 

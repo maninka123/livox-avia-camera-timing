@@ -7,10 +7,10 @@ import json
 import sys
 import uuid
 from datetime import datetime,timezone
-from common import ROOT,BAGS,RESULTS,bag_path,save_json,validate_options,dataset_bags,file_prefix,file_lock,read_json
-from bag_io import inspect
-from pipeline import run
-from job_registry import active_jobs,remember_current
+from algorithms.support.common import ROOT,BAGS,RESULTS,bag_path,save_json,validate_options,dataset_bags,file_prefix,file_lock,read_json
+from algorithms.support.bag_io import inspect
+from algorithms.support.pipeline import run
+from algorithms.support.job_registry import active_jobs,remember_current
 
 
 def execute(request, callback):
@@ -46,7 +46,7 @@ def main():
     args=parser.parse_args()
     if args.bag and (args.all or args.folder):parser.error('Choose one bag or folder mode, not both.')
     if args.all or args.folder:
-        from batch_worker import run_batch
+        from algorithms.support.batch_worker import run_batch
         devices=[f'device_{i}' for i in range(1,6) if dataset_bags(f'device_{i}')] if args.all else [args.folder]
         if not devices:parser.error('No device folder contains bags.')
         failures=False

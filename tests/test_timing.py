@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from timing import lag_profile,fit_multi,clock_metrics
+from algorithms.support.timing import lag_profile,fit_multi,clock_metrics
 
 class TimingTests(unittest.TestCase):
     def test_constant_rotation_cannot_identify_lag(self):

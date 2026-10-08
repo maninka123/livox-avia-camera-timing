@@ -3,7 +3,7 @@ import json
 from pathlib import Path
 import cv2
 import numpy as np
-from common import ROOT, sha256_file
+from algorithms.support.common import ROOT, sha256_file
 
 METHODS = ('auto', 'camera_guided', 'lidar_only', 'legacy')
 

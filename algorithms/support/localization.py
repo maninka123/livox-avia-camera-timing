@@ -10,8 +10,8 @@ import cv2
 import numpy as np
 from scipy import ndimage
 from scipy.stats import binned_statistic_2d
-from calibration import load_device, project
-from common import save_json, ROOT, sha256_file
+from algorithms.support.calibration import load_device, project
+from algorithms.support.common import save_json, ROOT, sha256_file
 
 
 def reference_capture(path, device):
@@ -194,7 +194,7 @@ def plot(evidence, selected, options, image, camera_cal, config, calibration, pa
 
 def discover(path, config, output, progress):
     import rosbag
-    from bag_io import inspect, grayscale
+    from algorithms.support.bag_io import inspect, grayscale
     from algorithms.livox.extract_cloud import decode
     from algorithms.flir.photometry import calibrate
     mode = config.get('livox_localization', 'auto')

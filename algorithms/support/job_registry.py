@@ -1,12 +1,19 @@
 """Persist worker identity so a server restart can reconnect safely to live jobs."""
 import os
 import signal
+import sys
 import time
 from pathlib import Path
-from common import ROOT, RESULTS, read_json, save_json
+from algorithms.support.common import ROOT, RESULTS, read_json, save_json
 
 workers={}
 ACTIVE=('queued','running','cancelling')
+WORKER_MODULES=('algorithms.support.pipeline','algorithms.support.batch_worker')
+
+def worker_command(module,request_file):
+    """Run package workers from the project root without modifying import paths."""
+    if module not in WORKER_MODULES:raise ValueError('Unknown processing worker module.')
+    return [sys.executable,'-m',module,str(Path(request_file).resolve())]
 
 def identity(pid,request_file):
     """Match PID, start tick and exact worker/request arguments; never signal a reused PID."""
@@ -15,11 +22,15 @@ def identity(pid,request_file):
         args=(proc/'cmdline').read_bytes().split(b'\0')
         if len(args)<2:return None
         cwd=(proc/'cwd').resolve()
-        script=(cwd/os.fsdecode(args[1])).resolve()
-        if script==ROOT/'process_bag.py':
-            pass  # CLI workers persist the same PID/start tick in each active run.
-        elif script not in (ROOT/'batch_worker.py',ROOT/'pipeline.py') or len(args)<3 or (cwd/os.fsdecode(args[2])).resolve()!=request_file:
-            return None
+        if args[1]==b'-m':
+            if len(args)<4 or os.fsdecode(args[2]) not in WORKER_MODULES or cwd!=ROOT.resolve():return None
+            if (cwd/os.fsdecode(args[3])).resolve()!=request_file.resolve():return None
+        else:
+            script=(cwd/os.fsdecode(args[1])).resolve()
+            if script==ROOT/'process_bag.py':
+                pass  # CLI workers persist the same PID/start tick in each active run.
+            elif script not in (ROOT/'batch_worker.py',ROOT/'pipeline.py') or len(args)<3 or (cwd/os.fsdecode(args[2])).resolve()!=request_file.resolve():
+                return None  # Recognize already-running workers from older app versions.
         stat=(proc/'stat').read_text().rsplit(')',1)[1].split()
         if stat[0]=='Z':return None
         return stat[19]  # starttime, field 22; fields after the command start at 3.

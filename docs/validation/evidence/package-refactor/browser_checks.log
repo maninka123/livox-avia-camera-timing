@@ -1,0 +1,54 @@
+{
+  "passed": true,
+  "single_run_id": "rig_20260828_191845_0_20261008T032702Z_3406b666",
+  "folder_run_id": "batch_device_1_20261008T032723Z_5130cabc",
+  "folder_child_run_id": "batch_device_1_20261008T032723Z_5130cabc/captures/rig_20260828_191845_0_8da877d2",
+  "camera_frames": 1423,
+  "livox_scans": 419,
+  "camera_rpm": 9.999671842705975,
+  "livox_rpm": 10.000187120585496,
+  "camera_roi": [
+    234,
+    146,
+    113,
+    113
+  ],
+  "lidar_method": "camera_guided",
+  "worker_identities": {
+    "rig_20260828_191845_0_20261008T032702Z_3406b666": {
+      "pid": 233102,
+      "start_tick": "6969207"
+    },
+    "batch_device_1_20261008T032723Z_5130cabc": {
+      "pid": 233384,
+      "start_tick": "6971235"
+    },
+    "batch_device_1_20261008T032723Z_5130cabc/captures/rig_20260828_191845_0_8da877d2": {
+      "pid": 233408,
+      "start_tick": "6971270"
+    }
+  },
+  "observed_stages": [
+    "camera_localization",
+    "localization",
+    "extract",
+    "flir_calibration",
+    "flir_detection",
+    "flir_validation",
+    "livox_features",
+    "livox_detection",
+    "livox_validation",
+    "scan_variability",
+    "timing",
+    "export"
+  ],
+  "package_worker_commands_checked_during_processing": true,
+  "second_cli_exit": 2,
+  "live_preview": true,
+  "saved_scan_preview": true,
+  "folder_cancelled_without_orphans": true,
+  "browser_errors": [],
+  "mobile_overflow": false,
+  "example_summary_unchanged": true,
+  "check_note": "The initial end-to-end check verified package commands, busy CLI rejection and folder child launch. Final identity checks wait for interpreter exit after terminal progress is published; this read-only completion check reused those results."
+}

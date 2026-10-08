@@ -1,6 +1,6 @@
 """Per-cloud descriptive statistics; motion scatter is distinct from absolute angular error."""
 import numpy as np
-from common import save_json, write_csv
+from algorithms.support.common import save_json, write_csv
 
 
 def describe(values):
@@ -33,7 +33,7 @@ def analyze_scans(camera, lidar, raw, output):
     rows=[]
     for i,(start,stop) in enumerate(zip(raw['offsets'][:-1],raw['offsets'][1:])):
         points=raw['points'][start:stop];r=np.hypot(points[:,0],points[:,1])
-        from localization import target_mask
+        from algorithms.support.localization import target_mask
         target=points[target_mask(points,raw.get('geometry'))]
         depth=describe(target[:,2]);radial=describe(np.hypot(target[:,0],target[:,1]))
         rows.append({'scan_index':i,'bag_stamp_s':raw['stamps'][i],'header_stamp_s':raw['headers'][i],

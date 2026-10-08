@@ -16,12 +16,12 @@ from types import SimpleNamespace
 
 import numpy as np
 import app as server
-import common
-import job_registry
-from bag_io import grayscale
+from algorithms.support import common
+from algorithms.support import job_registry
+from algorithms.support.bag_io import grayscale
 from algorithms.livox.extract_cloud import decode
-from sensors import validation_blocks
-from timing import fit_multi,lag_profile
+from algorithms.support.sensors import validation_blocks
+from algorithms.support.timing import fit_multi,lag_profile
 
 
 class CornerCases(unittest.TestCase):
@@ -123,7 +123,7 @@ class CornerCases(unittest.TestCase):
 
     def test_cli_reports_folder_failures_with_nonzero_exit_status(self):
         import process_bag as cli
-        import batch_worker
+        from algorithms.support import batch_worker
         (self.bags/'device_1'/'valid.bag').touch()
         result={'totals':{'failed_bags':1},'overall_timing':{}}
         with patch.object(cli,'RESULTS',self.results),patch.object(cli,'BAGS',self.bags),patch.object(cli,'remember_current'),\
@@ -183,7 +183,7 @@ class CornerCases(unittest.TestCase):
         import rosbag
         import rospy
         from sensor_msgs.msg import Image,PointCloud2
-        from bag_io import extract
+        from algorithms.support.bag_io import extract
         path=self.bags/'device_1'/'resolution.bag'
         with rosbag.Bag(str(path),'w') as bag:
             for i,width in enumerate((64,65)):

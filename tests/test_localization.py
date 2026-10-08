@@ -1,9 +1,9 @@
 import copy
 import unittest
 import numpy as np
-from calibration import validate,project
-from localization import maps,select,transform,target_mask
-from timing import fit_multi
+from algorithms.support.calibration import validate,project
+from algorithms.support.localization import maps,select,transform,target_mask
+from algorithms.support.timing import fit_multi
 
 
 class LocalizationTests(unittest.TestCase):

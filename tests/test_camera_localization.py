@@ -2,8 +2,8 @@ import unittest
 import tempfile
 from pathlib import Path
 import numpy as np
-from camera_localization import detect
-from common import validate_options
+from algorithms.support.camera_localization import detect
+from algorithms.support.common import validate_options
 
 
 def scene(wheels, brightness=False):
@@ -47,7 +47,7 @@ class CameraLocalizationTests(unittest.TestCase):
             from std_msgs.msg import String
         except ImportError:
             self.skipTest('ROS is needed for indexed bag sampling')
-        from camera_localization import sample_frames
+        from algorithms.support.camera_localization import sample_frames
         with tempfile.TemporaryDirectory() as tmp:
             path = Path(tmp)/'short_camera.bag'
             with rosbag.Bag(str(path), 'w') as bag:

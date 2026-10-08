@@ -2,7 +2,7 @@
 import csv
 import json
 from pathlib import Path
-from timing import fit_multi
+from algorithms.support.timing import fit_multi
 
 
 def main():

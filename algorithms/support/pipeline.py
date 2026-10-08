@@ -12,13 +12,13 @@ import traceback
 from pathlib import Path
 from datetime import datetime,timezone
 import numpy as np
-from common import ROOT, save_json, write_csv, bag_path, native,sha256_file
-from bag_io import extract
-from sensors import flir,livox
-from timing import analyze
-from visuals import preview_image,diagnostics
-from scan_variability import analyze_scans,plot_scans
-from job_registry import remember_current
+from algorithms.support.common import ROOT, save_json, write_csv, bag_path, native,sha256_file
+from algorithms.support.bag_io import extract
+from algorithms.support.sensors import flir,livox
+from algorithms.support.timing import analyze
+from algorithms.support.visuals import preview_image,diagnostics
+from algorithms.support.scan_variability import analyze_scans,plot_scans
+from algorithms.support.job_registry import remember_current
 
 STAGES={'camera_localization':(0,4),'localization':(4,8),'extract':(8,18),'flir_calibration':(18,22),'flir_detection':(22,40),'flir_validation':(40,55),
         'livox_features':(55,60),'livox_detection':(60,74),'livox_validation':(74,87),
@@ -156,12 +156,12 @@ def run(request):
         config=request['config'];path=bag_path(request['bag']);source_stat=path.stat()
         job.progress('camera_localization',0,1,'Checking source recording identity before target localization')
         source_hash=sha256_file(path)
-        from camera_localization import resolve
+        from algorithms.support.camera_localization import resolve
         camera_location=resolve(path,config,out,job.progress)
         if camera_location:
             job.state['previews']['localization']={'path':'camera_localization/target_localization.png','frame':0,'bag_stamp_s':None,'relative_angle_deg':None,'method':'camera_auto','attempts':[]}
             job.publish()
-        from localization import discover
+        from algorithms.support.localization import discover
         localization=discover(path,config,out,job.progress)
         if localization:
             job.state['previews']['localization']={'path':'localization/target_localization.png','frame':0,'bag_stamp_s':None,'relative_angle_deg':None,'method':localization['method'],'attempts':localization['attempts']}

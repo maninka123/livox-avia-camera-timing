@@ -2,6 +2,7 @@
 
 | Record | What it checks |
 |---|---|
+| [Supporting-module layout](PACKAGE_LAYOUT_CHECKS.md) | Package imports, app workers, recovery and cancellation |
 | [Publication](PUBLICATION_CHECKS.md) | How to run checks in a clean checkout |
 | [App audit](APP_AUDIT.md) | App, CLI, worker recovery and actual-bag processing |
 | [Example cleanup](EXAMPLE_CLEANUP.md) | Single example, concise tables and 77 passing tests |

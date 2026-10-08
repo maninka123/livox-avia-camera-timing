@@ -11,10 +11,10 @@ import time
 import traceback
 import uuid
 from pathlib import Path
-from common import ROOT, RESULTS, bag_path, save_json, validate_options, native,file_prefix
-from bag_io import inspect
-from batch_analysis import aggregate,summarize_capture
-from job_registry import remember_current
+from algorithms.support.common import ROOT, RESULTS, bag_path, save_json, validate_options, native,file_prefix
+from algorithms.support.bag_io import inspect
+from algorithms.support.batch_analysis import aggregate,summarize_capture
+from algorithms.support.job_registry import remember_current,worker_command
 
 
 class Cancelled(Exception):pass
@@ -57,7 +57,7 @@ def run_batch(request):
                 save_json(child_out/'request.json',child_request)
                 env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',PYTHONDONTWRITEBYTECODE='1')
                 with (child_out/'worker.log').open('w') as log:
-                    child=subprocess.Popen([sys.executable,str(ROOT/'pipeline.py'),str(child_out/'request.json')],cwd=str(ROOT),env=env,stdout=log,stderr=subprocess.STDOUT)
+                    child=subprocess.Popen(worker_command('algorithms.support.pipeline',child_out/'request.json'),cwd=str(ROOT),env=env,stdout=log,stderr=subprocess.STDOUT)
                 while True:
                     status_file=child_out/'status.json'
                     if status_file.exists():

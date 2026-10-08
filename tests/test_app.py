@@ -2,7 +2,7 @@ import unittest
 import tempfile
 from pathlib import Path
 from app import app
-from common import validate_options
+from algorithms.support.common import validate_options
 
 class AppTests(unittest.TestCase):
     def setUp(self):self.client=app.test_client()
@@ -33,7 +33,7 @@ class AppTests(unittest.TestCase):
         devices=self.client.get('/api/datasets').get_json()
         self.assertEqual([d['id'] for d in devices],[f'device_{i}' for i in range(1,6)])
         self.assertEqual(devices[0]['bags'],2)
-        from common import bag_path
+        from algorithms.support.common import bag_path
         self.assertEqual(bag_path('rig_20260828_192028_0.bag').parent.name,'device_1')
         self.assertEqual(len(self.client.get('/api/bags?dataset=device_1').get_json()),2)
         self.assertEqual(self.client.get('/api/bags?dataset=device_2').get_json(),[])
@@ -48,7 +48,7 @@ class AppTests(unittest.TestCase):
         import rosbag
         import rospy
         from sensor_msgs.msg import Image,PointCloud2
-        from common import BAGS
+        from algorithms.support.common import BAGS
         destination=BAGS/'device_5'/'verification.bag'
         if destination.exists():self.skipTest('Verification filename already exists in Device 5.')
         try:

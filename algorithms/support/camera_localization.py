@@ -2,7 +2,7 @@
 import cv2
 import numpy as np
 from algorithms.flir.photometry import calibrate, features, initial_rate
-from common import save_json
+from algorithms.support.common import save_json
 
 
 MAX_EDGE = 640
@@ -14,7 +14,7 @@ def sample_frames(path, topic, progress=None):
     """Indexed, deterministic sampling; never retain the full image recording."""
     import rosbag
     import rospy
-    from bag_io import grayscale
+    from algorithms.support.bag_io import grayscale
     frames, stamps = [], []
     original = None
     with rosbag.Bag(str(path)) as bag:

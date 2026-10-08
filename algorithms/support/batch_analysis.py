@@ -4,13 +4,13 @@ import html
 import json
 from pathlib import Path
 import numpy as np
-from common import ROOT, save_json, write_csv, native,distinct_captures
-from scan_variability import describe
-from timing import fit_multi, SIGN
+from algorithms.support.common import ROOT, save_json, write_csv, native,distinct_captures
+from algorithms.support.scan_variability import describe
+from algorithms.support.timing import fit_multi, SIGN
 
 
 def timing_plot(model, data, path):
-    from timing_visualization import timing_figure
+    from algorithms.support.timing_visualization import timing_figure
     timing_figure(model, data, path)
 
 

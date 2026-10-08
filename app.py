@@ -17,10 +17,10 @@ import numpy as np
 import rosbag
 from flask import Flask,jsonify,render_template,request,send_file,send_from_directory
 from werkzeug.utils import secure_filename
-from common import ROOT,BAGS,RESULTS,bag_path,save_json,read_json,native,validate_options,write_csv,dataset_path,dataset_bags,result_path,capture_identity,file_lock,file_prefix
-from bag_io import inspect,grayscale
-from timing import fit_multi
-from job_registry import workers,remember,status,active_jobs,restore,ACTIVE
+from algorithms.support.common import ROOT,BAGS,RESULTS,bag_path,save_json,read_json,native,validate_options,write_csv,dataset_path,dataset_bags,result_path,capture_identity,file_lock,file_prefix
+from algorithms.support.bag_io import inspect,grayscale
+from algorithms.support.timing import fit_multi
+from algorithms.support.job_registry import workers,remember,status,active_jobs,restore,ACTIVE,worker_command
 from werkzeug.exceptions import HTTPException
 
 app=Flask(__name__);app.config['MAX_CONTENT_LENGTH']=8*1024**3
@@ -122,7 +122,7 @@ def bag_info():
 
 @app.get('/api/calibration')
 def device_calibration():
-    from calibration import load_device
+    from algorithms.support.calibration import load_device
     device=request.args.get('device')
     # Validate the device independently of calibration availability.
     dataset_path(device)
@@ -167,7 +167,7 @@ def upload():
     finally:temp.unlink(missing_ok=True)
     return jsonify(name=str((destination/name).relative_to(BAGS)))
 
-def spawn_worker(identifier,out,req,script):
+def spawn_worker(identifier,out,req,module):
     save_json(out/'request.json',req)
     save_json(out/'status.json',{'id':identifier,'bag':req.get('bag',req.get('dataset')),'kind':req.get('kind','detection'),
         'status':'queued','percent':0,'stage':'queued','message':'Starting Python worker','processed':0,'remaining':0,
@@ -176,7 +176,7 @@ def spawn_worker(identifier,out,req,script):
     env=dict(os.environ,OPENBLAS_NUM_THREADS='1',OMP_NUM_THREADS='1',PYTHONDONTWRITEBYTECODE='1')
     process=None
     try:
-        process=subprocess.Popen([sys.executable,str(ROOT/script),str(out/'request.json')],cwd=str(ROOT),stdout=log,stderr=subprocess.STDOUT,env=env,start_new_session=True)
+        process=subprocess.Popen(worker_command(module,out/'request.json'),cwd=str(ROOT),stdout=log,stderr=subprocess.STDOUT,env=env,start_new_session=True)
         remember(identifier,process,out)
     except OSError as exc:
         if process is not None and process.poll() is None:
@@ -202,7 +202,7 @@ def start_job():
         if active_jobs():return jsonify(error='A recording is already being processed. Finish or cancel it first.'),409
         identifier=new_id(path.stem);out=RESULTS/identifier;out.mkdir()
         req={'id':identifier,'bag':str(path.relative_to(BAGS)),'config':config,'created_at':datetime.now(timezone.utc).isoformat()}
-        spawn_worker(identifier,out,req,'pipeline.py')
+        spawn_worker(identifier,out,req,'algorithms.support.pipeline')
     return jsonify(id=identifier),202
 
 @app.post('/api/batches')
@@ -241,7 +241,7 @@ def start_batch():
         req={'id':identifier,'kind':'batch','dataset':name,'bags':[str(p.relative_to(BAGS)) for p in paths],
              'config':options,'auto_topics':payload.get('auto_topics',True),'auto_groups':payload.get('auto_groups',True),
              'created_at':datetime.now(timezone.utc).isoformat()}
-        spawn_worker(identifier,out,req,'batch_worker.py')
+        spawn_worker(identifier,out,req,'algorithms.support.batch_worker')
     return jsonify(id=identifier,bags=len(paths)),202
 
 @app.get('/api/jobs/<path:run_id>')
@@ -347,7 +347,7 @@ def scan_preview(run_id):
     out=folder(run_id);index=int(request.args.get('scan',0))
     file=out/'intermediates'/'livox_extracted.npz'
     if not file.is_file():raise ValueError('This capture has no extracted cloud data yet.')
-    from scan_reader import read_scan
+    from algorithms.support.scan_reader import read_scan
     with scan_preview_lock:
         points,(low,high),localized=read_scan(file,index)
     image=np.full((600,760,3),250,np.uint8)
@@ -395,7 +395,7 @@ def compare():
                    'fitted_phase_deg':data['prediction_deg'][i],'residual_deg':data['residual_deg'][i]} for i,record in enumerate(observations)])
     save_json(out/'model.json',model);save_json(out/'request.json',{'runs':ids})
     result={'id':identifier,'kind':'comparison','multi_timing':model,'observations':observations};save_json(out/'summary.json',result)
-    from timing_visualization import timing_figure
+    from algorithms.support.timing_visualization import timing_figure
     timing_figure(model, data, out/'figures'/'cross_speed_timing.png')
     report=f'''# Cross-speed timing comparison
 
