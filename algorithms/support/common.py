@@ -13,6 +13,12 @@ ROOT = Path(__file__).resolve().parents[2]
 BAGS = ROOT / 'bagfiles'
 RESULTS = ROOT / 'results'
 
+def processing_code_hashes(root=None):
+    """Snapshot processing sources without traversing datasets or environments."""
+    root=ROOT if root is None else Path(root)
+    files=[root/'app.py',root/'process_bag.py',*sorted((root/'algorithms').rglob('*.py'))]
+    return {file.relative_to(root).as_posix():hashlib.sha256(file.read_bytes()).hexdigest() for file in files}
+
 def file_prefix(value,max_bytes=180):
     """Keep generated filenames below Linux's byte limit, including Unicode names."""
     encoded=value.encode('utf-8')

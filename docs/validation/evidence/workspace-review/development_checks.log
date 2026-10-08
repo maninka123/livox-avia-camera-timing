@@ -1,0 +1,96 @@
+test_all_copied_bags_visible (test_app.AppTests) ... ok
+test_device_folders_and_legacy_bag_lookup (test_app.AppTests) ... ok
+test_duplicate_capture_not_independent (test_app.AppTests) ... ok
+test_empty_and_invalid_device_not_queued (test_app.AppTests) ... ok
+test_home_and_local_assets (test_app.AppTests) ... ok
+test_invalid_folder_configuration_not_queued (test_app.AppTests) ... ok
+test_invalid_job_returns_actionable_error (test_app.AppTests) ... ok
+test_path_traversal_rejected (test_app.AppTests) ... ok
+test_topic_types_and_crop_are_validated (test_app.AppTests) ... ok
+test_valid_import_uses_selected_device_and_generic_filename (test_app.AppTests) ... ok
+test_automatic_default_and_explicit_manual_override (test_camera_localization.CameraLocalizationTests) ... ok
+test_crowded_scene_does_not_silently_ignore_other_candidates (test_camera_localization.CameraLocalizationTests) ... ok
+test_malformed_discovery_inputs_fail_with_actionable_errors (test_camera_localization.CameraLocalizationTests) ... ok
+test_off_center_wheel_and_clipped_reflection_with_brightness_changes (test_camera_localization.CameraLocalizationTests) ... ok
+test_short_camera_topic_in_long_bag_is_sampled_over_its_own_sequence (test_camera_localization.CameraLocalizationTests) ... ok
+test_static_target_with_global_brightness_changes_is_not_rotation (test_camera_localization.CameraLocalizationTests) ... ok
+test_two_equally_plausible_wheels_require_target_selection (test_camera_localization.CameraLocalizationTests) ... ok
+test_broken_result_symlinks_do_not_break_the_library (test_corner_cases.CornerCases) ... ok
+test_busy_app_blocks_cli_before_a_result_directory_is_created (test_corner_cases.CornerCases) ... ok
+test_cli_interruption_during_startup_has_consistent_cancelled_status (test_corner_cases.CornerCases) ... Processing valid.bag -> /tmp/tmpl8l8ju1h/results/cancel_start
+ok
+test_cli_reports_folder_failures_with_nonzero_exit_status (test_corner_cases.CornerCases) ... Processing device_1 -> /tmp/tmpnn4_q078/results/batch_device_1_20261008T034314Z_8e19ba4f
+COMPLETE device_1 {'failed_bags': 1} overall timing {}
+ok
+test_cli_reservation_blocks_app_and_releases_on_initialization_failure (test_corner_cases.CornerCases) ... Processing device_1/valid.bag -> /tmp/tmpyufh6d6l/results/cli_reserved
+ok
+test_concurrent_uploads_keep_both_files_and_no_temporary_files (test_corner_cases.CornerCases) ... ok
+test_corrupt_run_does_not_break_library_or_file_access (test_corner_cases.CornerCases) ... ok
+test_damaged_progress_does_not_release_a_live_worker_reservation (test_corner_cases.CornerCases) ... ok
+test_different_filenames_with_identical_bag_contents_are_one_capture (test_corner_cases.CornerCases) ... ok
+test_duplicate_renamed_sources_are_rejected_by_comparison (test_corner_cases.CornerCases) ... ok
+test_example_label_is_display_metadata_and_new_runs_remain_visible (test_corner_cases.CornerCases) ... ok
+test_external_result_folders_are_not_listed_or_changed (test_corner_cases.CornerCases) ... ok
+test_external_symlinks_are_excluded_from_files_and_download (test_corner_cases.CornerCases) ... ok
+test_generated_unicode_run_ids_obey_byte_limits (test_corner_cases.CornerCases) ... ok
+test_http_errors_have_actionable_json (test_corner_cases.CornerCases) ... ok
+test_image_stride_and_buffer_errors_are_explicit (test_corner_cases.CornerCases) ... ok
+test_interrupted_job_is_terminal_and_cancelled_marker_is_respected (test_corner_cases.CornerCases) ... ok
+test_invalid_saved_speeds_and_fractional_counts_are_not_presented (test_corner_cases.CornerCases) ... ok
+test_json_publication_is_atomic_for_concurrent_writers (test_corner_cases.CornerCases) ... ok
+test_long_source_filename_can_start_a_run_without_renaming_the_source (test_corner_cases.CornerCases) ... ok
+test_malformed_scan_csv_and_missing_array_return_json_errors (test_corner_cases.CornerCases) ... ok
+test_missing_sensor_in_first_bag_does_not_block_automatic_folder_queue (test_corner_cases.CornerCases) ... ok
+test_missing_sensor_in_first_bag_does_not_block_manual_folder_queue (test_corner_cases.CornerCases) ... ok
+test_missing_status_is_inspectable_instead_of_server_error (test_corner_cases.CornerCases) ... ok
+test_nonfinite_scan_values_are_null_and_bounds_are_checked (test_corner_cases.CornerCases) ... ok
+test_only_one_concurrent_processing_request_starts (test_corner_cases.CornerCases) ... ok
+test_padded_big_endian_cloud_is_decoded_and_invalid_fields_rejected (test_corner_cases.CornerCases) ... ok
+test_recent_queue_is_not_marked_interrupted_during_worker_launch (test_corner_cases.CornerCases) ... ok
+test_resolution_change_is_rejected_even_when_manual_crop_still_fits (test_corner_cases.CornerCases) ... ok
+test_short_validation_blocks_and_invalid_timing_data_are_rejected (test_corner_cases.CornerCases) ... ok
+test_two_server_processes_share_one_processing_reservation (test_corner_cases.CornerCases) ... ok
+test_unreadable_single_bag_returns_json_error (test_corner_cases.CornerCases) ... ok
+test_valid_json_with_missing_result_fields_is_marked_incomplete (test_corner_cases.CornerCases) ... ok
+test_very_long_upload_names_and_repeat_imports_fit_filesystem_limits (test_corner_cases.CornerCases) ... ok
+test_worker_spawn_failure_does_not_leave_queued_run (test_corner_cases.CornerCases) ... ok
+test_wrong_progress_types_do_not_break_job_views (test_corner_cases.CornerCases) ... ok
+test_wrong_types_in_manual_folder_settings_are_rejected_before_queueing (test_corner_cases.CornerCases) ... ok
+test_fisheye_model_and_points_behind_camera (test_localization.LocalizationTests) ... ok
+test_full_circle_phase_timing_model (test_localization.LocalizationTests) ... ok
+test_matrix_direction_units_and_camera_model_are_validated (test_localization.LocalizationTests) ... ok
+test_new_and_reference_phase_conventions_cannot_mix (test_localization.LocalizationTests) ... ok
+test_off_axis_wheel_and_different_distance_without_calibration (test_localization.LocalizationTests) ... ok
+test_skew_is_applied_in_both_supported_camera_models (test_localization.LocalizationTests) ... ok
+test_static_scene_with_changing_scan_density_is_not_a_rotor (test_localization.LocalizationTests) ... ok
+test_two_rotating_regions_are_ambiguous (test_localization.LocalizationTests) ... ok
+test_code_snapshot_tracks_algorithm_changes_and_ignores_supporting_evidence (test_project_layout.ProjectLayoutTests) ... ok
+test_current_documentation_links_resolve (test_project_layout.ProjectLayoutTests) ... ok
+test_launcher_preserves_app_options_from_another_directory (test_project_layout.ProjectLayoutTests) ... ok
+test_launcher_rejects_an_explicit_missing_interpreter (test_project_layout.ProjectLayoutTests) ... ok
+test_runtime_sources_use_package_imports_and_project_data_paths (test_project_layout.ProjectLayoutTests) ... ok
+test_corrupt_arrays_and_archive_return_actionable_errors (test_scan_reader.ScanReaderTests) ... /home/pasindu/rotating_target_ws/Livox_FLIR_Studio/tests/test_scan_reader.py:26: ResourceWarning: unclosed file <_io.BufferedReader name='/tmp/tmpyqwvd9rl/clouds.npz'>
+  with self.assertRaises(ValueError):scan_reader.read_scan(path,0)
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+ok
+test_each_scan_is_exact_for_both_storage_orders_and_float_sizes (test_scan_reader.ScanReaderTests) ... ok
+test_legacy_metadata_and_invalid_indices (test_scan_reader.ScanReaderTests) ... ok
+test_all_failed_folder_has_a_report_and_unresolved_offset (test_scan_variability.ScanTests) ... ok
+test_finite_statistics_do_not_invent_measurements (test_scan_variability.ScanTests) ... ok
+test_path_traversal_rejected_for_nested_results_and_bags (test_scan_variability.ScanTests) ... ok
+test_signed_rpm_with_irregular_sampling_and_rejected_observations (test_scan_variability.ScanTests) ... ok
+test_too_short_interval_has_no_rpm (test_scan_variability.ScanTests) ... ok
+test_constant_rotation_cannot_identify_lag (test_timing.TimingTests) ... ok
+test_cross_speed_separates_phase_and_known_delay (test_timing.TimingTests) ... ok
+test_device_uptime_is_not_subtracted_from_unix (test_timing.TimingTests) ... ok
+test_excited_motion_recovers_known_lag_and_sign (test_timing.TimingTests) ... ok
+test_offset_beyond_supported_cross_speed_search_is_unresolved (test_timing.TimingTests) ... ok
+test_same_speed_rejected (test_timing.TimingTests) ... ok
+test_two_speeds_with_multiple_phase_wrap_solutions_are_unresolved (test_timing.TimingTests) ... ok
+test_commands_allow_only_workers_and_resolve_request_paths (test_worker_launch.WorkerLaunchTests) ... ok
+test_live_package_workers_recover_and_reject_other_requests_or_workspaces (test_worker_launch.WorkerLaunchTests) ... ok
+
+----------------------------------------------------------------------
+Ran 84 tests in 9.614s
+
+OK

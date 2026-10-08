@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "checks": [
+    {
+      "workspace": "Livox_FLIR_Studio",
+      "launcher_outside_project_exit": 0,
+      "invalid_interpreter_exit": 1
+    },
+    {
+      "workspace": "livox-avia-camera-timing",
+      "launcher_outside_project_exit": 0,
+      "invalid_interpreter_exit": 1
+    }
+  ]
+}

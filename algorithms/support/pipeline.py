@@ -3,7 +3,6 @@
 import os
 os.environ.setdefault('OPENBLAS_NUM_THREADS','1');os.environ.setdefault('OMP_NUM_THREADS','1')
 import argparse
-import hashlib
 import json
 import signal
 import sys
@@ -12,7 +11,7 @@ import traceback
 from pathlib import Path
 from datetime import datetime,timezone
 import numpy as np
-from algorithms.support.common import ROOT, save_json, write_csv, bag_path, native,sha256_file
+from algorithms.support.common import ROOT, save_json, write_csv, bag_path, native,sha256_file,processing_code_hashes
 from algorithms.support.bag_io import extract
 from algorithms.support.sensors import flir,livox
 from algorithms.support.timing import analyze
@@ -34,7 +33,7 @@ class Job:
             'elapsed_s':0,'metrics':{},'previews':{},'detections':{},'trace':{'FLIR':[],'Livox':[]}}
         signal.signal(signal.SIGTERM,self.cancel)
         remember_current(self.out)
-        self.code_hashes={str(file.relative_to(ROOT)):hashlib.sha256(file.read_bytes()).hexdigest() for file in ROOT.rglob('*.py') if not any(part in ('tests','verification','.venv','.git') for part in file.parts)}
+        self.code_hashes=processing_code_hashes()
         self.publish()
     def cancel(self,*args):raise Cancelled('Processing cancelled. Partial artifacts are preserved.')
     def publish(self):

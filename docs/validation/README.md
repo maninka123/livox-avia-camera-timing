@@ -2,6 +2,7 @@
 
 | Record | What it checks |
 |---|---|
+| [Review after reorganisation](WORKSPACE_REVIEW.md) | Current layout, code snapshots and complete two-bag processing |
 | [Supporting-module layout](PACKAGE_LAYOUT_CHECKS.md) | Package imports, app workers, recovery and cancellation |
 | [Publication](PUBLICATION_CHECKS.md) | How to run checks in a clean checkout |
 | [App audit](APP_AUDIT.md) | App, CLI, worker recovery and actual-bag processing |

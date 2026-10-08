@@ -1,0 +1,15 @@
+{
+  "passed": true,
+  "run_id": "batch_device_1_20261008T033736Z_65323b2a",
+  "totals": {
+    "camera_frames": 2848,
+    "completed_bags": 2,
+    "failed_bags": 0,
+    "input_points": 20112000,
+    "livox_clouds": 838,
+    "requested_bags": 2
+  },
+  "overall_timing_status": "UNRESOLVED",
+  "live_preview": true,
+  "example_summary_unchanged": true
+}

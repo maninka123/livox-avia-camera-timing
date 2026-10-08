@@ -4,7 +4,7 @@ The repository contains two raw Device 1 bags and **one saved ten-capture exampl
 
 | Check | Evidence |
 |---|---|
-| App and CLI | [Latest audit](APP_AUDIT.md) |
+| Layout, app and CLI | [Current review](WORKSPACE_REVIEW.md) · [Detailed audit](APP_AUDIT.md) |
 | Camera localization | [Automatic camera checks](AUTOMATIC_CAMERA_CHECKS.md) |
 | Timing model | `reproduce_automatic.py` refits the example’s saved phase observations |
 | Data delivery | Raw bags and observation arrays use Git LFS |

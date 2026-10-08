@@ -22,6 +22,8 @@ bash launch.sh
 
 Open **http://127.0.0.1:8765**. Select a device, choose one bag or the whole folder, then start. Watch detections and progress; inspect scans, plots and reports after completion.
 
+Run the launcher from any directory. It uses the app’s `.venv`; `STUDIO_PYTHON` can select another Python executable.
+
 ## How it works
 
 | Camera | Livox Avia | Timing |
@@ -66,7 +68,7 @@ Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetc
 .venv/bin/python reproduce_automatic.py
 ```
 
-[Documentation](docs/README.md) · [App guide](docs/guides/APP_GUIDE.md) · [Validation](docs/validation/README.md).
+[Documentation](docs/README.md) · [App guide](docs/guides/APP_GUIDE.md) · [Validation](docs/validation/README.md) · [Code layout](algorithms/README.md).
 
 ## Papers
 
@@ -74,5 +76,3 @@ Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetc
 - **Preprint:** [A Rotating Aperture Target with a Common Geometric Estimator for Temporal Calibration of Heterogeneous Sensors](https://doi.org/10.2139/ssrn.7513129).
 
 The papers provide the research background; this app’s independent estimators and results are described above.
-
-[Code layout](algorithms/README.md): sensor methods and shared support live under `algorithms/`; launch scripts stay at the root.

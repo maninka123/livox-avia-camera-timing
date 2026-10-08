@@ -1,0 +1,74 @@
+{
+  "completion_reused_existing_run": true,
+  "passed": true,
+  "run_id": "batch_device_1_20261008T033736Z_65323b2a",
+  "totals": {
+    "camera_frames": 2848,
+    "completed_bags": 2,
+    "failed_bags": 0,
+    "input_points": 20112000,
+    "livox_clouds": 838,
+    "requested_bags": 2
+  },
+  "overall_timing_status": "UNRESOLVED",
+  "worker_identity": {
+    "pid": 236482,
+    "start_tick": "7032533"
+  },
+  "child_workers": {
+    "batch_device_1_20261008T033736Z_65323b2a/captures/rig_20260828_191845_0_be44a395": {
+      "pid": 236522,
+      "start_tick": "7032569"
+    },
+    "batch_device_1_20261008T033736Z_65323b2a/captures/rig_20260828_192028_0_e858ff9a": {
+      "pid": 236781,
+      "start_tick": "7034581"
+    }
+  },
+  "maximum_concurrent_cloud_workers": 1,
+  "live_preview": true,
+  "second_cli_exit": 2,
+  "observed_stages": [
+    {
+      "key": [
+        2,
+        "complete"
+      ],
+      "percent": 100,
+      "processed": 2,
+      "remaining": 0
+    }
+  ],
+  "processing_sources": [
+    "algorithms/__init__.py",
+    "algorithms/flir/__init__.py",
+    "algorithms/flir/periodic.py",
+    "algorithms/flir/photometry.py",
+    "algorithms/livox/__init__.py",
+    "algorithms/livox/extract_cloud.py",
+    "algorithms/livox/periodic.py",
+    "algorithms/livox/return_features.py",
+    "algorithms/support/__init__.py",
+    "algorithms/support/bag_io.py",
+    "algorithms/support/batch_analysis.py",
+    "algorithms/support/batch_worker.py",
+    "algorithms/support/calibration.py",
+    "algorithms/support/camera_localization.py",
+    "algorithms/support/common.py",
+    "algorithms/support/job_registry.py",
+    "algorithms/support/localization.py",
+    "algorithms/support/pipeline.py",
+    "algorithms/support/scan_reader.py",
+    "algorithms/support/scan_variability.py",
+    "algorithms/support/sensors.py",
+    "algorithms/support/timing.py",
+    "algorithms/support/timing_visualization.py",
+    "algorithms/support/visuals.py",
+    "app.py",
+    "process_bag.py"
+  ],
+  "provenance_excludes_evidence": true,
+  "browser_errors": [],
+  "mobile_overflow": false,
+  "example_summary_unchanged": true
+}
