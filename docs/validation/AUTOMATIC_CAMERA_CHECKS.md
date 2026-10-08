@@ -14,4 +14,4 @@ Discovery retains at most 128 grayscale images with longest edge capped at 640 p
 
 Earlier reference analyses remain separately stored. The new full run is retained in the development workspace; the repository includes its compact checks and images. No additional raw bags or large arrays were added for this update.
 
-[Camera discovery](automatic-camera-verification/capture_checks.json) · [Spatial integration](automatic-camera-verification/integration_checks.json) · [Complete run](automatic-camera-verification/end_to_end_checks.json) · [Browser checks](automatic-camera-verification/browser_checks.json)
+[Camera discovery](evidence/automatic-camera-verification/capture_checks.json) · [Spatial integration](evidence/automatic-camera-verification/integration_checks.json) · [Complete run](evidence/automatic-camera-verification/end_to_end_checks.json) · [Browser checks](evidence/automatic-camera-verification/browser_checks.json)

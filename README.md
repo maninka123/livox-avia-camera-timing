@@ -2,7 +2,7 @@
 
 A local app for flywheel angles and relative timing from **Livox Avia + camera ROS1 bags**.
 
-[![Full Studio workspace](app_preview.png)](app_preview.png)
+[![Full Studio workspace](docs/assets/app_preview.png)](docs/assets/app_preview.png)
 
 Choose a recording, inspect its topics and camera view, then watch detection previews. Click any figure for full size.
 
@@ -28,15 +28,13 @@ Open **http://127.0.0.1:8765**. Select a device, choose one bag or the whole fol
 |---|---|---|
 | Find the wheel; fit its shape; track image phase. | Find rotating returns; track each cloud’s phase. | Compare sensor phases across different RPMs. |
 
-![Independent estimation and timing](method_overview.svg)
-
 Each sensor estimates its own angles and RPM. Camera position plus device calibration guides the LiDAR search; missing calibration falls back to LiDAR-only. Camera cropping is automatic; a manual crop is optional.
 
-Add your device’s **K, D and LiDAR→camera transform** to `calibrations/device_<n>.json`. [Device 1 example](calibrations/device_1.json) · [Calibration details](LOCALIZATION.md).
+Add your device’s **K, D and LiDAR→camera transform** to `calibrations/device_<n>.json`. [Device 1 example](calibrations/device_1.json) · [Calibration details](docs/guides/LOCALIZATION.md).
 
-![Automatic camera crop](automatic_camera.png)
+![Automatic camera crop](docs/assets/automatic_camera.png)
 
-[![Livox detection at four wheel orientations](livox_detection.png)](livox_detection.png)
+[![Livox detection at four wheel orientations](docs/assets/livox_detection.png)](docs/assets/livox_detection.png)
 
 Four orientations from a recorded capture: depth-coloured clouds (top), selected wheel returns in orange (middle), and their angular histograms (bottom).
 
@@ -52,9 +50,9 @@ Four orientations from a recorded capture: depth-coloured clouds (top), selected
 
 The modeled matching scene appears on Livox about **25.95 ms later**. This is a model-based timing candidate. Different RPMs help separate fixed angle differences from delay; exposure and per-ray timing require separate calibration.
 
-![Example timing](automatic_device_1_timing.png)
+![Example timing](docs/assets/automatic_device_1_timing.png)
 
-[Example report](results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Capture metrics](results/batch_device_1_20261007T064645Z_f2b206cc/capture_metrics.csv).
+[Results folder guide](results/README.md) · [Example report](results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Capture metrics](results/batch_device_1_20261007T064645Z_f2b206cc/capture_metrics.csv).
 
 Two raw bags are included in `bagfiles/device_1/`; Devices 2–5 are ready for your recordings. Both raw examples are near +10 RPM, so additional speeds are needed for combined timing. The saved ten-capture example uses the earlier camera crop; the current app also discovers that crop automatically.
 
@@ -68,7 +66,7 @@ Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetc
 .venv/bin/python reproduce_automatic.py
 ```
 
-[App guide](docs/APP_GUIDE.md) · [Methods](docs/METHODS.md) · [Audit and checks](docs/APP_AUDIT.md).
+[Documentation](docs/README.md) · [App guide](docs/guides/APP_GUIDE.md) · [Validation](docs/validation/README.md).
 
 ## Papers
 

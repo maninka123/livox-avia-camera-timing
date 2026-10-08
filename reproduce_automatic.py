@@ -7,7 +7,7 @@ from timing import fit_multi
 
 def main():
     root = Path(__file__).resolve().parent
-    run = json.loads((root / 'docs/published_automatic.json').read_text())['id']
+    run = json.loads((root / 'docs/validation/reference/published_automatic.json').read_text())['id']
     folder = root / 'results' / run
     with (folder / 'timing/phase_observations.csv').open() as stream:
         rows = list(csv.DictReader(stream))

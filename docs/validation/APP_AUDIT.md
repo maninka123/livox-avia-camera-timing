@@ -42,10 +42,10 @@ Single-speed fitting candidates retain their timing qualification and recommenda
 
 ## Inspect the evidence
 
-[Software checks](final-audit-verification/software_checks.log) · [Publication checks](final-audit-verification/publication_checks.log) · [Real worker/reservation check](final-audit-verification/real_worker_checks.json) · [Publication worker check](final-audit-verification/publication_worker_checks.json) · [Fresh-run browser check](final-audit-verification/browser_checks.json) · [Browser corner cases](final-audit-verification/corner_browser_checks.json) · [Timing/SVG checks](final-audit-verification/timing_browser_checks.json).
+[Software checks](evidence/final-audit-verification/software_checks.log) · [Publication checks](evidence/final-audit-verification/publication_checks.log) · [Real worker/reservation check](evidence/final-audit-verification/real_worker_checks.json) · [Publication worker check](evidence/final-audit-verification/publication_worker_checks.json) · [Fresh-run browser check](evidence/final-audit-verification/browser_checks.json) · [Browser corner cases](evidence/final-audit-verification/corner_browser_checks.json) · [Timing/SVG checks](evidence/final-audit-verification/timing_browser_checks.json).
 
-![Camera discovery progress from the actual run](final-audit-verification/camera_progress.png)
+![Camera discovery progress from the actual run](evidence/final-audit-verification/camera_progress.png)
 
-![Calculated metrics from the fresh complete bag run](final-audit-verification/fresh_run_metrics.png)
+![Calculated metrics from the fresh complete bag run](evidence/final-audit-verification/fresh_run_metrics.png)
 
 The raw-data distribution remains the same two Device 1 example bags. New full verification runs stay local; compact evidence is published here.

@@ -1,7 +1,7 @@
 import asyncio,json,zipfile,urllib.request
 from pathlib import Path
 from playwright.async_api import async_playwright
-ROOT=Path(__file__).resolve().parent.parent;OUT=ROOT/'verification';BASE='http://127.0.0.1:8765'
+ROOT=Path(__file__).resolve().parents[4];OUT=Path(__file__).resolve().parent;BASE='http://127.0.0.1:8765'
 async def main():
  batch=(OUT/'automatic_final_batch_id.txt').read_text().strip();summary=json.loads((ROOT/'results'/batch/'summary.json').read_text());run=next(c['run_id'] for c in summary['captures'] if '192028' in c['bag'])
  checks=[];errors=[]

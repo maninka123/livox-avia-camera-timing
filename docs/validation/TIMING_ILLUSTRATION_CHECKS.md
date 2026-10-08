@@ -11,4 +11,4 @@ Checked in Chromium using saved single-bag, ten-capture folder and cross-speed r
 - Missing offset or RPM does not substitute example data. Tiny/zero offsets and a stopped wheel remain valid.
 - No browser errors; all three saved summary files retained their SHA256 hashes.
 
-[Check evidence](timing-illustration-verification/checks.json) · [Exported SVG](timing-illustration-verification/example.svg)
+[Check evidence](evidence/timing-illustration-verification/checks.json) · [Exported SVG](evidence/timing-illustration-verification/example.svg)

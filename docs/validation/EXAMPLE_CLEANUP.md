@@ -11,6 +11,6 @@
 
 `reproduce_automatic.py` reproduced the saved timing candidate and uncertainty. `reproduce_reference.py` now invokes the same example for compatibility.
 
-[Software checks](example-cleanup-verification/software_checks.log) · [Browser checks](example-cleanup-verification/browser_checks.json) · [Reproduced timing](example-cleanup-verification/reproduced_timing.json).
+[Software checks](evidence/example-cleanup-verification/software_checks.log) · [Browser checks](evidence/example-cleanup-verification/browser_checks.json) · [Reproduced timing](evidence/example-cleanup-verification/reproduced_timing.json).
 
-![One saved example](../saved_example.png)
+![One saved example](../assets/saved_example.png)

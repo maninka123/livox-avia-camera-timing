@@ -24,4 +24,4 @@ Positive τ means Livox content leads on bag-record time; negative τ means came
 
 Identical source hashes are excluded as timing replicates. Confidence intervals are conditional on stable sensor pose and phase convention. Header epochs are checked separately; the candidate does not calibrate physical exposure or per-ray acquisition times.
 
-[Calibration and target finding](../LOCALIZATION.md) · [Example report](../results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Verification](APP_AUDIT.md).
+[Calibration and target finding](LOCALIZATION.md) · [Example report](../../results/batch_device_1_20261007T064645Z_f2b206cc/REPORT.md) · [Verification](../validation/APP_AUDIT.md).

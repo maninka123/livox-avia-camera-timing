@@ -33,4 +33,4 @@ The flywheel illustration uses the calculated offset. Its displayed value is rou
 
 `results/<run>/` contains sensor angles/models, extracted arrays, scan tables, timing metrics, figures and reports. Folder runs also contain individual outputs in `captures/`. Use **Open report**, **Download artifacts**, or an individual file link.
 
-Plots retain their original resolution. The correlation matrix displays compactly; long figures scroll. [Calibration](../LOCALIZATION.md) · [Methods](METHODS.md) · [Checks](APP_AUDIT.md).
+Plots retain their original resolution. The correlation matrix displays compactly; long figures scroll. [Calibration](LOCALIZATION.md) · [Methods](METHODS.md) · [Checks](../validation/APP_AUDIT.md).

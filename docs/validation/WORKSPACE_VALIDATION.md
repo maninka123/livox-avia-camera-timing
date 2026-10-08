@@ -1,3 +1,7 @@
+# Historical workspace validation
+
+This record describes an earlier run, now archived locally. For current use, see the [app guide](../guides/APP_GUIDE.md) and [published example](../../results/README.md). The measurements below belong to that earlier run.
+
 # Livox + FLIR Studio: folder processing and validation
 
 The app supports **one ROS bag** or **every bag in a selected device folder**. Existing data are in `bagfiles/device_1/`; `device_2/` through `device_5/` are ready for additional data. Imports are saved in the selected device. Only the selected Livox PointCloud2 and FLIR Image topics are processed.

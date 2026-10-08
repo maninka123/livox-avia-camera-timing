@@ -9,3 +9,4 @@ __pycache__/
 # New runs are local; the published reference results are force-added once.
 results/*
 !results/.gitkeep
+!results/README.md

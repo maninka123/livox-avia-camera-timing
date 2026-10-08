@@ -16,4 +16,4 @@ Verified:
 - The real scan retained 4,819 returns (75.3 KiB) from a 30.0 MiB recording array. A separate read measured 4.6 MiB peak RSS growth; the 1 MiB bound applies to stream buffers, not total process memory.
 - 56 software tests passed. No bag detection or timing processing was rerun for these presentation changes. Existing scientific results and figures are preserved.
 
-[Browser checks](readability-verification/check_results.json) · [Figure checks](readability-verification/figure_checks.json) · [Memory measurement](readability-verification/memory_check.json) · [Software checks](readability-verification/software_checks.log)
+[Browser checks](evidence/readability-verification/check_results.json) · [Figure checks](evidence/readability-verification/figure_checks.json) · [Memory measurement](evidence/readability-verification/memory_check.json) · [Software checks](evidence/readability-verification/software_checks.log)

@@ -1,7 +1,7 @@
 import asyncio,json,urllib.request,time
 from pathlib import Path
 from playwright.async_api import async_playwright
-ROOT=Path('/home/pasindu/rotating_target_ws/.publication/livox-avia-camera-timing');BASE='http://127.0.0.1:8767';OUT=ROOT/'docs/automatic-verification'
+ROOT=Path(__file__).resolve().parents[4];BASE='http://127.0.0.1:8767';OUT=Path(__file__).resolve().parent
 async def main():
  checks=[];errors=[];observations=[]
  async with async_playwright() as pw:
@@ -11,7 +11,7 @@ async def main():
   assert await page.evaluate('state.bags.length')==2
   await page.select_option('#bag-select','device_1/rig_20260828_192028_0.bag');await page.wait_for_function("state.metadata && document.getElementById('bag-facts').textContent.includes('605.8')")
   await page.wait_for_function("!document.getElementById('recorded-camera-preview').hidden")
-  await page.screenshot(path=str(ROOT/'app_preview.png'),full_page=True)
+  await page.screenshot(path=str(ROOT/'docs/assets/app_preview.png'),full_page=True)
   checks.append('Published app enumerates exactly the two distributed raw bags and valid Device 1 calibration')
   await page.click('#start');await page.wait_for_function('state.currentJob!==null');job=await page.evaluate('state.currentJob')
   deadline=time.monotonic()+120;last_stage=None;screenshot=False

@@ -14,4 +14,4 @@ The accumulated value is consistent with roughly 9.9 revolutions at −15 RPM. T
 
 Chromium checks covered scan selection, both paginated table columns, positive/negative multiple turns, zero, rounding near 360°, missing values, and desktop/mobile layouts at 390 and 320 px. No browser errors occurred. Saved scan statistics and the analysis summary retained their SHA256 hashes. No inference was rerun.
 
-[Check evidence](scan-angle-verification/checks.json) · [Desktop](scan-angle-verification/scan_396_desktop.png) · [Mobile](scan-angle-verification/scan_396_mobile.png)
+[Check evidence](evidence/scan-angle-verification/checks.json) · [Desktop](evidence/scan-angle-verification/scan_396_desktop.png) · [Mobile](evidence/scan-angle-verification/scan_396_mobile.png)
