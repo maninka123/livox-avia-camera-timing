@@ -60,6 +60,19 @@ Two raw bags are included in `bagfiles/device_1/`; Devices 2–5 are ready for y
 
 Every new run gets its own results folder. Bags and arrays use **Git LFS**; fetch them before opening scan previews.
 
+## Sensor pipeline values
+
+Measured on four camera–LiDAR pairs (29 captures, ±5/10/15 RPM, 28 Oct 2026); every validation check passed. Set the device's value as `lidar_timestamp_shift/capture_offset` in [Sensor_Computer](https://github.com/maninka123/Sensor_Computer) `src/node_pc/config/pipeline.yaml` (live sensors, `auto_timestamp_offset: true`).
+
+| Device | Camera S/N | Livox S/N | τ (ms) | 95% interval (ms) | `capture_offset` (s) |
+|---|---|---|---:|---:|---:|
+| Pair 1 | 25120439 | 3JEDN920015M711 | −26.7 | [−28.6, −24.8] | **0.0705** |
+| Pair 2 | 24510717 | 3JEDLB30015Y251 | −22.2 | [−27.6, −16.9] | **0.0757** |
+| Pair 3 | 25500033 | 3JEDK3V0013U651 | −24.5 | [−26.4, −22.5] | **0.0731** |
+| Pair 4 | 25120437 | 3JEDNB30018L201 | −24.8 | [−25.7, −23.8] | **0.0729** |
+
+`capture_offset = 0.100 s + τ − camera header→arrival (≈ 2 ms)`. Replaying the pipeline's LiDAR stamping on all captures with these values leaves −0.1 to +2.7 ms. Valid for the same computer, drivers and camera settings (35 fps, 4×4 binning, 10 Hz LiDAR).
+
 ## CLI
 
 ```bash
