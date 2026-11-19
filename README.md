@@ -89,3 +89,7 @@ Measured on four camera–LiDAR pairs (29 captures, ±5/10/15 RPM, 28 Oct 2026);
 - **Preprint:** [A Rotating Aperture Target with a Common Geometric Estimator for Temporal Calibration of Heterogeneous Sensors](https://doi.org/10.2139/ssrn.7513129).
 
 The papers provide the research background; this app’s independent estimators and results are described above.
+
+## UNSW collection
+
+Pushes to personal `main` automatically update `livox-avia-camera-timing/` in the [UNSW AMT collection](https://github.com/unsw-edu-au/AMT-project). See [repository sync and existing working folders](docs/amt-repository-sync.md).
